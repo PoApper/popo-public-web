@@ -113,7 +113,8 @@ const EquipAssociationPage: React.FunctionComponent<{
                 <ReservationCalendar
                   markedDates={markedDates}
                   selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}/>
+                  setSelectedDate={setSelectedDate}
+                  placeName={"equip"}/>
               </Grid.Row>
               <Grid.Row>
                 <EquipReservationTable

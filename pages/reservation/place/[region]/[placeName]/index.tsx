@@ -63,7 +63,8 @@ const PlaceReservationPage: React.FunctionComponent<{
                 <ReservationCalendar
                   markedDates={markedDates}
                   selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}/>
+                  setSelectedDate={setSelectedDate}
+                  placeName={placeName}/>
               </Grid.Row>
 
               <Grid.Row style={{ marginBottom: '1em' }}>
