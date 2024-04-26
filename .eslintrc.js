@@ -16,4 +16,7 @@ module.exports = {
     'plugin:@next/next/recommended',
     'next/core-web-vitals',
   ],
+  rules: {
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+  },
 };
