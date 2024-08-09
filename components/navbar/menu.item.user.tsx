@@ -37,6 +37,7 @@ const MenuItemUser = () => {
           <Dropdown.Menu>
             <Dropdown.Item text={'내 정보'} href={'/auth/my-info'} />
             <Dropdown.Item text={'내 예약'} href={'/auth/my-reservation'} />
+            <Dropdown.Item text={'내 즐겨찾기'} href={'/auth/my-favorite'} />
             <Dropdown.Item text={'로그아웃'} onClick={handleLogout} />
           </Dropdown.Menu>
         </Dropdown>
