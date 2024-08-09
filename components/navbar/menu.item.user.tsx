@@ -23,7 +23,8 @@ const MenuItemUser = () => {
       await PoPoAxios.get('/auth/logout', {
         withCredentials: true,
       });
-      router.push('/');
+      await router.push('/');
+      window.location.reload();
     } catch (err) {
       alert('로그아웃에 실패했습니다.');
       console.log(err);
