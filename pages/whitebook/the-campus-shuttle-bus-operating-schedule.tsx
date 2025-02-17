@@ -2,10 +2,11 @@ import React from 'react';
 
 import Layout from '@/components/layout';
 import { Table } from 'semantic-ui-react';
+import Image from 'next/image';
 
 const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
   // prettier-ignore
-  const InnerSpotList = ['idx', '임시 주차장', '지곡회관', '철강대학원', '실험동', '가속기', '실험동', '철강대학원', '지곡회관', '임시 주차장', '환경동']
+  const InnerSpotList = ['idx', '임시 주차장', '지곡회관', '친환경소재\n대학원', '실험동', '가속기', '실험동', '친환경소재\n대학원', '지곡회관', '임시 주차장', '환경동']
 
   // prettier-ignore
   const InnerSpotTable_Semester = [
@@ -76,7 +77,7 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
             {InnerSpotList.map((spot, index) => {
               return (
                 <Table.HeaderCell width={1} key={index}>
-                  {spot}
+                  <pre>{spot}</pre>
                 </Table.HeaderCell>
               );
             })}
@@ -122,6 +123,18 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
         - 문의처: 054-279-3536 (차량반)
         <br />
       </p>
+
+      <h2>셔틀버스 정류장(Shuttle Bus Stop)</h2>
+      <div>
+        <img
+          src="/shuttle-bus-stop.png"
+          alt="Shuttle Bus Stop"
+          style={{
+            maxWidth: '400px',
+            height: 'auto',
+          }}
+        />
+      </div>
     </Layout>
   );
 };
