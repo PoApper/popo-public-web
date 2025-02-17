@@ -110,8 +110,7 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
 
       <p>
         * 주중(월~금)에만 운행 (Shuttle bus operates only on weekdays)
-        <br />
-        * 휴일 및 주말에는 차량 운행 없음. (There is no campus shuttle bus
+        <br />* 휴일 및 주말에는 차량 운행 없음. (There is no campus shuttle bus
         support on holidays and weekends)
       </p>
       <p>
