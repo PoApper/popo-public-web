@@ -2,7 +2,6 @@ import React from 'react';
 
 import Layout from '@/components/layout';
 import { Table } from 'semantic-ui-react';
-import Image from 'next/image';
 
 const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
   // prettier-ignore
