@@ -64,11 +64,6 @@ const Footer = () => {
                   개발자 모집
                 </List.Item>
               </List>
-              <List link>
-                <List.Item as="a" href="https://bit.ly/2XCtf3H">
-                  오류 신고 및 피드백
-                </List.Item>
-              </List>
             </Grid.Column>
             <Grid.Column width={4}>
               <Header as="h4" content="POSTECH" />
