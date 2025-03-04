@@ -8,9 +8,19 @@ const HomePage: React.FunctionComponent = () => {
     <Layout>
       <HomeLayout>
         <picture>
-            <source media="(max-width: 780px)" srcSet="/home/background_mobile.png" />
-            <source media="(min-width: 781px)" srcSet="/home/background_web.png" />
-            <img src="/home/background_web.png" alt="Hero Background" style={{ width: '100%', height: 'auto' }} />
+          <source
+            media="(max-width: 780px)"
+            srcSet="/home/background_mobile.png"
+          />
+          <source
+            media="(min-width: 781px)"
+            srcSet="/home/background_web.png"
+          />
+          <img
+            src="/home/background_web.png"
+            alt="Hero Background"
+            style={{ width: '100%', height: 'auto' }}
+          />
         </picture>
 
         <CircleSection />
@@ -30,14 +40,30 @@ const HomeLayout = styled.div`
 `;
 
 const circles = [
-  { text: '장소예약', href: '/reservation/place', icon: '/home/place_reservation.png' },
-  { text: '장비예약', href: '/reservation/equipment', icon: '/home/equipment_reservation.png' },
+  {
+    text: '장소예약',
+    href: '/reservation/place',
+    icon: '/home/place_reservation.png',
+  },
+  {
+    text: '장비예약',
+    href: '/reservation/equipment',
+    icon: '/home/equipment_reservation.png',
+  },
   { text: '자치단체', href: '/association', icon: '/home/association.png' },
   { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
-  { text: '기록물관리', href: 'https://drive.google.com/drive/u/0/folders/1vHexwLSdD92maoKNlvw9zQ0q0J59k5FD', icon: '/home/record.png' },
+  {
+    text: '기록물관리',
+    href: 'https://drive.google.com/drive/u/0/folders/1vHexwLSdD92maoKNlvw9zQ0q0J59k5FD',
+    icon: '/home/record.png',
+  },
   { text: '동아리소개', href: '/club', icon: '/home/club.png' },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
-  { text: '배달업체', href: 'https://delivery.postech.ac.kr/', icon: '/home/delivery.png' },
+  {
+    text: '배달업체',
+    href: 'https://delivery.postech.ac.kr/',
+    icon: '/home/delivery.png',
+  },
 ];
 
 const Circle = styled(Link)`
@@ -51,7 +77,7 @@ const Circle = styled(Link)`
   gap: 8px;
 
   @media (max-width: 780px) {
-    width: 90px; /* 모바일에서는 원의 가로 크기를 줄임 */
+    width: 90px;
   }
 `;
 
@@ -59,7 +85,7 @@ const IconWrapper = styled.div`
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: #EEEFF1;
+  background-color: #eeeff1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,11 +93,11 @@ const IconWrapper = styled.div`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #DADBDD;
+    background-color: #dadbdd;
   }
 
   @media (max-width: 780px) {
-    width: 100px;  /* 모바일에서 아이콘 감싸는 원의 크기를 줄임 */
+    width: 100px;
     height: 100px;
   }
 `;

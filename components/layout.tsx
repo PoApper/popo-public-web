@@ -12,21 +12,21 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-    <ThemeProvider theme={theme}>
-      <Head>
-        <title>POPO 퍼블릭 페이지</title>
-        <meta name="description" content="POPO 퍼블릭 페이지" />
-        <link rel="icon" href={'/favicon.ico'} />
-      </Head>
-      <main>
-        <Navbar />
-        <Wrapper>
-          <div style={{ width: '100%' }}>{children}</div>
-        </Wrapper>
-        <Footer />
-      </main>
-    </ThemeProvider>
-    <FloatingButton
+      <ThemeProvider theme={theme}>
+        <Head>
+          <title>POPO 퍼블릭 페이지</title>
+          <meta name="description" content="POPO 퍼블릭 페이지" />
+          <link rel="icon" href={'/favicon.ico'} />
+        </Head>
+        <main>
+          <Navbar />
+          <Wrapper>
+            <div style={{ width: '100%' }}>{children}</div>
+          </Wrapper>
+          <Footer />
+        </main>
+      </ThemeProvider>
+      <FloatingButton
         href="https://docs.google.com/forms/d/1J23um5RDRTdKC9bscZnixPhEeon6qz4DQRTJYMtFJTU/viewform?edit_requested=true"
         target="_blank"
         rel="noopener noreferrer"
@@ -79,6 +79,5 @@ const FloatingButton = styled.a`
     right: 10px;
   }
 `;
-
 
 export default Layout;
