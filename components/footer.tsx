@@ -107,7 +107,7 @@ const Footer = () => {
             </List.Item>
             <List.Item>
               <a
-                href={`https://github.com/PoApper/popo-public-web/releases/tag/${process.env.NEXT_PUBLIC_POPO_VERSION}`}
+                href={`https://github.com/PoApper/popo-public-web/commits/${process.env.NEXT_PUBLIC_POPO_VERSION}`}
                 target="_blank"
                 rel="noreferrer"
               >

@@ -52,13 +52,24 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   );
 
   useEffect(() => {
+    // 로그인 확인
     PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
-      .then((res) => setUserInfo(res.data))
+      .then((res) => {
+        setUserInfo(res.data);
+      })
       .catch(() => {
         alert('로그인 후 예약 할 수 있습니다.');
         router.push('/auth/login');
       });
-  }, [router]);
+    // 오늘 이후의 날짜를 선택했는지 확인
+    const today = moment().format('YYYYMMDD');
+    if (moment(selectedDate).isBefore(today)) {
+      setTimeout(() => {
+        alert('오늘 이후의 날짜를 선택해주세요.');
+        router.push(`/reservation/place/${placeInfo.region}/${placeName}`);
+      }, 100);
+    }
+  }, []);
 
   function handleSubmit() {
     if (!isPossible) {

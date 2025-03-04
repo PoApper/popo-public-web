@@ -1,7 +1,5 @@
 on:
   push:
-  release:
-    types: [published]
 
 name: Docker Build and Push
 
@@ -30,7 +28,7 @@ jobs:
   docker_build_and_push:
     name: Docker build and push
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,9 +48,9 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
       - name: Determine Prod/Dev Stage
         run: |
-          if [[ ${{ github.event_name }} == 'release' ]]; then
+          if [[ ${{ github.ref_type }} == 'tag' ]]; then
             echo "PROD"
-            echo "IMAGE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+            echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
             echo "NEXT_PUBLIC_ENV=prod" >> $GITHUB_ENV
           else
             echo "DEV"
@@ -71,6 +69,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           push: true
+          provenance: false # Disable image index metadata
 
   redeploy_dev_service:
     name: Redeploy Dev Service
@@ -78,7 +77,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Redeploy Dev Service
-        run: curl -X POST ${{ secrets.PORTAINER_DEV_SERVICE_WEBHOOK }}
+        run: |
+          RESPONSE=$(curl -s -o response.txt -w "%{http_code}" -X POST ${{ secrets.PORTAINER_DEV_SERVICE_WEBHOOK }})
+          if [ "$RESPONSE" -ne 204 ]; then
+            echo "❌ Deployment failed! HTTP Response: $RESPONSE"
+            cat response.txt  # 오류 메시지 출력 (필요 시)
+            exit 1
+          fi
+          echo "✅ Deployment successful! HTTP Response: $RESPONSE"
 
   deploy_health_check:
     name: Check Application Status

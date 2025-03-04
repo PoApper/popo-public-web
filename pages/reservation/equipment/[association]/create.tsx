@@ -47,13 +47,24 @@ const EquipReservationCreatePage: React.FunctionComponent<{
   const [endTime, setEndTime] = useState<moment.Moment>(nowNext30Min); // HHmm
 
   useEffect(() => {
+    // 로그인 확인
     PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
-      .then((res) => setUserInfo(res.data))
+      .then((res) => {
+        setUserInfo(res.data);
+      })
       .catch(() => {
         alert('로그인 후 예약 할 수 있습니다.');
         router.push('/auth/login');
       });
-  }, [association, router]);
+    // 오늘 이후의 날짜를 선택했는지 확인
+    const today = moment().format('YYYYMMDD');
+    if (moment(selectedDate).isBefore(today)) {
+      setTimeout(() => {
+        alert('오늘 이후의 날짜를 선택해주세요.');
+        router.push(`/reservation/equipment/${association}`);
+      }, 100);
+    }
+  }, []);
 
   function handleSubmit() {
     if (title.length == 1 || description.length == 1) {
