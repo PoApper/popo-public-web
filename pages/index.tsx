@@ -61,7 +61,7 @@ const circles = [
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
   {
     text: '배달업체',
-    href: 'https://delivery.postech.ac.kr/',
+    href: 'https://www.postechdorm.com/delivery',
     icon: '/home/delivery.png',
   },
 ];
