@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Layout from '@/components/layout';
+import { POPOLinks } from '@/components/common/popo-links';
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -54,14 +55,14 @@ const circles = [
   { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
     text: '기록물관리',
-    href: 'https://drive.google.com/drive/u/0/folders/1vHexwLSdD92maoKNlvw9zQ0q0J59k5FD',
+    href: POPOLinks.StudentCouncilArchiveLink,
     icon: '/home/record.png',
   },
   { text: '동아리소개', href: '/club', icon: '/home/club.png' },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
   {
     text: '배달업체',
-    href: 'https://www.postechdorm.com/delivery',
+    href: POPOLinks.PostechDeliveryLink,
     icon: '/home/delivery.png',
   },
 ];

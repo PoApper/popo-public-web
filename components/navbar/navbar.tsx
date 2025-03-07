@@ -2,11 +2,7 @@ import styled from 'styled-components';
 import { Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
 import Link from 'next/link';
 import MenuItemUser from './menu.item.user';
-
-const StudentCouncilArchiveLink =
-  'https://drive.google.com/drive/u/0/folders/1vHexwLSdD92maoKNlvw9zQ0q0J59k5FD';
-const InpostackLink = 'http://inpostack.poapper.club/';
-const PostechDeliveryLink = 'http://delivery.postech.ac.kr/';
+import { POPOLinks } from '@/components/common/popo-links';
 
 const Navbar = () => {
   return (
@@ -116,7 +112,7 @@ const MobileNav = () => {
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
-                <a href={StudentCouncilArchiveLink} target="_blank">
+                <a href={POPOLinks.StudentCouncilArchiveLink} target="_blank">
                   총학생회 기록물관리기관 <Icon name="external" />
                 </a>
               </Dropdown.Item>
@@ -139,12 +135,12 @@ const MobileNav = () => {
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item disabled>
-                <a href={InpostackLink} target={'_blank'}>
+                <a href={POPOLinks.InpostackLink} target={'_blank'}>
                   인포스택 <Icon name="external" />
                 </a>
               </Dropdown.Item>
               <Dropdown.Item>
-                <a href={PostechDeliveryLink} target={'_blank'}>
+                <a href={POPOLinks.PostechDeliveryLink} target={'_blank'}>
                   배달업체 <Icon name="external" />
                 </a>
               </Dropdown.Item>
@@ -211,7 +207,7 @@ const DesktopNav = () => {
           <Dropdown.Item
             text={'총학생회 기록물관리기관'}
             target="_blank"
-            href={StudentCouncilArchiveLink}
+            href={POPOLinks.StudentCouncilArchiveLink}
           />
         </Dropdown.Menu>
       </Dropdown>
@@ -235,7 +231,7 @@ const DesktopNav = () => {
           </Dropdown.Item>
           <Dropdown.Item
             text={'배달업체'}
-            href={'http://delivery.postech.ac.kr/'}
+            href={POPOLinks.PostechDeliveryLink}
             target={'_blank'}
           />
         </Dropdown.Menu>
