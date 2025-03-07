@@ -134,11 +134,6 @@ const MobileNav = () => {
                   생활백서
                 </LinkWithStyle>
               </Dropdown.Item>
-              <Dropdown.Item disabled>
-                <a href={POPOLinks.InpostackLink} target={'_blank'}>
-                  인포스택 <Icon name="external" />
-                </a>
-              </Dropdown.Item>
               <Dropdown.Item>
                 <a href={POPOLinks.PostechDeliveryLink} target={'_blank'}>
                   배달업체 <Icon name="external" />
