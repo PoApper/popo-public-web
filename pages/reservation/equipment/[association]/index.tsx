@@ -100,7 +100,14 @@ const EquipAssociationPage: React.FunctionComponent<{
                 예약금 납부 후, 카카오톡 채널에 입장하여{' '}
                 <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
               </li>
-              <strong>카카오톡 채널 링크 :</strong> {dongyeonContact}
+              <strong>카카오톡 채널 링크 :</strong>
+              <a
+                href={dongyeonContact}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {dongyeonContact}
+              </a>
               <br />
               <em>예시</em>
               <br />
