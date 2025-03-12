@@ -83,18 +83,58 @@ const EquipAssociationPage: React.FunctionComponent<{
         <Grid.Column width={6}>
           <EquipListTable equipments={sortedEquipList} />
           {association == 'dongyeon' ? (
-            <p>
-              1. 물품 대여는 예약 신청 - 입금 - 입금 확인 후 가능합니다. <br />
-              2. 예약금은 최소한 대여일 전날 입금 바랍니다. <br />
-              3. 예약비는 {dongyeonBank} 계좌로 입금 바랍니다. <br />
-              4. 입금자명은 예약자명과 같게 해주세요. <br />
-              5. 장비 분실 및 예약 시간을 어길시 책임을 물을 수 있습니다. <br />
-              6. 대여시간은 {dongyeonServiceTime} 입니다. 그 외 시간의 대여와
-              반납은 어렵습니다. <br />
-              7. 예약한 장비는 동아리 연합회 사무실(학생회관 301호)에서 수령할
-              수 있습니다. <br />
-              8. 기타 문의는 {dongyeonContact} 연락주세요. <br />
-            </p>
+            <ul>
+              <li>
+                물품 대여 순서 :{' '}
+                <strong>
+                  POPO 신청&입금 - 카카오톡 채널 입장 - 승인 - 대여&반납
+                </strong>
+              </li>
+              <li>
+                예약비 입금 계좌 :
+                <strong> 부산은행 1122244813601 (안강현)</strong>
+                <br />
+                <em>*입금자명은 예약자명과 동일하게 해주세요.</em>
+              </li>
+              <br />
+              <li>
+                예약금 납부 후, 카카오톡 채널에 입장하여{' '}
+                <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
+              </li>
+              <strong>카카오톡 채널 링크 :</strong>{' '}
+              <a
+                href="http://pf.kakao.com/_qASbn/chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'blue', textDecoration: 'underline' }}
+              >
+                http://pf.kakao.com/_qASbn/chat
+              </a>
+              <br />
+              <em>예시</em>
+              <br />
+              정종민
+              <br />
+              3월 10일 월요일
+              <br />
+              메인스피커1 / 오디오 인터페이스 / 유선 보컬 마이크 1~3
+              <br />
+              <br />
+              <li>
+                대여/반납 시간 : <strong>월~금 / 12:30~13:30</strong>
+                <br />
+                <em>*그 외 시간에 대여와 반납은 어렵습니다.</em>
+              </li>
+              <li>
+                수령 장소 : <strong>동아리연합회 사무실(학생회관 301호)</strong>
+              </li>
+              <li>
+                <strong style={{ color: 'red' }}>
+                  장비 분실 및 반납 시간을 어길 시 책임을 물을 수 있습니다.
+                </strong>
+              </li>
+              <li>문의 : (연락처)</li>
+            </ul>
           ) : (
             <p style={{ marginTop: '10px' }}>
               장비를 클릭하면 장비 사진을 볼 수 있습니다! 🖼️
