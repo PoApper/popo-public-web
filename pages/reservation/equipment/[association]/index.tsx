@@ -91,8 +91,7 @@ const EquipAssociationPage: React.FunctionComponent<{
                 </strong>
               </li>
               <li>
-                예약비 입금 계좌 :
-                <strong> 부산은행 1122244813601 (안강현)</strong>
+                예약비 입금 계좌 :<strong> {dongyeonBank}</strong>
                 <br />
                 <em>*입금자명은 예약자명과 동일하게 해주세요.</em>
               </li>
@@ -101,15 +100,7 @@ const EquipAssociationPage: React.FunctionComponent<{
                 예약금 납부 후, 카카오톡 채널에 입장하여{' '}
                 <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
               </li>
-              <strong>카카오톡 채널 링크 :</strong>{' '}
-              <a
-                href="http://pf.kakao.com/_qASbn/chat"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: 'blue', textDecoration: 'underline' }}
-              >
-                http://pf.kakao.com/_qASbn/chat
-              </a>
+              <strong>카카오톡 채널 링크 :</strong> {dongyeonContact}
               <br />
               <em>예시</em>
               <br />
@@ -121,7 +112,7 @@ const EquipAssociationPage: React.FunctionComponent<{
               <br />
               <br />
               <li>
-                대여/반납 시간 : <strong>월~금 / 12:30~13:30</strong>
+                대여/반납 시간 :<strong> {dongyeonServiceTime}</strong>
                 <br />
                 <em>*그 외 시간에 대여와 반납은 어렵습니다.</em>
               </li>
@@ -133,7 +124,7 @@ const EquipAssociationPage: React.FunctionComponent<{
                   장비 분실 및 반납 시간을 어길 시 책임을 물을 수 있습니다.
                 </strong>
               </li>
-              <li>문의 : (연락처)</li>
+              <li>문의 : (연락처) </li>
             </ul>
           ) : (
             <p style={{ marginTop: '10px' }}>
