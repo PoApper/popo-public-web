@@ -100,13 +100,14 @@ const EquipAssociationPage: React.FunctionComponent<{
                 예약금 납부 후, 카카오톡 채널에 입장하여{' '}
                 <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
               </li>
-              <strong>카카오톡 채널 링크 :</strong>
+              <strong>카카오톡 채널 링크 : </strong>
+              {/* TODO: 동연 카카오톡 채널 관리자페이지에서 변경할 수 있게 변경 */}
               <a
-                href={dongyeonContact}
+                href="http://pf.kakao.com/_qASbn/chat"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {dongyeonContact}
+                동아리연합회 2025
               </a>
               <br />
               <em>예시</em>
@@ -131,7 +132,7 @@ const EquipAssociationPage: React.FunctionComponent<{
                   장비 분실 및 반납 시간을 어길 시 책임을 물을 수 있습니다.
                 </strong>
               </li>
-              <li>문의 : (연락처) </li>
+              <li>문의 : {dongyeonContact} </li>
             </ul>
           ) : (
             <p style={{ marginTop: '10px' }}>
