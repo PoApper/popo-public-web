@@ -25,10 +25,6 @@ export function isOnOpeningHours(
   start_time: string, // hh:mm
   end_time: string, // hh:mm
 ) {
-  console.log(opening_hours);
-  console.log(weekday);
-  console.log(start_time);
-  console.log(end_time);
   const openingHour = JSON.parse(opening_hours);
 
   if (openingHour['Everyday']) {
