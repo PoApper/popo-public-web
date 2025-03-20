@@ -37,8 +37,8 @@ export function isOnOpeningHours(
   const hours = openingHour[weekday].split(',');
 
   for (const hour of hours) {
-    // 다음과 같이 &가 있어 시간이 나눠지는 상황도 고려해야 함 "Sunday":"00:00-10:00 & 13:00~24:00"
-    const openTimesPerDay = hour.split('&');
+    // 다음과 같이 &가 있어 시간이 나눠지는 상황도 고려해야 함 "Sunday":"00:00-10:00 & 13:00-24:00"
+    const openTimesPerDay = hour.split(' & ');
     for (const openTime of openTimesPerDay) {
       const open_start = openTime.split('-')[0];
       const open_end = openTime.split('-')[1];
