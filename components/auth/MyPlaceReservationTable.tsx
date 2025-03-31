@@ -19,9 +19,9 @@ const MyPlaceReservationTable = () => {
     PoPoAxios.get('/reservation-place/user', {
       params: {
         skip,
-        take: itemsPerPage
+        take: itemsPerPage,
       },
-      withCredentials: true
+      withCredentials: true,
     })
       .then((res) => {
         setReserveList(res.data.items);
@@ -114,7 +114,9 @@ const MyPlaceReservationTable = () => {
           })}
         </Table.Body>
       </Table>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}
+      >
         <Pagination
           activePage={currentPage}
           totalPages={totalPages}
