@@ -59,7 +59,7 @@ const MyPlaceReservationTable = () => {
           {reserve_list.map((reservation, idx) => {
             return (
               <Table.Row textAlign="center" key={reservation.uuid}>
-                <Table.Cell>{idx + 1}</Table.Cell>
+                <Table.Cell>{(currentPage - 1) * itemsPerPage + idx + 1}</Table.Cell>
 
                 <PlaceReservationDetailModal
                   key={reservation.uuid}
