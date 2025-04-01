@@ -59,7 +59,9 @@ const MyPlaceReservationTable = () => {
           {reserve_list.map((reservation, idx) => {
             return (
               <Table.Row textAlign="center" key={reservation.uuid}>
-                <Table.Cell>{(currentPage - 1) * itemsPerPage + idx + 1}</Table.Cell>
+                <Table.Cell>
+                  {(currentPage - 1) * itemsPerPage + idx + 1}
+                </Table.Cell>
 
                 <PlaceReservationDetailModal
                   key={reservation.uuid}
@@ -115,7 +117,12 @@ const MyPlaceReservationTable = () => {
         </Table.Body>
       </Table>
       <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '1rem',
+          marginBottom: '1rem',
+        }}
       >
         <Pagination
           activePage={currentPage}
