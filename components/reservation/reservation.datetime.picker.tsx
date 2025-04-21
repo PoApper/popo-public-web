@@ -10,6 +10,8 @@ const ReservationDatetimePicker = ({
   setDate,
   setStartTime,
   setEndTime,
+  timeIntervals,
+  isCinemaRoom,
 }: {
   date: any;
   startTime: any;
@@ -17,6 +19,8 @@ const ReservationDatetimePicker = ({
   setDate: any;
   setStartTime: any;
   setEndTime: any;
+  timeIntervals?: number;
+  isCinemaRoom?: boolean;
 }) => {
   const now: moment.Moment = roundUpByDuration(moment(), 30);
   const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
@@ -54,16 +58,24 @@ const ReservationDatetimePicker = ({
         <DatePicker
           showTimeSelect
           showTimeSelectOnly
-          timeIntervals={30}
+          timeIntervals={timeIntervals ?? 30}
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'hh:mm aa'}
           selected={startTime.toDate()}
-          minTime={date.toDate()}
-          maxTime={moment(date.format('YYYY-MM-DD') + 'T23:59').toDate()}
+          minTime={
+            isCinemaRoom
+              ? moment(date.format('YYYY-MM-DD') + 'T06:00').toDate()
+              : date.toDate()
+          }
+          maxTime={
+            isCinemaRoom
+              ? moment(date.format('YYYY-MM-DD') + 'T12:00').toDate()
+              : moment(date.format('YYYY-MM-DD') + 'T23:59').toDate()
+          }
           onChange={(startTime: Date | null) => {
             const newStartTime = moment(startTime);
             const newStartTimeNext30Min = moment(newStartTime).add(
-              30,
+              timeIntervals ?? 30,
               'minute',
             );
             setStartTime(newStartTime);
@@ -77,18 +89,29 @@ const ReservationDatetimePicker = ({
         <DatePicker
           showTimeSelect
           showTimeSelectOnly
-          timeIntervals={30}
+          disabled={isCinemaRoom}
+          timeIntervals={timeIntervals ?? 30}
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'hh:mm aa'}
           selected={endTime.toDate()}
-          minTime={moment(startTime).add(30, 'minute').toDate()}
+          minTime={
+            isCinemaRoom
+              ? moment(date.format('YYYY-MM-DD') + 'T12:00').toDate()
+              : moment(startTime).add(30, 'minute').toDate()
+          }
           maxTime={
-            endTime.format('HHmm') === '0000'
-              ? moment(date.format('YYYY-MM-DD') + 'T00:00').toDate() // edge-case
-              : moment(date.format('YYYY-MM-DD') + 'T23:59').toDate()
+            isCinemaRoom
+              ? moment(date.format('YYYY-MM-DD') + 'T15:00').toDate()
+              : endTime.format('HHmm') === '0000'
+                ? moment(date.format('YYYY-MM-DD') + 'T00:00').toDate() // edge-case
+                : moment(date.format('YYYY-MM-DD') + 'T23:59').toDate()
           }
           onChange={(endTime: Date | null) => {
-            setEndTime(moment(endTime));
+            if (isCinemaRoom) {
+              return;
+            } else {
+              setEndTime(moment(endTime));
+            }
           }}
         />
       </div>
