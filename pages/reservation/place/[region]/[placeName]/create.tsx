@@ -174,6 +174,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             setDate={setDate}
             setStartTime={setStartTime}
             setEndTime={setEndTime}
+            timeIntervals={placeInfo.name.includes('시네마 룸') ? 180 : 30}
           />
         </Form.Group>
 

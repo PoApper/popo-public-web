@@ -10,6 +10,7 @@ const ReservationDatetimePicker = ({
   setDate,
   setStartTime,
   setEndTime,
+  timeIntervals,
 }: {
   date: any;
   startTime: any;
@@ -17,6 +18,7 @@ const ReservationDatetimePicker = ({
   setDate: any;
   setStartTime: any;
   setEndTime: any;
+  timeIntervals?: number;
 }) => {
   const now: moment.Moment = roundUpByDuration(moment(), 30);
   const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
@@ -54,7 +56,7 @@ const ReservationDatetimePicker = ({
         <DatePicker
           showTimeSelect
           showTimeSelectOnly
-          timeIntervals={30}
+          timeIntervals={timeIntervals ?? 30}
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'hh:mm aa'}
           selected={startTime.toDate()}
