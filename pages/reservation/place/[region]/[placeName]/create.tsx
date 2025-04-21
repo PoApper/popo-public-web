@@ -198,6 +198,17 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
           </div>
         </div>
 
+        {placeInfo.name.includes('시네마 룸') ? null : (
+          <Message>
+            <Message.Header>RC 시네마 룸</Message.Header>
+            RC 시네마 룸의 예약은
+            <br />
+            06:00 ~ 09:00 / 09:00 ~ 12:00 / 12:00 ~ 15:00
+            <br />
+            3가지 시간대만 가능 합니다.
+          </Message>
+        )}
+
         <Message>
           <Message.Header>
             예약 장소와 예약 시간을 꼭 확인해주세요!
