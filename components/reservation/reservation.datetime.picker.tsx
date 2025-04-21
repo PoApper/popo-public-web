@@ -65,7 +65,7 @@ const ReservationDatetimePicker = ({
           onChange={(startTime: Date | null) => {
             const newStartTime = moment(startTime);
             const newStartTimeNext30Min = moment(newStartTime).add(
-              30,
+              timeIntervals ?? 30,
               'minute',
             );
             setStartTime(newStartTime);

@@ -37,12 +37,15 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
 
-  const now: moment.Moment = roundUpByDuration(moment(), 30);
-  const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
+  const timeIntervals = placeInfo.name.includes('시네마 룸') ? 180 : 30;
+
+  const now: moment.Moment = roundUpByDuration(moment(), timeIntervals);
 
   const [date, setDate] = useState<moment.Moment>(moment(selectedDate)); // YYYY-MM-DD
   const [startTime, setStartTime] = useState<moment.Moment>(now); // HHmm
-  const [endTime, setEndTime] = useState<moment.Moment>(nowNext30Min); // HHmm
+  const [endTime, setEndTime] = useState<moment.Moment>(
+    moment(now).add(timeIntervals, 'minute'),
+  ); // HHmm
 
   const isPossible = isOnOpeningHours(
     placeInfo.opening_hours,
@@ -174,7 +177,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             setDate={setDate}
             setStartTime={setStartTime}
             setEndTime={setEndTime}
-            timeIntervals={placeInfo.name.includes('시네마 룸') ? 180 : 30}
+            timeIntervals={timeIntervals}
           />
         </Form.Group>
 
