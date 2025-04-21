@@ -79,7 +79,7 @@ const ReservationDatetimePicker = ({
         <DatePicker
           showTimeSelect
           showTimeSelectOnly
-          timeIntervals={30}
+          timeIntervals={timeIntervals ?? 30}
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'hh:mm aa'}
           selected={endTime.toDate()}
