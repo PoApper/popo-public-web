@@ -178,6 +178,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             setStartTime={setStartTime}
             setEndTime={setEndTime}
             timeIntervals={timeIntervals}
+            isCinemaRoom={placeInfo.name.includes('시네마 룸')}
           />
         </Form.Group>
 
@@ -198,16 +199,15 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
           </div>
         </div>
 
-        {placeInfo.name.includes('시네마 룸') ? null : (
+        {placeInfo.name.includes('시네마 룸') ? (
           <Message>
-            <Message.Header>RC 시네마 룸</Message.Header>
             RC 시네마 룸의 예약은
             <br />
             06:00 ~ 09:00 / 09:00 ~ 12:00 / 12:00 ~ 15:00
             <br />
             3가지 시간대만 가능 합니다.
           </Message>
-        )}
+        ) : null}
 
         <Message>
           <Message.Header>
