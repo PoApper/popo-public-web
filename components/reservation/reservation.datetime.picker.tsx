@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -22,8 +22,16 @@ const ReservationDatetimePicker = ({
   timeIntervals?: number;
   isCinemaRoom?: boolean;
 }) => {
-  const now: moment.Moment = roundUpByDuration(moment(), 30);
+  const now: moment.Moment = roundUpByDuration(moment().tz('Asia/Seoul'), 30);
   const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
+
+  const CinemaExcludeTimes = [
+    moment(date.format('YYYY-MM-DD') + 'T03:00').toDate(),
+    moment(date.format('YYYY-MM-DD') + 'T06:00').toDate(),
+    moment(date.format('YYYY-MM-DD') + 'T09:00').toDate(),
+    moment(date.format('YYYY-MM-DD') + 'T12:00').toDate(),
+    moment(date.format('YYYY-MM-DD') + 'T15:00').toDate(),
+  ];
 
   return (
     <>
@@ -46,7 +54,11 @@ const ReservationDatetimePicker = ({
               } else {
                 setDate(moment(targetDate + 'T00:00'));
                 setStartTime(moment(targetDate + 'T00:00'));
-                setEndTime(moment(targetDate + 'T00:30'));
+                if (isCinemaRoom) {
+                  setEndTime(moment(targetDate + 'T03:00'));
+                } else {
+                  setEndTime(moment(targetDate + 'T00:30'));
+                }
               }
             }
           }}
@@ -62,14 +74,11 @@ const ReservationDatetimePicker = ({
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'hh:mm aa'}
           selected={startTime.toDate()}
-          minTime={
-            isCinemaRoom
-              ? moment(date.format('YYYY-MM-DD') + 'T06:00').toDate()
-              : date.toDate()
-          }
+          excludeTimes={isCinemaRoom ? CinemaExcludeTimes : []}
+          minTime={isCinemaRoom ? date.toDate() : date.toDate()}
           maxTime={
             isCinemaRoom
-              ? moment(date.format('YYYY-MM-DD') + 'T12:00').toDate()
+              ? moment(date.format('YYYY-MM-DD') + 'T21:00').toDate()
               : moment(date.format('YYYY-MM-DD') + 'T23:59').toDate()
           }
           onChange={(startTime: Date | null) => {
