@@ -97,7 +97,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 
   return (
     <Layout>
-      <h2>장비 에약: {OWNER_NAME_MAP[association]}</h2>
+      <h2>장비 예약: {OWNER_NAME_MAP[association]}</h2>
       <Form>
         <Form.Input
           required
