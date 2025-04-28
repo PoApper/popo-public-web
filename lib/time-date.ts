@@ -21,6 +21,17 @@ export function hourDiff(
   return duration.asHours();
 }
 
+export function minuteDiff(
+  startTime: string | moment.Moment,
+  endTime: string | moment.Moment,
+): number {
+  const startMoment = moment(startTime, 'HHmm');
+  const endMoment = moment(endTime, 'HHmm');
+  const duration = moment.duration(endMoment.diff(startMoment));
+
+  return duration.asMinutes();
+}
+
 export function roundUpByDuration(
   date: moment.Moment,
   durationMinutes: number = 30,

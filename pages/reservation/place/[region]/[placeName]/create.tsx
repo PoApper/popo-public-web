@@ -9,7 +9,7 @@ import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IUser } from '@/types/user.interface';
 import { isOnOpeningHours } from '@/lib/opening_hours';
-import { hourDiff, roundUpByDuration } from '@/lib/time-date';
+import { minuteDiff, roundUpByDuration } from '@/lib/time-date';
 import ReservationDatetimePicker from '@/components/reservation/reservation.datetime.picker';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
@@ -203,7 +203,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
           <Message>
             RC 시네마 룸의 예약은
             <br />
-            06:00 ~ 09:00 / 09:00 ~ 12:00 / 12:00 ~ 15:00
+            18:00 ~ 21:00 / 21:00 ~ 24:00 / 00:00 ~ 03:00
             <br />
             3가지 시간대만 가능 합니다.
           </Message>
@@ -218,7 +218,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
               // @ts-ignore
               RegionKorNameMapping[placeInfo.region]
             }{' '}
-            {placeInfo.name}, {hourDiff(startTime, endTime)}시간 예약입니다.
+            {placeInfo.name}, {minuteDiff(startTime, endTime)}분 예약입니다.
           </p>
         </Message>
 
