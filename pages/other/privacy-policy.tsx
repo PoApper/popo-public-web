@@ -221,9 +221,9 @@ const PrivacyPolicyPage = () => {
       <p>
         ▶ 개인정보 보호책임자
         <br />
-        성명 : 고태영
+        성명 : 박준기
         <br />
-        직책 : 제38대 총학생회 회장
+        직책 : 제39대 총학생회 회장
         <br />
         연락처 : 054-279-2621, <a href={`mailto:${STUEmail}`}>{STUEmail}</a>,
         <br />※ 개인정보 보호 담당부서로 연결됩니다.
@@ -233,7 +233,7 @@ const PrivacyPolicyPage = () => {
         <br />
         부서명 : 총학생회
         <br />
-        담당자 : 고태영
+        담당자 : 박준기
         <br />
         연락처 : 054-279-2621, <a href={`mailto:${STUEmail}`}>{STUEmail}</a>,
       </p>
