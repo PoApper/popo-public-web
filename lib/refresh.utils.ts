@@ -6,7 +6,9 @@ let isRefreshing = false;
 // 여러 컴포넌트가 각각 리프레시를 요청하면 백엔드에서 race condition으로 인해 오류가 발생할 수 있음
 // 이를 방지하기 위해 한 번의 리프레시로 모든 컴포넌트의 요청을 처리하도록 함
 let failedQueue: Array<{
+  // eslint-disable-next-line
   resolve: (value?: any) => void;
+  // eslint-disable-next-line
   reject: (error: any) => void;
   originalRequest: any;
 }> = [];
@@ -28,7 +30,9 @@ export const setIsRefreshing = (value: boolean) => {
 };
 
 export const addToFailedQueue = (
+  // eslint-disable-next-line
   resolve: (value?: any) => void,
+  // eslint-disable-next-line
   reject: (error: any) => void,
   originalRequest: any,
 ) => {
