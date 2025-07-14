@@ -36,11 +36,17 @@ export const addToFailedQueue = (
   reject: (error: any) => void,
   originalRequest: any,
 ) => {
+  console.debug('addToFailedQueue start');
+  console.debug('failedQueue', failedQueue);
   failedQueue.push({ resolve, reject, originalRequest });
+  console.debug('addToFailedQueue end');
+  console.debug('failedQueue', failedQueue);
 };
 
 export const refreshAccessToken = async () => {
   try {
+    console.debug('refreshAccessToken start');
+
     const response = await PoPoAxios.post(
       '/auth/refresh',
       {},

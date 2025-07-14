@@ -34,22 +34,28 @@ PoPoAxios.interceptors.response.use(
       error.response?.data?.error === 'AccessTokenExpired' &&
       !originalRequest._retry
     ) {
+      console.debug('엑세스 토큰 만료 에러 받음');
       if (getIsRefreshing()) {
+        console.debug('이미 refresh 중이면 큐에 추가');
         // 이미 refresh 중이면 큐에 추가
         return new Promise((resolve, reject) => {
           addToFailedQueue(resolve, reject, originalRequest);
         });
       }
 
+      console.debug('refresh 중이 아니면 큐에 추가 안함');
       originalRequest._retry = true;
       setIsRefreshing(true);
 
       try {
+        console.debug('refresh 토큰 재발급 시작');
         // refresh 토큰 재발급
         await refreshAccessToken();
         processQueue(null);
+        console.debug('refresh 토큰 재발급 완료');
         return PoPoAxios(originalRequest);
       } catch (refreshError) {
+        console.debug('refresh 토큰 재발급 실패');
         processQueue(refreshError);
         // refresh 실패 시 로그아웃 처리
         if (typeof window !== 'undefined') {
@@ -57,9 +63,11 @@ PoPoAxios.interceptors.response.use(
         }
         return Promise.reject(refreshError);
       } finally {
+        console.debug('refresh 토큰 재발급 로직 finally');
         setIsRefreshing(false);
       }
     }
+    console.debug('refresh 상황이 아닌 경우');
     // refresh 상황이 아닌 경우
     return Promise.reject(error);
   },
