@@ -41,16 +41,18 @@ NODE_TLS_REJECT_UNAUTHORIZED=0
 
 ## 위 방법을 시도했을 때도 안된다면
 
-2025.07.15 일자 수정  
+2025.07.15 일자 수정
 
 `local-certs` 폴더에서 아래 명령어를 실행
 
 ```sh
 $ mkcert -key-file localhost-key.pem -cert-file localhost.pem localhost 127.0.0.1 ::1
 ```
+
 프론트에서도 동일한 명령어를 실행해야 한다.
 
 해당 명령어는 다음을 모두 커버한다:
+
 - localhost (도메인으로 요청 시)
 - 127.0.0.1 (IPv4로 요청 시)
 - ::1 (IPv6로 요청 시)
