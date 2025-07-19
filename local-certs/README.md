@@ -27,7 +27,7 @@ Sudo password:
 
 ENV에 요 값을 아래와 같이 세팅해야 한다.
 
-```
+```bash
 NODE_TLS_REJECT_UNAUTHORIZED=0
 ```
 
