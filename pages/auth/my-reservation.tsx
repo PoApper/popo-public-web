@@ -11,7 +11,7 @@ const MyInfoPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true }).catch(() => {
+    PoPoAxios.get('/auth/verifyToken').catch(() => {
       alert('로그인 후 조회할 수 있습니다.');
       router.push('/auth/login');
     });

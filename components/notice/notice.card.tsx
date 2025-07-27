@@ -26,9 +26,6 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
 
       const status = await PoPoAxios.get(
         `/noticeLike/status/${user_id}/${notice_id}`,
-        {
-          withCredentials: true,
-        },
       );
       setIsLike(status.data);
     };
@@ -50,9 +47,7 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
     }
 
     if (isLike) {
-      await PoPoAxios.delete(`/noticeLike/${user_id}/${notice_id}`, {
-        withCredentials: true,
-      })
+      await PoPoAxios.delete(`/noticeLike/${user_id}/${notice_id}`)
         .then(() => setLikeCount(likeCount - 1))
         .catch((err) => {
           const errMsg = err.response.data.message;
@@ -60,11 +55,10 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
           console.log(err);
         });
     } else {
-      await PoPoAxios.post(
-        '/noticeLike',
-        { user_id: user_id, notice_id: notice_id },
-        { withCredentials: true },
-      )
+      await PoPoAxios.post('/noticeLike', {
+        user_id: user_id,
+        notice_id: notice_id,
+      })
         .then(() => setLikeCount(likeCount + 1))
         .catch((err) => {
           const errMsg = err.response.data.message;

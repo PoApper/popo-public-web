@@ -19,7 +19,6 @@ const MyEquipReservationTable = () => {
         skip,
         take: itemsPerPage,
       },
-      withCredentials: true,
     })
       .then((res) => {
         setReserveList(res.data.items);

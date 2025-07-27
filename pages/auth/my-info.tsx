@@ -30,7 +30,7 @@ const MyInfoPage = () => {
     passwordAgain.length > 0 && password !== passwordAgain;
 
   useEffect(() => {
-    PoPoAxios.get('/auth/myInfo', { withCredentials: true })
+    PoPoAxios.get('/auth/myInfo')
       .then((res) => setMyInfo(res.data))
       .catch(() => {
         alert('로그인 후 조회할 수 있습니다.');
@@ -40,13 +40,9 @@ const MyInfoPage = () => {
 
   async function submitNewPassword() {
     try {
-      await PoPoAxios.post(
-        '/auth/password/update',
-        {
-          password: password,
-        },
-        { withCredentials: true },
-      );
+      await PoPoAxios.post('/auth/password/update', {
+        password: password,
+      });
       alert('비밀번호 변경에 성공했습니다!');
       window.location.reload();
     } catch (err: any) {

@@ -8,11 +8,9 @@ const WhiteBookIndexPage = () => {
   const [whitebookList, setWhitebookList] = useState([]);
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
+    PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        PoPoAxios.get('/whitebook/with-login?orderBy=click_count', {
-          withCredentials: true,
-        })
+        PoPoAxios.get('/whitebook/with-login?orderBy=click_count')
           .then((res) => setWhitebookList(res.data))
           .catch(() => console.log('생활백서를 불러오는데 실패했습니다.'));
       })

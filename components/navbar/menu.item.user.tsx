@@ -11,18 +11,14 @@ const MenuItemUser = () => {
   });
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', {
-      withCredentials: true,
-    })
+    PoPoAxios.get('/auth/verifyToken')
       .then((res) => setUser(res.data))
       .catch(() => setUser(null)); // Do noting!
   }, []);
 
   const handleLogout = async () => {
     try {
-      await PoPoAxios.get('/auth/logout', {
-        withCredentials: true,
-      });
+      await PoPoAxios.get('/auth/logout');
       await router.push('/');
       window.location.reload();
     } catch (err) {

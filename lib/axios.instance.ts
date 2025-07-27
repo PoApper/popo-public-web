@@ -20,6 +20,7 @@ export const popoApiUrl =
 
 export const PoPoAxios = axios.create({
   baseURL: popoApiUrl as string,
+  withCredentials: true,
 });
 
 // 엑세스 토큰 만료 시 refresh 후 재시도 로직
