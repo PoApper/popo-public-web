@@ -41,7 +41,7 @@ export const addToFailedQueue = (
 
 export const refreshAccessToken = async () => {
   try {
-    const response = await PoPoAxios.post('/auth/refresh');
+    const response = await PoPoAxios.post('/auth/refresh', {});
     if (response.status !== 200 && response.status !== 201) {
       throw new Error('Refresh token failed');
     }
