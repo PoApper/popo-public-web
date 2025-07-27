@@ -8,7 +8,7 @@ const DeleteConfirmModal = (props: any) => {
   const [open, setOpen] = useState(props.open);
 
   const handleDelete = async () => {
-    PoPoAxios.delete(`/${deleteURI}`, { withCredentials: true })
+    PoPoAxios.delete(`/${deleteURI}`)
       .then(() => {
         window.location.reload();
       })

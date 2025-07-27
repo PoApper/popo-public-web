@@ -13,7 +13,7 @@ const LoginPage = () => {
   const [password, setPW] = useState<string>('');
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
+    PoPoAxios.get('/auth/verifyToken')
       .then(() => {
         alert('이미 로그인 되었습니다.');
         router.push('/');
@@ -27,7 +27,7 @@ const LoginPage = () => {
       password: password,
     };
 
-    PoPoAxios.post('/auth/login', body, { withCredentials: true })
+    PoPoAxios.post('/auth/login', body)
       .then(() => {
         router.push('/');
       })
