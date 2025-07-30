@@ -52,11 +52,13 @@ const MyInfoPage = () => {
   }
 
   async function withdrawMembership() {
-    const isConfirmed = confirm('정말로 회원 탈퇴하시겠습니까?');
+    const isConfirmed = confirm(
+      '회원 탈퇴 시 모든 정보가 삭제되며 복구되지 않습니다.',
+    );
 
     if (isConfirmed) {
       try {
-        await PoPoAxios.delete('/user/me', { withCredentials: true });
+        await PoPoAxios.delete('/user/me');
         alert('회원 탈퇴가 완료되었습니다.');
         router.push('/');
       } catch (err: any) {
@@ -138,7 +140,6 @@ const MyInfoPage = () => {
           <Segment>
             <h4>회원 탈퇴</h4>
             <Container>
-              <p>회원 탈퇴 시 모든 정보가 삭제되며 복구할 수 없습니다.</p>
               <Form.Button
                 negative
                 size="mini"
