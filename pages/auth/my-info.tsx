@@ -51,6 +51,25 @@ const MyInfoPage = () => {
     }
   }
 
+  async function withdrawMembership() {
+    const isConfirmed = confirm(
+      '회원 탈퇴 시 모든 정보가 삭제되며 복구되지 않습니다.',
+    );
+
+    if (isConfirmed) {
+      try {
+        await PoPoAxios.delete('/user/me');
+        alert('회원 탈퇴가 완료되었습니다.');
+        router.push('/');
+      } catch (err: any) {
+        const response = err.response;
+        alert(
+          `회원 탈퇴에 실패했습니다. 😢\n"${response?.data?.message || '오류가 발생했습니다.'}"`,
+        );
+      }
+    }
+  }
+
   return (
     <Layout>
       <Container
@@ -115,6 +134,20 @@ const MyInfoPage = () => {
             <h4>가입일</h4>
             <Container>
               {moment(myInfo.createdAt).format('YYYY.MM.DD HH:mm')}
+            </Container>
+          </Segment>
+
+          <Segment>
+            <h4>회원 탈퇴</h4>
+            <Container>
+              <Form.Button
+                negative
+                size="mini"
+                onClick={withdrawMembership}
+                style={{ marginTop: '10px' }}
+              >
+                회원 탈퇴
+              </Form.Button>
             </Container>
           </Segment>
         </Segment.Group>
