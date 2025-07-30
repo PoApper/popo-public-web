@@ -22,7 +22,7 @@ const RegisterPage = () => {
   const [userType, setUserType] = useState<string>('');
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
+    PoPoAxios.get('/auth/verifyToken')
       .then(() => {
         alert('이미 로그인 되었습니다.');
         router.push('/');
@@ -52,7 +52,7 @@ const RegisterPage = () => {
       userType: userType,
     };
 
-    PoPoAxios.post('/auth/signIn', body, { withCredentials: true })
+    PoPoAxios.post('/auth/signIn', body)
       .then(() => {
         alert(
           '회원가입에 성공했습니다! 😁\nPOPO 가입 메일을 확인해주세요! 📧\n(1분 정도 지연 될 수 있습니다.)',

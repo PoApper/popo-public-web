@@ -48,7 +48,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 
   useEffect(() => {
     // 로그인 확인
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
+    PoPoAxios.get('/auth/verifyToken')
       .then((res) => {
         setUserInfo(res.data);
       })
@@ -72,20 +72,16 @@ const EquipReservationCreatePage: React.FunctionComponent<{
       return;
     }
 
-    PoPoAxios.post(
-      '/reservation-equip',
-      {
-        equipments: selectedEquipments,
-        owner: association,
-        phone: phone,
-        title: title,
-        description: description,
-        date: date.format('YYYYMMDD'), // YYYYMMDD
-        start_time: startTime.format('HHmm'), // HHmm
-        end_time: endTime.format('HHmm'), // HHmm
-      },
-      { withCredentials: true },
-    )
+    PoPoAxios.post('/reservation-equip', {
+      equipments: selectedEquipments,
+      owner: association,
+      phone: phone,
+      title: title,
+      description: description,
+      date: date.format('YYYYMMDD'), // YYYYMMDD
+      start_time: startTime.format('HHmm'), // HHmm
+      end_time: endTime.format('HHmm'), // HHmm
+    })
       .then(() => {
         alert('예약을 생성했습니다!');
         router.push('/auth/my-reservation');

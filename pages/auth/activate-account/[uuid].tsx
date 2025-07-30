@@ -14,7 +14,7 @@ const ActivateAccountPage = () => {
     if (!userUuid) return;
 
     setIsLoading(true);
-    PoPoAxios.put(`/auth/activate/${userUuid}`, { withCredentials: true })
+    PoPoAxios.put(`/auth/activate/${userUuid}`)
       .then(() => {
         setIsLoading(false);
         setIsValidAccount(true);

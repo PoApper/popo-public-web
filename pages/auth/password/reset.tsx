@@ -12,7 +12,7 @@ const PasswordResetPage = () => {
   const [email, setEmail] = useState<string>('');
 
   useEffect(() => {
-    PoPoAxios.get('/auth/verifyToken', { withCredentials: true })
+    PoPoAxios.get('/auth/verifyToken')
       .then(() => {
         alert('이미 로그인 되었습니다.');
         router.push('/');
