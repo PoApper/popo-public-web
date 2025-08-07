@@ -98,7 +98,7 @@ const MyInfoPage = () => {
                   label="Password"
                   placeholder="8자리 이상 16자리 이하"
                   onChange={(e) => setPW(e.target.value)}
-                  error={isValidPassword ? '비밃번호가 너무 짧습니다.' : null}
+                  error={isValidPassword ? '비밀번호가 너무 짧습니다.' : null}
                 />
 
                 <Form.Input

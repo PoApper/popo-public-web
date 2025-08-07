@@ -33,7 +33,7 @@ const ActivateAccountPage = () => {
         <div>계정 정보를 확인하고 있습니다...</div>
       ) : isValidAccount ? (
         <div>
-          <h2>계정이 활성 되었습니다!</h2>
+          <h2>계정이 활성화되었습니다!</h2>
           <p>
             POSTECH 총학생회에서 운영하는 POPO는 학생 복지와 편의를 제공합니다.
             <br />
@@ -46,7 +46,7 @@ const ActivateAccountPage = () => {
         </div>
       ) : (
         <div>
-          <h2>올바르지 않는 접근입니다.</h2>
+          <h2>올바르지 않은 접근입니다.</h2>
         </div>
       )}
     </div>
