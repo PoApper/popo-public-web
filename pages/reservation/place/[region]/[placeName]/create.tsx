@@ -61,7 +61,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         setUserInfo(res.data);
       })
       .catch(() => {
-        alert('로그인 후 예약 할 수 있습니다.');
+        alert('로그인 후 예약할 수 있습니다.');
         router.push('/auth/login');
       });
     // 오늘 이후의 날짜를 선택했는지 확인
@@ -83,7 +83,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     }
 
     if (title.length == 1 || description.length == 1) {
-      alert('예약 설명이 너무 짤습니다.');
+      alert('예약 설명이 너무 짧습니다.');
       return;
     }
 

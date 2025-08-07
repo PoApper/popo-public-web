@@ -13,7 +13,7 @@ const MenuItemUser = () => {
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then((res) => setUser(res.data))
-      .catch(() => setUser(null)); // Do noting!
+      .catch(() => setUser(null)); // Do nothing!
   }, []);
 
   const handleLogout = async () => {

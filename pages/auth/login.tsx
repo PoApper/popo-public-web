@@ -15,7 +15,7 @@ const LoginPage = () => {
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        alert('이미 로그인 되었습니다.');
+        alert('이미 로그인되었습니다.');
         router.push('/');
       })
       .catch(() => {});
@@ -50,7 +50,7 @@ const LoginPage = () => {
           borderRadius: 8,
         }}
       >
-        <Message>POPO 가입 때 사용한 email을 통해 로그인 해주세요.</Message>
+        <Message>POPO 가입 때 사용한 email을 통해 로그인해주세요.</Message>
 
         <Form>
           <Form.Input
