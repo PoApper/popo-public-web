@@ -28,7 +28,7 @@ const PasswordResetPage = () => {
     PoPoAxios.post('/auth/password/reset', body)
       .then(() => {
         alert(
-          '비빌번호가 초기화 되었습니다. 이메일을 통해 신규 비빌먼호를 확인해주세요.',
+          '비밀번호가 초기화 되었습니다. 이메일을 통해 신규 비밀번호를 확인해주세요.',
         );
         router.push('/');
       })

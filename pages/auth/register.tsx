@@ -24,7 +24,7 @@ const RegisterPage = () => {
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        alert('이미 로그인 되었습니다.');
+        alert('이미 로그인되었습니다.');
         router.push('/');
       })
       .catch(() => {});
@@ -55,13 +55,13 @@ const RegisterPage = () => {
     PoPoAxios.post('/auth/signIn', body)
       .then(() => {
         alert(
-          '회원가입에 성공했습니다! 😁\nPOPO 가입 메일을 확인해주세요! 📧\n(1분 정도 지연 될 수 있습니다.)',
+          '회원가입에 성공했습니다! 😁\nPOPO 가입 메일을 확인해주세요! 📧\n(1분 정도 지연될 수 있습니다.)',
         );
         router.push('/auth/login');
       })
       .catch((err) => {
         const response = err.response;
-        alert(`회원가입에 실패했습니다. 😢\n""${response.data.message}"`);
+        alert(`회원가입에 실패했습니다. 😢\n"${response.data.message}"`);
       });
   }
 
@@ -83,7 +83,7 @@ const RegisterPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             error={isNotValidEmail ? '유효하지 않은 이메일입니다.' : null}
           />
-          <p>이 이메일로 인증메일이 발송됩니다!</p>
+          <p>이 이메일로 인증 메일이 발송됩니다!</p>
 
           <Form.Group widths={'equal'}>
             <Form.Input
