@@ -64,7 +64,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
         router.push(`/reservation/equipment/${association}`);
       }, 100);
     }
-  }, []);
+  }, [association, router, selectedDate]);
 
   function handleSubmit() {
     if (title.length == 1 || description.length == 1) {

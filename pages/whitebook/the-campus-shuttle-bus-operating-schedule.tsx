@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 import Layout from '@/components/layout';
 import { Table } from 'semantic-ui-react';
@@ -124,9 +125,11 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
 
       <h2>셔틀버스 정류장(Shuttle Bus Stop)</h2>
       <div>
-        <img
+        <Image
           src="/shuttle-bus-stop.png"
           alt="Shuttle Bus Stop"
+          width={400}
+          height={300}
           style={{
             maxWidth: '400px',
             height: 'auto',

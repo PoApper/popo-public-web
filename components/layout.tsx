@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '@/styles/theme';
 import Navbar from './navbar/navbar';
@@ -31,11 +32,7 @@ const Layout = ({ children }: LayoutProps) => {
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img
-          src="/home/siren.ico"
-          alt="Siren Icon"
-          style={{ width: '30px', height: '30px' }}
-        />
+        <Image src="/home/siren.ico" alt="Siren Icon" width={30} height={30} />
         <span>오류 신고</span>
       </FloatingButton>
     </>

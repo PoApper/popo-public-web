@@ -72,7 +72,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         router.push(`/reservation/place/${placeInfo.region}/${placeName}`);
       }, 100);
     }
-  }, []);
+  }, [placeInfo.region, placeName, router, selectedDate]);
 
   function handleSubmit() {
     if (!isPossible) {
