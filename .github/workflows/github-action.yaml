@@ -95,7 +95,7 @@ jobs:
 
   deploy_health_check:
     name: Check Application Status
-    needs: docker_build_and_push
+    needs: redeploy_dev_service
     runs-on: ubuntu-latest
     steps:
       - name: Check the deployed service URL
