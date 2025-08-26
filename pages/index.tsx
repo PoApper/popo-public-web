@@ -51,19 +51,19 @@ const circles = [
     href: '/reservation/equipment',
     icon: '/home/equipment_reservation.png',
   },
-  { text: '자치단체', href: '/association', icon: '/home/association.png' },
-  { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
-  {
-    text: '기록물관리',
-    href: POPOLinks.StudentCouncilArchiveLink,
-    icon: '/home/record.png',
-  },
   { text: '동아리소개', href: '/club', icon: '/home/club.png' },
+  { text: '자치단체', href: '/association', icon: '/home/association.png' },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
+  { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
     text: '배달업체',
     href: POPOLinks.PostechDeliveryLink,
     icon: '/home/delivery.png',
+  },
+  {
+    text: '기록물관리',
+    href: POPOLinks.StudentCouncilArchiveLink,
+    icon: '/home/record.png',
   },
 ];
 
