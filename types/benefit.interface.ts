@@ -7,7 +7,7 @@
 export interface IAffiliate {
   id: number;
   title: string;
-  content_short: string;
+  contentShort: string;
   content: string;
 }
 
@@ -15,7 +15,7 @@ export interface IDiscount {
   id: number;
   title: string;
   region: string;
-  open_hour: string;
+  openHour: string;
   phone: string;
   content: string;
 }
