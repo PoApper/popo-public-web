@@ -38,7 +38,7 @@ const EquipReservationTable = ({
         <Table.Body>
           {reservations.length ? (
             reservations
-              .sort((a, b) => Number(a.start_time) - Number(b.start_time))
+              .sort((a, b) => Number(a.startTime) - Number(b.startTime))
               .map((reservation) => {
                 return (
                   <Table.Row key={reservation.uuid} textAlign="center">
@@ -57,8 +57,8 @@ const EquipReservationTable = ({
                     <Table.Cell>
                       {convertDate(reservation.date)}
                       <br />
-                      {convertTime(reservation.start_time)} ~
-                      {convertTime(reservation.end_time)}
+                      {convertTime(reservation.startTime)} ~
+                      {convertTime(reservation.endTime)}
                     </Table.Cell>
                     <Table.Cell>
                       <Label

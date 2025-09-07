@@ -89,8 +89,8 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
       <div style={{ marginTop: 8, whiteSpace: 'pre-line', textAlign: 'left' }}>
         {notice.content}
       </div>
-      {notice.image_url ? (
-        <Image src={notice.image_url} alt={notice.title} />
+      {notice.imageUrl ? (
+        <Image src={notice.imageUrl} alt={notice.title} />
       ) : null}
       <hr />
       <div style={{ marginTop: 8, paddingRight: 4, textAlign: 'right' }}>

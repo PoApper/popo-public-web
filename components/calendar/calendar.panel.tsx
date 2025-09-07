@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ICalendar } from '@/types/calendar.interface';
 
 const CalendarPanel = ({ nextEvent }: { nextEvent: ICalendar }) => {
-  const dDay = moment(nextEvent.event_date).diff(
+  const dDay = moment(nextEvent.eventDate).diff(
     moment().format('YYYY-MM-DD'),
     'days',
   );
@@ -24,7 +24,7 @@ const CalendarPanel = ({ nextEvent }: { nextEvent: ICalendar }) => {
         </div>
         <div>
           {nextEvent.title}
-          <br />({`${moment(nextEvent.event_date).format('MM월 DD일 dddd')}`})
+          <br />({`${moment(nextEvent.eventDate).format('MM월 DD일 dddd')}`})
         </div>
       </CalendarCard>
     </div>

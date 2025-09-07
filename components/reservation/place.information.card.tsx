@@ -13,7 +13,7 @@ const PlaceInformationCard: FunctionComponent<{
         wrapped
         ui={false}
         src={
-          placeInfo.image_url ??
+          placeInfo.imageUrl ??
           'https://react.semantic-ui.com/images/wireframe/image.png'
         }
         alt={'place_image'}
@@ -24,18 +24,18 @@ const PlaceInformationCard: FunctionComponent<{
         <Card.Description>{placeInfo.description}</Card.Description>
         <Card.Meta style={{ marginTop: 8 }}>
           <OpeningHoursList
-            openingHours={JSON.parse(placeInfo.opening_hours)}
+            openingHours={JSON.parse(placeInfo.openingHours)}
           />
-          {placeInfo.max_minutes !== 24 * 60 ||
-          placeInfo.max_concurrent_reservation > 1 ? (
+          {placeInfo.maxMinutes !== 24 * 60 ||
+          placeInfo.maxConcurrentReservation > 1 ? (
             <ul style={{ paddingLeft: 16 }}>
-              {placeInfo.max_minutes !== 24 * 60 ? (
-                <li>최대 예약 기간: {placeInfo.max_minutes}분</li>
+              {placeInfo.maxMinutes !== 24 * 60 ? (
+                <li>최대 예약 기간: {placeInfo.maxMinutes}분</li>
               ) : null}
-              {placeInfo.max_concurrent_reservation > 1 ? (
+              {placeInfo.maxConcurrentReservation > 1 ? (
                 <li>
                   동시 예약 가능 갯수: 최대{' '}
-                  {placeInfo.max_concurrent_reservation}개 예약
+                  {placeInfo.maxConcurrentReservation}개 예약
                 </li>
               ) : null}
             </ul>
