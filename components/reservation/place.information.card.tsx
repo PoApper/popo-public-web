@@ -23,9 +23,7 @@ const PlaceInformationCard: FunctionComponent<{
         <Card.Meta>{placeInfo.location}</Card.Meta>
         <Card.Description>{placeInfo.description}</Card.Description>
         <Card.Meta style={{ marginTop: 8 }}>
-          <OpeningHoursList
-            openingHours={JSON.parse(placeInfo.openingHours)}
-          />
+          <OpeningHoursList openingHours={JSON.parse(placeInfo.openingHours)} />
           {placeInfo.maxMinutes !== 24 * 60 ||
           placeInfo.maxConcurrentReservation > 1 ? (
             <ul style={{ paddingLeft: 16 }}>
@@ -34,8 +32,8 @@ const PlaceInformationCard: FunctionComponent<{
               ) : null}
               {placeInfo.maxConcurrentReservation > 1 ? (
                 <li>
-                  동시 예약 가능 갯수: 최대{' '}
-                  {placeInfo.maxConcurrentReservation}개 예약
+                  동시 예약 가능 갯수: 최대 {placeInfo.maxConcurrentReservation}
+                  개 예약
                 </li>
               ) : null}
             </ul>

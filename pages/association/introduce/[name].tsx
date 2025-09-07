@@ -24,9 +24,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
             alt={`${name}_logo`}
           />
         </div>
-
         <h1 style={{ margin: '0' }}>{name}</h1>
-
         <div style={{ fontSize: 18 }}>
           <IconLink link={associationInfo.homepageUrl}>
             <Image
@@ -60,12 +58,11 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'youtube'}
             />
           </IconLink>
-        </div> <i></i>
-
+        </div>{' '}
+        <i></i>
         <div style={{ fontSize: 16, margin: '12px 0' }}>
           {associationInfo.content}
         </div>
-
         <div>
           <p>
             <b>사무실 위치</b>: {associationInfo.location}
