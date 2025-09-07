@@ -20,7 +20,7 @@ const AssociationIndexPage: React.FunctionComponent<{
               size="small"
               href={`/association/introduce/${intro.name}`}
               src={
-                intro.image_url ??
+                intro.imageUrl ??
                 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               alt={`${intro.name}_logo`}

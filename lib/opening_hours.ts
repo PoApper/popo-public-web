@@ -20,12 +20,12 @@ export const KoreanToEnglishMap: any = {
 };
 
 export function isOnOpeningHours(
-  opening_hours: string,
+  openingHours: string,
   weekday: string, // Monday
-  start_time: string, // hh:mm
-  end_time: string, // hh:mm
+  startTime: string, // hh:mm
+  endTime: string, // hh:mm
 ) {
-  const openingHour = JSON.parse(opening_hours);
+  const openingHour = JSON.parse(openingHours);
 
   if (openingHour['Everyday']) {
     weekday = 'Everyday';
@@ -40,11 +40,11 @@ export function isOnOpeningHours(
     // 다음과 같이 &가 있어 시간이 나눠지는 상황도 고려해야 함 "Sunday":"00:00-10:00 & 13:00-24:00"
     const openTimesPerDay = hour.split(' & ');
     for (const openTime of openTimesPerDay) {
-      const open_start = openTime.split('-')[0];
-      const open_end = openTime.split('-')[1];
+      const openStartTime = openTime.split('-')[0];
+      const openEndTime = openTime.split('-')[1];
 
       // 하나라도 range 내부에 포함된다면 예약 가능
-      const isInside = open_start <= start_time && end_time <= open_end;
+      const isInside = openStartTime <= startTime && endTime <= openEndTime;
       if (isInside) {
         return true;
       }
