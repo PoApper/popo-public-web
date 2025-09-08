@@ -25,7 +25,7 @@ const AffiliateCards = ({ affiliates }: { affiliates: IAffiliate[] }) => {
               <Card color="pink" style={{ minHeight: '160px' }}>
                 <Card.Content>
                   <Card.Header>{affiliate.title}</Card.Header>
-                  <Card.Description>{affiliate.content_short}</Card.Description>
+                  <Card.Description>{affiliate.contentShort}</Card.Description>
                 </Card.Content>
               </Card>
             }

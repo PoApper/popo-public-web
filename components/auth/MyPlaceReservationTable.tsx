@@ -87,8 +87,8 @@ const MyPlaceReservationTable = () => {
                 <Table.Cell>
                   {convertDate(reservation.date)}
                   <br />
-                  {convertTime(reservation.start_time)} ~
-                  {convertTime(reservation.end_time)}
+                  {convertTime(reservation.startTime)} ~
+                  {convertTime(reservation.endTime)}
                 </Table.Cell>
 
                 <Table.Cell>

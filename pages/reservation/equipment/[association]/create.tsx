@@ -79,8 +79,8 @@ const EquipReservationCreatePage: React.FunctionComponent<{
       title: title,
       description: description,
       date: date.format('YYYYMMDD'), // YYYYMMDD
-      start_time: startTime.format('HHmm'), // HHmm
-      end_time: endTime.format('HHmm'), // HHmm
+      startTime: startTime.format('HHmm'), // HHmm
+      endTime: endTime.format('HHmm'), // HHmm
     })
       .then(() => {
         alert('예약을 생성했습니다!');

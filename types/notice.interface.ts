@@ -2,8 +2,8 @@ export interface INotice {
   id: number;
   title: string;
   content: string;
-  image_url: string;
+  imageUrl: string;
   link: string;
-  start_datetime: string;
-  end_datetime: string;
+  startDatetime: string;
+  endDatetime: string;
 }

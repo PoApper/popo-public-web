@@ -48,7 +48,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   ); // HHmm
 
   const isPossible = isOnOpeningHours(
-    placeInfo.opening_hours,
+    placeInfo.openingHours,
     date.format('dddd'), // 월요일
     startTime.format('HH:mm'),
     endTime.format('HH:mm'),
@@ -93,8 +93,8 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
       title: title,
       description: description,
       date: date.format('YYYYMMDD'), // YYYYMMDD
-      start_time: startTime.format('HHmm'), // HHmm
-      end_time: endTime.format('HHmm'), // HHmm
+      startTime: startTime.format('HHmm'), // HHmm
+      endTime: endTime.format('HHmm'), // HHmm
     })
       .then(() => {
         alert('예약을 생성했습니다!');
@@ -160,7 +160,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
           <label>사용 가능 시간</label>
           <div style={{ color: 'gray' }}>
             <OpeningHoursList
-              openingHours={JSON.parse(placeInfo.opening_hours)}
+              openingHours={JSON.parse(placeInfo.openingHours)}
             />
           </div>
         </div>

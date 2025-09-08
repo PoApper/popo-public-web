@@ -28,7 +28,7 @@ const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
             <Modal.Content>
               <Image
                 src={
-                  equipment.image_url ??
+                  equipment.imageUrl ??
                   'https://via.placeholder.com/200?text=NoImage'
                 }
                 alt={`${equipment.name}_logo`}

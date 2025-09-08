@@ -18,17 +18,15 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
           <Image
             size="small"
             src={
-              associationInfo.image_url ??
+              associationInfo.imageUrl ??
               'https://react.semantic-ui.com/images/wireframe/image.png'
             }
             alt={`${name}_logo`}
           />
         </div>
-
         <h1 style={{ margin: '0' }}>{name}</h1>
-
         <div style={{ fontSize: 18 }}>
-          <IconLink link={associationInfo.homepage_url}>
+          <IconLink link={associationInfo.homepageUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/website-000000?style=for-the-badge'
@@ -36,7 +34,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'homepage'}
             />
           </IconLink>
-          <IconLink link={associationInfo.facebook_url}>
+          <IconLink link={associationInfo.facebookUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white'
@@ -44,7 +42,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'facebook'}
             />
           </IconLink>
-          <IconLink link={associationInfo.instagram_url}>
+          <IconLink link={associationInfo.instagramUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white'
@@ -52,7 +50,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'instagram'}
             />
           </IconLink>
-          <IconLink link={associationInfo.youtube_url}>
+          <IconLink link={associationInfo.youtubeUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white'
@@ -60,12 +58,11 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'youtube'}
             />
           </IconLink>
-        </div>
-
+        </div>{' '}
+        <i></i>
         <div style={{ fontSize: 16, margin: '12px 0' }}>
           {associationInfo.content}
         </div>
-
         <div>
           <p>
             <b>사무실 위치</b>: {associationInfo.location}

@@ -10,12 +10,12 @@ const WhiteBookIndexPage = () => {
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        PoPoAxios.get('/whitebook/with-login?orderBy=click_count')
+        PoPoAxios.get('/whitebook/with-login?orderBy=clickCount')
           .then((res) => setWhitebookList(res.data))
           .catch(() => console.log('생활백서를 불러오는 데 실패했습니다.'));
       })
       .catch(() => {
-        PoPoAxios.get('/whitebook?orderBy=click_count')
+        PoPoAxios.get('/whitebook?orderBy=clickCount')
           .then((res) => setWhitebookList(res.data))
           .catch(() => console.log('생활백서를 불러오는 데 실패했습니다.'));
       });

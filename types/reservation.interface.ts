@@ -11,11 +11,11 @@ export interface IPlace {
   region: string;
   location: string;
   description: string;
-  image_url?: string;
-  max_minutes: number;
-  max_concurrent_reservation: number;
-  opening_hours: string;
-  total_reservation_count: number;
+  imageUrl?: string;
+  maxMinutes: number;
+  maxConcurrentReservation: number;
+  openingHours: string;
+  totalReservationCount: number;
 }
 
 export interface IEquipment {
@@ -23,8 +23,8 @@ export interface IEquipment {
   name: string;
   description: string;
   fee: number;
-  image_url?: string;
-  max_minutes: number;
+  imageUrl?: string;
+  maxMinutes: number;
 }
 
 export interface IPlaceReservation {
@@ -33,12 +33,12 @@ export interface IPlaceReservation {
   place: IPlace;
   date: string;
   description: string;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
   phone: string;
   status: string;
   title: string;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export interface IEquipReservation {
@@ -47,10 +47,10 @@ export interface IEquipReservation {
   equipments: IEquipment[];
   date: string;
   description: string;
-  start_time: string;
-  end_time: string;
+  startTime: string;
+  endTime: string;
   phone: string;
   status: string;
   title: string;
-  created_at: Date;
+  createdAt: Date;
 }

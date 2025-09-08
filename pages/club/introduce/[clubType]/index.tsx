@@ -24,13 +24,13 @@ const ClubTypeIndexPage: React.FunctionComponent<{
               size="small"
               href={`/club/introduce/${clubType}/${clubInfo.name}`}
               src={
-                clubInfo.image_url ??
+                clubInfo.imageUrl ??
                 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               alt={`${clubInfo.name}_logo`}
             />
             <h4 style={{ margin: '5px 0 0' }}>{clubInfo.name}</h4>
-            <p style={{ color: 'gray' }}>{clubInfo.short_desc}</p>
+            <p style={{ color: 'gray' }}>{clubInfo.shortDesc}</p>
           </Container>
         ))}
       </IntroduceGrid>

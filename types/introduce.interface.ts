@@ -8,15 +8,15 @@ export interface IClubIntroduce {
   uuid: string;
   name: string;
   content: string;
-  short_desc: string;
+  shortDesc: string;
   location: string;
   representative: string;
   contact: string;
-  image_url?: string;
-  homepage_url?: string;
-  facebook_url?: string;
-  instagram_url?: string;
-  youtube_url?: string;
+  imageUrl?: string;
+  homepageUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  youtubeUrl?: string;
 }
 
 export interface IAssociationIntroduce {
@@ -26,9 +26,9 @@ export interface IAssociationIntroduce {
   location: string;
   representative: string;
   contact: string;
-  image_url?: string;
-  homepage_url?: string;
-  facebook_url?: string;
-  instagram_url?: string;
-  youtube_url?: string;
+  imageUrl?: string;
+  homepageUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  youtubeUrl?: string;
 }

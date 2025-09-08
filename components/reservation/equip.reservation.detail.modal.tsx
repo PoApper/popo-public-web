@@ -49,16 +49,16 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
               <b>
                 {moment(reservation.date, 'YYYYMMDD').format('YYYY-MM-DD')}
                 &nbsp;
-                {moment(reservation.start_time, 'HHmm').format('HH:mm')}
+                {moment(reservation.startTime, 'HHmm').format('HH:mm')}
                 &nbsp;~&nbsp;
-                {moment(reservation.end_time, 'HHmm').format('HH:mm')}
+                {moment(reservation.endTime, 'HHmm').format('HH:mm')}
               </b>
             </div>
           </Segment>
           <Segment>
             <h4>생성일</h4>
             <div>
-              {moment(reservation.created_at).format('YYYY-MM-DD HH:mm')}
+              {moment(reservation.createdAt).format('YYYY-MM-DD HH:mm')}
             </div>
           </Segment>
         </Segment.Group>

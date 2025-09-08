@@ -43,7 +43,7 @@ const DiscountOfferCards = ({
             <Modal.Content>
               <p>
                 <Icon name="clock outline" />
-                영업 시간: {discountOffer.open_hour}
+                영업 시간: {discountOffer.openHour}
               </p>
               <p>
                 <Icon name="phone" />

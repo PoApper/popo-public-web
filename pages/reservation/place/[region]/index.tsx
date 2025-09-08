@@ -42,7 +42,7 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
     if (selectedSortType === 'alphabetic') {
       return a.name > b.name ? 1 : -1;
     } else if (selectedSortType === 'popular') {
-      return a.total_reservation_count < b.total_reservation_count ? 1 : -1;
+      return a.totalReservationCount < b.totalReservationCount ? 1 : -1;
     } else {
       return 0;
     }
