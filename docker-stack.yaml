@@ -1,4 +1,6 @@
-version: '3'
+# 해당 파일은 Portainer에서 사용되는 Paxi Stack을 복사 붙여넣기 한 파일로, 참고용입니다.
+# 해당 파일을 수정해도 반영되지 않습니다. Portainer에 직접 들어가 수정해야 합니다.
+version: '3.3'
 services:
   dev:
     image: 151345152001.dkr.ecr.ap-northeast-2.amazonaws.com/popo-public-web:latest
