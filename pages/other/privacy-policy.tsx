@@ -6,6 +6,7 @@ const PrivacyPolicyPage = () => {
   const [STUEmail, setSTUEmail] = useState('');
 
   useEffect(() => {
+    // TODO: stu_email -> stuEmail. 백엔드와 함께 작업
     PoPoAxios.get('/setting').then((res) => setSTUEmail(res.data.stu_email));
   }, []);
 

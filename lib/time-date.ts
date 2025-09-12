@@ -41,9 +41,9 @@ export function roundUpByDuration(
     return moment(date).add(remainder, 'minutes').second(0);
   } else {
     const quotient = (date.minute() % durationMinutes) + 1;
-    const new_hour = Math.floor((quotient * durationMinutes) / 60);
-    const new_minute = (quotient * durationMinutes) % 60;
-    return moment(date).hour(new_hour).minute(new_minute).second(0);
+    const newHour = Math.floor((quotient * durationMinutes) / 60);
+    const newMinute = (quotient * durationMinutes) % 60;
+    return moment(date).hour(newHour).minute(newMinute).second(0);
   }
 }
 

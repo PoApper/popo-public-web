@@ -7,7 +7,7 @@ import DeleteConfirmModal from '../common/delete.confirm.modal';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const MyEquipReservationTable = () => {
-  const [reserve_list, setReserveList] = useState<IEquipReservation[]>([]);
+  const [reserveList, setReserveList] = useState<IEquipReservation[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -52,7 +52,7 @@ const MyEquipReservationTable = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {reserve_list.map((reservation, idx) => {
+          {reserveList.map((reservation, idx) => {
             return (
               <Table.Row textAlign="center" key={reservation.uuid}>
                 <Table.Cell>
