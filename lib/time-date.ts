@@ -16,13 +16,21 @@ export function hourDiff(
 ): number {
   // 시작 시각은 그대로 두고 종료 시각을 변경할 때 시간이 이상하게 표시되는 문제 수정
   // 관련 이슈: https://github.com/PoApper/popo-public-web/issues/148
-  
+
   // moment 객체에서 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-  const startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
-  const endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
+  const startMoment = moment()
+    .hour(startTime.hour())
+    .minute(startTime.minute())
+    .second(0)
+    .millisecond(0);
+  const endMoment = moment()
+    .hour(endTime.hour())
+    .minute(endTime.minute())
+    .second(0)
+    .millisecond(0);
 
   const duration = moment.duration(endMoment.diff(startMoment));
-  
+
   // duration.hours()와 duration.minutes()는 정수로 반환되므로 부동소수점 문제 없음
   return duration.hours() + duration.minutes() / 60;
 }
@@ -32,11 +40,19 @@ export function minuteDiff(
   endTime: moment.Moment,
 ): number {
   // moment 객체에서 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-  const startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
-  const endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
+  const startMoment = moment()
+    .hour(startTime.hour())
+    .minute(startTime.minute())
+    .second(0)
+    .millisecond(0);
+  const endMoment = moment()
+    .hour(endTime.hour())
+    .minute(endTime.minute())
+    .second(0)
+    .millisecond(0);
 
   const duration = moment.duration(endMoment.diff(startMoment));
-  
+
   // duration.minutes()와 duration.hours()는 정수로 반환되므로 부동소수점 문제 없음
   return duration.hours() * 60 + duration.minutes();
 }

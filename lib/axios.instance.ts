@@ -15,7 +15,6 @@ if (!next_env) {
   );
 }
 
-
 export const popoApiUrl =
   next_env === 'prod'
     ? 'https://api.popo.poapper.club'
@@ -24,10 +23,10 @@ export const popoApiUrl =
       : next_env === 'local'
         ? 'https://localhost:4000'
         : (() => {
-          throw new Error(
-            `NEXT_PUBLIC_ENV 환경변수가 제대로 설정되어 있지 않습니다. ${next_env}는 유효하지 않은 값입니다.`,
-          );
-        })();
+            throw new Error(
+              `NEXT_PUBLIC_ENV 환경변수가 제대로 설정되어 있지 않습니다. ${next_env}는 유효하지 않은 값입니다.`,
+            );
+          })();
 
 export const PoPoAxios = axios.create({
   baseURL: popoApiUrl as string,
