@@ -14,22 +14,56 @@ export function hourDiff(
   startTime: string | moment.Moment,
   endTime: string | moment.Moment,
 ): number {
-  const startMoment = moment(startTime, 'HHmm');
-  const endMoment = moment(endTime, 'HHmm');
-  const duration = moment.duration(endMoment.diff(startMoment));
+  // 시작 시각은 그대로 두고 종료 시각을 변경할 때 시간이 이상하게 표시되는 문제 수정
+  // 관련 이슈: https://github.com/PoApper/popo-public-web/issues/148
+  let startMoment: moment.Moment;
+  let endMoment: moment.Moment;
 
-  return duration.asHours();
+  if (typeof startTime === 'string') {
+    startMoment = moment(startTime, 'HHmm');
+  } else {
+    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+    startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
+  }
+
+  if (typeof endTime === 'string') {
+    endMoment = moment(endTime, 'HHmm');
+  } else {
+    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+    endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
+  }
+
+  const duration = moment.duration(endMoment.diff(startMoment));
+  
+  // 부동소수점 정밀도 문제 해결을 위해 반올림
+  return Math.round(duration.asHours() * 100) / 100;
 }
 
 export function minuteDiff(
   startTime: string | moment.Moment,
   endTime: string | moment.Moment,
 ): number {
-  const startMoment = moment(startTime, 'HHmm');
-  const endMoment = moment(endTime, 'HHmm');
-  const duration = moment.duration(endMoment.diff(startMoment));
+  let startMoment: moment.Moment;
+  let endMoment: moment.Moment;
 
-  return duration.asMinutes();
+  if (typeof startTime === 'string') {
+    startMoment = moment(startTime, 'HHmm');
+  } else {
+    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+    startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
+  }
+
+  if (typeof endTime === 'string') {
+    endMoment = moment(endTime, 'HHmm');
+  } else {
+    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+    endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
+  }
+
+  const duration = moment.duration(endMoment.diff(startMoment));
+  
+  // 부동소수점 정밀도 문제 해결을 위해 반올림
+  return Math.round(duration.asMinutes());
 }
 
 export function roundUpByDuration(
