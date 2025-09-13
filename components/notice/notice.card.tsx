@@ -17,27 +17,27 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
   const [isLike, setIsLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
-  const user_id = user ? user.uuid : null;
-  const notice_id = notice.id;
+  const userId = user ? user.uuid : null;
+  const noticeId = notice.id;
 
   useEffect(() => {
     const fetchLikeStatus = async () => {
-      if (!user_id) return;
+      if (!userId) return;
 
       const status = await PoPoAxios.get(
-        `/noticeLike/status/${user_id}/${notice_id}`,
+        `/noticeLike/status/${userId}/${noticeId}`,
       );
       setIsLike(status.data);
     };
 
     const fetchLikeCount = async () => {
-      const count = await PoPoAxios.get(`/noticeLike/count/${notice_id}`);
+      const count = await PoPoAxios.get(`/noticeLike/count/${noticeId}`);
       setLikeCount(count.data);
     };
 
     fetchLikeStatus();
     fetchLikeCount();
-  }, [user_id, notice_id]);
+  }, [userId, noticeId]);
 
   const handleLike = async () => {
     if (!user) {
@@ -47,7 +47,7 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
     }
 
     if (isLike) {
-      await PoPoAxios.delete(`/noticeLike/${user_id}/${notice_id}`)
+      await PoPoAxios.delete(`/noticeLike/${userId}/${noticeId}`)
         .then(() => setLikeCount(likeCount - 1))
         .catch((err) => {
           const errMsg = err.response.data.message;
@@ -56,8 +56,8 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
         });
     } else {
       await PoPoAxios.post('/noticeLike', {
-        user_id: user_id,
-        notice_id: notice_id,
+        userId: userId,
+        noticeId: noticeId,
       })
         .then(() => setLikeCount(likeCount + 1))
         .catch((err) => {

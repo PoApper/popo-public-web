@@ -88,7 +88,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     }
 
     PoPoAxios.post('/reservation-place', {
-      place_id: placeInfo.uuid,
+      placeId: placeInfo.uuid,
       phone: phone,
       title: title,
       description: description,
