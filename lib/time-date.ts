@@ -11,27 +11,15 @@ export function convertTime(time: string) {
 }
 
 export function hourDiff(
-  startTime: string | moment.Moment,
-  endTime: string | moment.Moment,
+  startTime: moment.Moment,
+  endTime: moment.Moment,
 ): number {
   // 시작 시각은 그대로 두고 종료 시각을 변경할 때 시간이 이상하게 표시되는 문제 수정
   // 관련 이슈: https://github.com/PoApper/popo-public-web/issues/148
-  let startMoment: moment.Moment;
-  let endMoment: moment.Moment;
-
-  if (typeof startTime === 'string') {
-    startMoment = moment(startTime, 'HHmm');
-  } else {
-    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-    startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
-  }
-
-  if (typeof endTime === 'string') {
-    endMoment = moment(endTime, 'HHmm');
-  } else {
-    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-    endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
-  }
+  
+  // moment 객체에서 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+  const startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
+  const endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
 
   const duration = moment.duration(endMoment.diff(startMoment));
   
@@ -40,25 +28,12 @@ export function hourDiff(
 }
 
 export function minuteDiff(
-  startTime: string | moment.Moment,
-  endTime: string | moment.Moment,
+  startTime: moment.Moment,
+  endTime: moment.Moment,
 ): number {
-  let startMoment: moment.Moment;
-  let endMoment: moment.Moment;
-
-  if (typeof startTime === 'string') {
-    startMoment = moment(startTime, 'HHmm');
-  } else {
-    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-    startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
-  }
-
-  if (typeof endTime === 'string') {
-    endMoment = moment(endTime, 'HHmm');
-  } else {
-    // moment 객체인 경우 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
-    endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
-  }
+  // moment 객체에서 시간만 추출하여 새로운 moment 객체 생성 (날짜 정보 제거)
+  const startMoment = moment().hour(startTime.hour()).minute(startTime.minute()).second(0).millisecond(0);
+  const endMoment = moment().hour(endTime.hour()).minute(endTime.minute()).second(0).millisecond(0);
 
   const duration = moment.duration(endMoment.diff(startMoment));
   
