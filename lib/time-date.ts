@@ -23,8 +23,8 @@ export function hourDiff(
 
   const duration = moment.duration(endMoment.diff(startMoment));
   
-  // 부동소수점 정밀도 문제 해결을 위해 반올림
-  return Math.round(duration.asHours() * 100) / 100;
+  // duration.hours()와 duration.minutes()는 정수로 반환되므로 부동소수점 문제 없음
+  return duration.hours() + duration.minutes() / 60;
 }
 
 export function minuteDiff(
@@ -37,8 +37,8 @@ export function minuteDiff(
 
   const duration = moment.duration(endMoment.diff(startMoment));
   
-  // 부동소수점 정밀도 문제 해결을 위해 반올림
-  return Math.round(duration.asMinutes());
+  // duration.minutes()와 duration.hours()는 정수로 반환되므로 부동소수점 문제 없음
+  return duration.hours() * 60 + duration.minutes();
 }
 
 export function roundUpByDuration(
