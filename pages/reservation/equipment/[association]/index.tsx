@@ -70,9 +70,9 @@ const EquipAssociationPage: React.FunctionComponent<{
     });
 
     PoPoAxios.get('/setting').then((res) => {
-      setDongyeonBank(res.data.dongyeon_bank);
-      setDongyeonServiceTime(res.data.dongyeon_service_time);
-      setDongyeonContact(res.data.dongyeon_contact);
+      setDongyeonBank(res.data.dongyeonBank);
+      setDongyeonServiceTime(res.data.dongyeonServiceTime);
+      setDongyeonContact(res.data.dongyeonContact);
     });
   }, [startDate, association, selectedDate]);
 
