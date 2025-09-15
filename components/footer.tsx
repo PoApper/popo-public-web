@@ -16,8 +16,8 @@ const Footer = () => {
 
   useEffect(() => {
     PoPoAxios.get('/setting').then((res) => {
-      setPOPOCRMEmail(res.data.popo_crm_email);
-      setSTUEmail(res.data.stu_email);
+      setPOPOCRMEmail(res.data.popoCRMEmail);
+      setSTUEmail(res.data.stuEmail);
     });
   }, []);
 
