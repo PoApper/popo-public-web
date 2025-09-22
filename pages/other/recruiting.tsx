@@ -42,7 +42,17 @@ const RecruitingPage = () => {
             </li>
           </ol>
           <p>
-            <strong>Contact Us</strong> : Lead Developer, 하석윤(컴공 18)
+            <strong>Contact Us</strong> : Lead Developer, 김관호(컴공 19)
+            <a href={'https://github.com/khkim6040'}>
+              <Icon name={'github'} />
+            </a>
+            <Popup
+              content={'khkim6040@postech.ac.kr'}
+              trigger={<Icon name={'mail'} />}
+            />
+          </p>
+          <p>
+            <strong>Previous Leads</strong> : 하석윤(컴공 18)
             <a href={'https://github.com/BlueHorn07'}>
               <Icon name={'github'} />
             </a>
@@ -90,6 +100,12 @@ const RecruitingPage = () => {
                   'https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white'
                 }
                 alt={'docker'}
+              />
+              <Image
+                src={
+                  'https://img.shields.io/badge/github actions-333?style=for-the-badge&logo=github actions&logoColor=white'
+                }
+                alt={'githubactions'}
               />
             </div>
           </FrameWorkDiv>
