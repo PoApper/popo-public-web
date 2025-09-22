@@ -90,7 +90,7 @@ const AppInstallButton = styled.button`
   position: fixed;
   bottom: 78px; /* 오류 신고 위 58px + 여유 */
   right: 40px;
-  background-color: #000;
+  background-color: #333435;
   color: white;
   border-radius: 25px;
   width: 110px;
