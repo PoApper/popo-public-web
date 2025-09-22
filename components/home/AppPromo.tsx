@@ -4,11 +4,12 @@ import { Segment, Header, Button, Icon } from 'semantic-ui-react';
 const AppPromo: React.FC = () => {
   return (
     <Segment style={{ margin: 0, maxWidth: 360 }}>
-    <Header as="h3" style={{ marginBottom: 8 }}>
+      <Header as="h3" style={{ marginBottom: 8 }}>
         POPO 앱 출시!
       </Header>
       <p style={{ marginBottom: 12 }}>
-        학교 생활에 필요한 기능을 한 곳에서. <br /> 지금 설치하고 더 빠르게 이용해보세요.
+        학교 생활에 필요한 기능을 한 곳에서. <br /> 지금 설치하고 더 빠르게
+        이용해보세요.
       </p>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <Button
@@ -41,5 +42,3 @@ const AppPromo: React.FC = () => {
 };
 
 export default AppPromo;
-
-

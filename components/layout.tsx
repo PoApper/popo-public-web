@@ -36,7 +36,11 @@ const Layout = ({ children }: LayoutProps) => {
         <Image src="/home/siren.ico" alt="Siren Icon" width={30} height={30} />
         <span>오류 신고</span>
       </FloatingButton>
-      <AppInstallButton onClick={() => document.dispatchEvent(new CustomEvent('open-app-promo'))}>
+      <AppInstallButton
+        onClick={() =>
+          document.dispatchEvent(new CustomEvent('open-app-promo'))
+        }
+      >
         <span>POPO 앱 출시!</span>
       </AppInstallButton>
       {/* 트리거 버튼은 별도로 노출하지 않고(오류 신고와 겹침 방지) 이벤트로만 열림 */}

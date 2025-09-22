@@ -5,7 +5,7 @@ import AppPromo from '@/components/home/AppPromo';
 type Props = {};
 
 const AppPromoFab: React.FC<Props> = () => {
-  const [open, setOpen] = useState(false);  
+  const [open, setOpen] = useState(false);
 
   React.useEffect(() => {
     const handler = () => setOpen(true);
@@ -31,5 +31,3 @@ const AppPromoFab: React.FC<Props> = () => {
 };
 
 export default AppPromoFab;
-
-
