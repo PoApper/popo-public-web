@@ -5,7 +5,7 @@ const AppPromo: React.FC = () => {
   return (
     <Segment style={{ margin: 0, maxWidth: 360 }}>
       <Header as="h3" style={{ marginBottom: 8 }}>
-        POPO 앱 출시!
+        POPO 앱 출시, 카풀 기능까지!
       </Header>
       <p style={{ marginBottom: 12 }}>
         학교 생활에 필요한 기능을 한 곳에서. <br /> 지금 설치하고 더 빠르게
