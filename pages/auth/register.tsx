@@ -90,7 +90,7 @@ const RegisterPage = () => {
               required
               type={'password'}
               label={'Password'}
-              placeholder={'8자리 이상 64자리 이하 (특수문자 허용)'}
+              placeholder={'8자리 이상 64자리 이하'}
               onChange={(e) => setPW(e.target.value)}
               error={
                 isNotValidPassword ? '비밀번호는 8~64자 사이여야 합니다.' : null
@@ -100,7 +100,7 @@ const RegisterPage = () => {
               required
               type={'password'}
               label={'Password 확인'}
-              placeholder={'8자리 이상 64자리 이하 (특수문자 허용)'}
+              placeholder={'8자리 이상 64자리 이하'}
               onChange={(e) => setPwAgain(e.target.value)}
               error={
                 isNotValidPasswordAgain ? '비밀번호가 일치하지 않습니다.' : null
