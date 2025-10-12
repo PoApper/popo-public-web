@@ -24,9 +24,9 @@ const MyInfoPage = () => {
   const [password, setPW] = useState<string>('');
   const [passwordAgain, setPwAgain] = useState<string>('');
 
-  const isValidPassword: boolean =
+  const isPasswordInvalid: boolean =
     password.length > 0 && !RegExp(/^.{8,64}$/).test(password);
-  const isValidPasswordAgain: boolean =
+  const isPasswordAgainInvalid: boolean =
     passwordAgain.length > 0 && password !== passwordAgain;
 
   useEffect(() => {
@@ -99,7 +99,7 @@ const MyInfoPage = () => {
                   placeholder="8자리 이상 64자리 이하"
                   onChange={(e) => setPW(e.target.value)}
                   error={
-                    isValidPassword
+                    isPasswordInvalid
                       ? '비밀번호는 8~64자 사이여야 합니다.'
                       : null
                   }
@@ -112,7 +112,7 @@ const MyInfoPage = () => {
                   label="Password 확인"
                   onChange={(e) => setPwAgain(e.target.value)}
                   error={
-                    isValidPasswordAgain
+                    isPasswordAgainInvalid
                       ? '비밀번호가 일치하지 않습니다.'
                       : null
                   }
