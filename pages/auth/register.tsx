@@ -34,7 +34,7 @@ const RegisterPage = () => {
     email.length == 0 ||
     !RegExp(/^(?=.*[a-zA-z])[a-zA-Z0-9]{4,20}@postech.ac.kr$/).test(email);
   const isNotValidPassword: boolean =
-    password.length == 0 || !RegExp(/^(\w{8,16})$/).test(password);
+    password.length == 0 || !RegExp(/^.{8,64}$/).test(password);
   const isNotValidPasswordAgain: boolean =
     passwordAgain.length == 0 || password !== passwordAgain;
 
@@ -90,15 +90,17 @@ const RegisterPage = () => {
               required
               type={'password'}
               label={'Password'}
-              placeholder={'8자리 이상 16자리 이하'}
+              placeholder={'8자리 이상 64자리 이하'}
               onChange={(e) => setPW(e.target.value)}
-              error={isNotValidPassword ? '비밀번호가 너무 짧습니다.' : null}
+              error={
+                isNotValidPassword ? '비밀번호는 8~64자 사이여야 합니다.' : null
+              }
             />
             <Form.Input
               required
               type={'password'}
               label={'Password 확인'}
-              placeholder={'8자리 이상 16자리 이하'}
+              placeholder={'8자리 이상 64자리 이하'}
               onChange={(e) => setPwAgain(e.target.value)}
               error={
                 isNotValidPasswordAgain ? '비밀번호가 일치하지 않습니다.' : null

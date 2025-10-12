@@ -24,9 +24,9 @@ const MyInfoPage = () => {
   const [password, setPW] = useState<string>('');
   const [passwordAgain, setPwAgain] = useState<string>('');
 
-  const isValidPassword: boolean =
-    password.length > 0 && !RegExp(/^(\w{8,16})$/).test(password);
-  const isValidPasswordAgain: boolean =
+  const isPasswordInvalid: boolean =
+    password.length > 0 && !RegExp(/^.{8,64}$/).test(password);
+  const isPasswordAgainInvalid: boolean =
     passwordAgain.length > 0 && password !== passwordAgain;
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const MyInfoPage = () => {
           </Segment>
 
           <Segment>
-            <h4>비밀번호 수정하기</h4>
+            <h4>비밀번호 변경</h4>
             <Form>
               <Form.Group style={{ marginBottom: '8px' }}>
                 <Form.Input
@@ -96,9 +96,13 @@ const MyInfoPage = () => {
                   type="password"
                   width={8}
                   label="Password"
-                  placeholder="8자리 이상 16자리 이하"
+                  placeholder="8자리 이상 64자리 이하"
                   onChange={(e) => setPW(e.target.value)}
-                  error={isValidPassword ? '비밀번호가 너무 짧습니다.' : null}
+                  error={
+                    isPasswordInvalid
+                      ? '비밀번호는 8~64자 사이여야 합니다.'
+                      : null
+                  }
                 />
 
                 <Form.Input
@@ -108,14 +112,14 @@ const MyInfoPage = () => {
                   label="Password 확인"
                   onChange={(e) => setPwAgain(e.target.value)}
                   error={
-                    isValidPasswordAgain
+                    isPasswordAgainInvalid
                       ? '비밀번호가 일치하지 않습니다.'
                       : null
                   }
                 />
               </Form.Group>
               <Form.Button primary size="mini" onClick={submitNewPassword}>
-                비밀번호 수정
+                비밀번호 변경
               </Form.Button>
             </Form>
           </Segment>
