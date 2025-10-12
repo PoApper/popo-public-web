@@ -25,7 +25,7 @@ const MyInfoPage = () => {
   const [passwordAgain, setPwAgain] = useState<string>('');
 
   const isValidPassword: boolean =
-    password.length > 0 && !RegExp(/^(\w{8,16})$/).test(password);
+    password.length > 0 && !RegExp(/^.{8,64}$/).test(password);
   const isValidPasswordAgain: boolean =
     passwordAgain.length > 0 && password !== passwordAgain;
 
@@ -96,9 +96,9 @@ const MyInfoPage = () => {
                   type="password"
                   width={8}
                   label="Password"
-                  placeholder="8자리 이상 16자리 이하"
+                  placeholder="8자리 이상 64자리 이하"
                   onChange={(e) => setPW(e.target.value)}
-                  error={isValidPassword ? '비밀번호가 너무 짧습니다.' : null}
+                  error={isValidPassword ? '비밀번호는 8~64자 사이여야 합니다.' : null}
                 />
 
                 <Form.Input
