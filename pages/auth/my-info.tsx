@@ -88,7 +88,7 @@ const MyInfoPage = () => {
           </Segment>
 
           <Segment>
-            <h4>비밀번호 수정하기</h4>
+            <h4>비밀번호 변경</h4>
             <Form>
               <Form.Group style={{ marginBottom: '8px' }}>
                 <Form.Input
@@ -115,7 +115,7 @@ const MyInfoPage = () => {
                 />
               </Form.Group>
               <Form.Button primary size="mini" onClick={submitNewPassword}>
-                비밀번호 수정
+                비밀번호 변경
               </Form.Button>
             </Form>
           </Segment>
