@@ -14,10 +14,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Docker-2CA5E0?style=flat-square&logo=Docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/node-20-brightgreen">
-  <img src="https://img.shields.io/badge/NextJS-14.2-brightgreen">
-  <img src="https://img.shields.io/badge/ReactJS-18.3-brightgreen">
+  <img src="https://img.shields.io/badge/Docker-2CA5E0?logo=Docker&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white">
+  <img src="https://img.shields.io/badge/Next.js-14.x-000000?logo=nextdotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black">
 </p>
 
 ## About
