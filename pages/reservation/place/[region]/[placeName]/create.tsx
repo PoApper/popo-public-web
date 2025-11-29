@@ -204,6 +204,16 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             3가지 시간대만 가능 합니다.
           </Message>
         ) : null}
+        {placeInfo.name.includes('그룹스터디룸') ? (
+          <Message>
+            <Message.Header>⚠️ 그룹스터디룸 이용 안내</Message.Header>
+            <p>
+              그룹스터디룸은 <strong>과외 목적으로 예약이 불가능</strong>합니다.
+              <br />
+              학습 및 스터디 목적으로만 사용해주시기 바랍니다.
+            </p>
+          </Message>
+        ) : null}
 
         <Message>
           <Message.Header>
