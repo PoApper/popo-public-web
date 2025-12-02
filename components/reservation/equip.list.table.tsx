@@ -17,7 +17,7 @@ const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
         {equipments.map((equipment: any, idx: number) => (
           <Modal
             key={idx}
-            size={'small'}
+            size={'mini'}
             trigger={
               <Table.Row>
                 <Table.Cell>{idx + 1}</Table.Cell>
