@@ -25,6 +25,7 @@ export interface IEquipment {
   fee: number;
   imageUrl?: string;
   maxMinutes: number;
+  openingHours: string;
 }
 
 export interface IPlaceReservation {

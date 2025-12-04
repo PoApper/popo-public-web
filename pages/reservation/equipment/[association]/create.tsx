@@ -5,12 +5,14 @@ import { useRouter } from 'next/router';
 import { Divider, Form, Message } from 'semantic-ui-react';
 
 import { hourDiff, roundUpByDuration } from '@/lib/time-date';
+import { isOnOpeningHours } from '@/lib/opening_hours';
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IEquipment } from '@/types/reservation.interface';
 import { IUser } from '@/types/user.interface';
 import ReservationDatetimePicker from '@/components/reservation/reservation.datetime.picker';
 import EquipReservationTable from '@/components/reservation/equip.reservation.table';
+import OpeningHoursList from '@/components/reservation/opening_hours.list';
 
 type ObjectType = {
   [key: string]: string;
@@ -46,6 +48,22 @@ const EquipReservationCreatePage: React.FunctionComponent<{
   const [startTime, setStartTime] = useState<moment.Moment>(now); // HHmm
   const [endTime, setEndTime] = useState<moment.Moment>(nowNext30Min); // HHmm
 
+  // Check if all selected equipments are available at the selected time
+  const selectedEquipmentObjects = equipmentList.filter((equip) =>
+    selectedEquipments.includes(equip.uuid),
+  );
+
+  const unavailableEquipments = selectedEquipmentObjects.filter((equip) => {
+    return !isOnOpeningHours(
+      equip.openingHours,
+      date.format('dddd'), // Monday
+      startTime.format('HH:mm'),
+      endTime.format('HH:mm'),
+    );
+  });
+
+  const isPossible = unavailableEquipments.length === 0;
+
   useEffect(() => {
     // 로그인 확인
     PoPoAxios.get('/auth/verifyToken')
@@ -69,6 +87,11 @@ const EquipReservationCreatePage: React.FunctionComponent<{
   function handleSubmit() {
     if (title.length == 1 || description.length == 1) {
       alert('예약 설명이 너무 짧습니다.');
+      return;
+    }
+
+    if (!isPossible) {
+      alert('선택한 시간대에 사용 불가능한 장비가 있습니다.');
       return;
     }
 
@@ -155,6 +178,26 @@ const EquipReservationCreatePage: React.FunctionComponent<{
           }}
         />
 
+        {selectedEquipmentObjects.length > 0 && (
+          <div className={'field'} style={{ maxWidth: 400 }}>
+            <label>선택한 장비의 사용 가능 시간</label>
+            {selectedEquipmentObjects.map((equip) => (
+              <div key={equip.uuid} style={{ marginBottom: 12 }}>
+                <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                  {equip.name}
+                </div>
+                <div style={{ color: 'gray', fontSize: '0.9em' }}>
+                  <OpeningHoursList
+                    openingHours={JSON.parse(equip.openingHours)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <Divider />
+
         <Form.Group>
           <ReservationDatetimePicker
             date={date}
@@ -165,6 +208,21 @@ const EquipReservationCreatePage: React.FunctionComponent<{
             setEndTime={setEndTime}
           />
         </Form.Group>
+
+        {!isPossible && selectedEquipments.length > 0 && (
+          <Message negative>
+            <Message.Header>예약이 불가능한 시간대입니다</Message.Header>
+            <p>
+              다음 장비들이 선택한 시간대에 사용 불가능합니다:
+              <ul>
+                {unavailableEquipments.map((equip) => (
+                  <li key={equip.uuid}>{equip.name}</li>
+                ))}
+              </ul>
+              각 장비의 사용 가능 시간을 확인해주세요.
+            </p>
+          </Message>
+        )}
 
         <div className={'field'}>
           <label>예약 현황</label>
