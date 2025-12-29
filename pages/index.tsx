@@ -53,6 +53,7 @@ const circles = [
   },
   { text: '동아리소개', href: '/club', icon: '/home/club.png' },
   { text: '자치단체', href: '/association', icon: '/home/association.png' },
+  { text: '학생단체', href: '/student_association', icon: '/home/student_association.png' },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
   { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
@@ -73,7 +74,7 @@ const Circle = styled(Link)`
   align-items: center;
   text-decoration: none;
   color: #333;
-  width: 120px;
+  width: 100px;
   height: auto;
   gap: 8px;
 
@@ -83,8 +84,8 @@ const Circle = styled(Link)`
 `;
 
 const IconWrapper = styled.div`
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: #eeeff1;
   display: flex;
