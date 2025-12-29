@@ -20,8 +20,9 @@ const StudentAssociationIndexPage: React.FunctionComponent<{
               size="small"
               href={`/student_association/introduce/${intro.name}`}
               src={
-                intro.imageUrl ??
-                'https://react.semantic-ui.com/images/wireframe/image.png'
+                intro.imageUrl && intro.imageUrl.trim() !== "" 
+                ? intro.imageUrl
+                : 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
               alt={`${intro.name}_logo`}
             />
