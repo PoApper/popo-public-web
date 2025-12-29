@@ -29,7 +29,7 @@ const ClubTypeIndexPage: React.FunctionComponent<{
               }
               alt={`${clubInfo.name}_logo`}
             />
-            <h4 style={{ margin: '5px 0 0' }}>{clubInfo.name}</h4>
+            <h3 style={{ margin: '5px 0 0' }}>{clubInfo.name}</h3>
             <p style={{ color: 'gray' }}>{clubInfo.shortDesc}</p>
           </Container>
         ))}
