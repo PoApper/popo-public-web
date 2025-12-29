@@ -53,7 +53,11 @@ const circles = [
   },
   { text: '동아리소개', href: '/club', icon: '/home/club.png' },
   { text: '자치단체', href: '/association', icon: '/home/association.png' },
-  { text: '학생단체', href: '/student_association', icon: '/home/student_association.png' },
+  {
+    text: '학생단체',
+    href: '/student_association',
+    icon: '/home/student_association.png',
+  },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
   { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
