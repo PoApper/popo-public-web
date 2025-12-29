@@ -4,13 +4,13 @@ import { Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
-import { IAssociationIntroduce } from '@/types/introduce.interface';
+import { IStudentAssociationIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
 
-const AssociationSingleIntroducePage: React.FunctionComponent<{
+const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
-  associationInfo: IAssociationIntroduce;
-}> = ({ name, associationInfo }) => {
+  studentAssociationInfo: IStudentAssociationIntroduce;
+}> = ({ name, studentAssociationInfo }) => {
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -18,15 +18,19 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
           <Image
             size="small"
             src={
-              associationInfo.imageUrl ??
-              'https://react.semantic-ui.com/images/wireframe/image.png'
+              studentAssociationInfo.imageUrl && studentAssociationInfo.imageUrl.trim() !== ""
+                ? studentAssociationInfo.imageUrl
+                : "https://react.semantic-ui.com/images/wireframe/image.png"
             }
             alt={`${name}_logo`}
           />
         </div>
+
         <h1 style={{ margin: '0' }}>{name}</h1>
+        <h2 style={{ color: 'grey', marginTop: 0 }}>{studentAssociationInfo.shortDesc}</h2>
+        
         <div style={{ fontSize: 18 }}>
-          <IconLink link={associationInfo.homepageUrl}>
+          <IconLink link={studentAssociationInfo.homepageUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/website-000000?style=for-the-badge'
@@ -34,7 +38,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'homepage'}
             />
           </IconLink>
-          <IconLink link={associationInfo.facebookUrl}>
+          <IconLink link={studentAssociationInfo.facebookUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white'
@@ -42,7 +46,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'facebook'}
             />
           </IconLink>
-          <IconLink link={associationInfo.instagramUrl}>
+          <IconLink link={studentAssociationInfo.instagramUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white'
@@ -50,7 +54,7 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               alt={'instagram'}
             />
           </IconLink>
-          <IconLink link={associationInfo.youtubeUrl}>
+          <IconLink link={studentAssociationInfo.youtubeUrl}>
             <Image
               src={
                 'https://img.shields.io/badge/Youtube-FF0000?style=for-the-badge&logo=youtube&logoColor=white'
@@ -61,15 +65,22 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
         </div>{' '}
         <i></i>
         <div style={{ fontSize: 16, margin: '12px 0' }}>
-          {associationInfo.content}
+          {studentAssociationInfo.content}
         </div>
         <div>
+          {studentAssociationInfo.location?.trim() && (
+            <p>
+              <b>사무실 위치</b>: {studentAssociationInfo.location}
+            </p>
+          )}
+          {studentAssociationInfo.office?.trim() && (
+            <p>
+              <b>협력 행정팀</b>: {studentAssociationInfo.office}
+            </p>
+          )}
           <p>
-            <b>사무실 위치</b>: {associationInfo.location}
-          </p>
-          <p>
-            <b>대표자</b>: {associationInfo.representative}(
-            {associationInfo.contact})
+            <b>대표자</b>: {studentAssociationInfo.representative} (
+            {studentAssociationInfo.contact})
           </p>
         </div>
       </div>
@@ -77,17 +88,17 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
   );
 };
 
-export default AssociationSingleIntroducePage;
+export default StudentAssociationSingleIntroducePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const name = context.query['name'] as string;
 
-  const res = await PoPoAxios.get<IAssociationIntroduce>(
-    `introduce/association/name/${name}`,
+  const res = await PoPoAxios.get<IStudentAssociationIntroduce>(
+    `introduce/student_association/name/${name}`,
   );
-  const associationInfo = res.data;
+  const studentAssociationInfo = res.data;
 
   return {
-    props: { name, associationInfo },
+    props: { name, studentAssociationInfo },
   };
 };
