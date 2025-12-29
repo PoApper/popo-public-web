@@ -32,3 +32,19 @@ export interface IAssociationIntroduce {
   instagramUrl?: string;
   youtubeUrl?: string;
 }
+
+export interface IStudentAssociationIntroduce {
+  uuid: string;
+  name: string;
+  shortDesc: string;
+  content: string;
+  location: string;
+  representative: string;
+  office: string;
+  contact: string;
+  imageUrl?: string;
+  homepageUrl?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  youtubeUrl?: string;
+}

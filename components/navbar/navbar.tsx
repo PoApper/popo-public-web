@@ -127,6 +127,15 @@ const MobileNav = () => {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <Dropdown item text="학생단체">
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <LinkWithStyle href={'/student_association'} passHref>
+                  학생단체 소개
+                </LinkWithStyle>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
           <Dropdown item text="생활백서">
             <Dropdown.Menu>
               <Dropdown.Item>
@@ -212,6 +221,16 @@ const DesktopNav = () => {
           <Dropdown.Item>
             <LinkWithStyle href={'/club'} passHref>
               동아리 소개
+            </LinkWithStyle>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown item simple text="학생단체">
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <LinkWithStyle href={'/student_association'} passHref>
+              학생단체 소개
             </LinkWithStyle>
           </Dropdown.Item>
         </Dropdown.Menu>
