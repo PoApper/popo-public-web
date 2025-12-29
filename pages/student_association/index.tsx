@@ -13,20 +13,21 @@ const StudentAssociationIndexPage: React.FunctionComponent<{
   return (
     <Layout>
       <IntroduceGrid>
-        {studentAssociationList.map((intro) => (
-          <div key={intro.uuid}>
+        {studentAssociationList.map((studentAssociationInfo) => (
+          <div key={studentAssociationInfo.uuid}>
             <Image
               centered
               size="small"
-              href={`/student_association/introduce/${intro.name}`}
+              href={`/student_association/introduce/${studentAssociationInfo.name}`}
               src={
-                intro.imageUrl && intro.imageUrl.trim() !== "" 
-                ? intro.imageUrl
+                studentAssociationInfo.imageUrl && studentAssociationInfo.imageUrl.trim() !== "" 
+                ? studentAssociationInfo.imageUrl
                 : 'https://react.semantic-ui.com/images/wireframe/image.png'
               }
-              alt={`${intro.name}_logo`}
+              alt={`${studentAssociationInfo.name}_logo`}
             />
-            <StudentAssociationName>{intro.name}</StudentAssociationName>
+            <h3 style={{ margin: '5px 0 0' }}>{studentAssociationInfo.name}</h3>
+            <p style={{ color: 'gray' }}>{studentAssociationInfo.shortDesc}</p>
           </div>
         ))}
       </IntroduceGrid>
@@ -57,8 +58,4 @@ const IntroduceGrid = styled.div`
   @media only screen and (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
   }
-`;
-
-const StudentAssociationName = styled.h3`
-  word-break: keep-all;
 `;
