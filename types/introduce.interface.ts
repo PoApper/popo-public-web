@@ -19,6 +19,12 @@ export interface IClubIntroduce {
   youtubeUrl?: string;
 }
 
+export interface IAssociationCategory {
+  id: number;
+  name: string;
+  displayName: string;
+}
+
 export interface IAssociationIntroduce {
   uuid: string;
   name: string;
@@ -31,6 +37,8 @@ export interface IAssociationIntroduce {
   facebookUrl?: string;
   instagramUrl?: string;
   youtubeUrl?: string;
+  category: IAssociationCategory;
+  categoryId: number;
 }
 
 export interface IStudentAssociationIntroduce {
