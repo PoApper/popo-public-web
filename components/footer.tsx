@@ -13,11 +13,19 @@ import { PoPoAxios } from '@/lib/axios.instance';
 const Footer = () => {
   const [popoCRMEmail, setPOPOCRMEmail] = useState('');
   const [STUEmail, setSTUEmail] = useState('');
+  const [STUPresidentName, setSTUPresidentName] = useState('');
+  const [STUPresidentContact, setSTUPresidentContact] = useState('');
+  const [STUTel, setSTUTel] = useState('');
+  const [STUFax, setSTUFax] = useState('');
 
   useEffect(() => {
     PoPoAxios.get('/setting').then((res) => {
       setPOPOCRMEmail(res.data.popoCRMEmail);
       setSTUEmail(res.data.stuEmail);
+      setSTUPresidentName(res.data.stuPresidentName);
+      setSTUPresidentContact(res.data.stuPresidentContact);
+      setSTUTel(res.data.stuTel);
+      setSTUFax(res.data.stuFax);
     });
   }, []);
 
@@ -38,16 +46,28 @@ const Footer = () => {
               <small>
                 <p>77 Cheongam-Ro. Nam-Gu. Pohang. Gyeongbuk. Korea 790-784</p>
                 <p>
-                  TEL +82-10-9385-2178 (총학생회장 박준기)
-                  <br />
-                  TEL +82-54-279-2621, 2637
-                  <br />
-                  FAX +82-54-279-2626
+                  {STUPresidentContact && STUPresidentName && (
+                    <>
+                      TEL {STUPresidentContact} (총학생회장 {STUPresidentName})
+                      <br />
+                    </>
+                  )}
+                  {STUTel && (
+                    <>
+                      TEL {STUTel}
+                      <br />
+                    </>
+                  )}
+                  {STUFax && <>FAX {STUFax}</>}
                 </p>
                 <p>
-                  E-mail: {STUEmail}
-                  <br />
-                  POPO 관련 문의: {popoCRMEmail}
+                  {STUEmail && (
+                    <>
+                      E-mail: {STUEmail}
+                      <br />
+                    </>
+                  )}
+                  {popoCRMEmail && <>POPO 관련 문의: {popoCRMEmail}</>}
                 </p>
               </small>
             </Grid.Column>
