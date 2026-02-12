@@ -46,6 +46,8 @@ const EquipAssociationPage: React.FunctionComponent<{
   const [dongyeonBank, setDongyeonBank] = useState('');
   const [dongyeonServiceTime, setDongyeonServiceTime] = useState('');
   const [dongyeonContact, setDongyeonContact] = useState('');
+  const [dongyeonKakaoLink, setDongyeonKakaoLink] = useState('');
+  const [dongyeonKakaoTitle, setDongyeonKakaoTitle] = useState('');
   const startDate = moment()
     .subtract(1, 'months')
     .startOf('month')
@@ -73,6 +75,8 @@ const EquipAssociationPage: React.FunctionComponent<{
       setDongyeonBank(res.data.dongyeonBank);
       setDongyeonServiceTime(res.data.dongyeonServiceTime);
       setDongyeonContact(res.data.dongyeonContact);
+      setDongyeonKakaoLink(res.data.dongyeonKakaoLink);
+      setDongyeonKakaoTitle(res.data.dongyeonKakaoTitle);
     });
   }, [startDate, association, selectedDate]);
 
@@ -100,15 +104,18 @@ const EquipAssociationPage: React.FunctionComponent<{
                 예약금 납부 후, 카카오톡 채널에 입장하여{' '}
                 <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
               </li>
-              <strong>카카오톡 채널 링크 : </strong>
-              {/* TODO: 동연 카카오톡 채널 관리자페이지에서 변경할 수 있게 변경 */}
-              <a
-                href="http://pf.kakao.com/_qASbn/chat"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                동아리연합회 2026
-              </a>
+              {dongyeonKakaoLink && dongyeonKakaoTitle && (
+                <>
+                  <strong>카카오톡 채널 링크 : </strong>
+                  <a
+                    href={dongyeonKakaoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {dongyeonKakaoTitle}
+                  </a>
+                </>
+              )}
               <br />
               <em>예시</em>
               <br />
