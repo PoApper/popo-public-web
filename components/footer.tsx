@@ -38,9 +38,9 @@ const Footer = () => {
               <small>
                 <p>77 Cheongam-Ro. Nam-Gu. Pohang. Gyeongbuk. Korea 790-784</p>
                 <p>
-                  TEL +82-10-9385-2178 (총학생회장 박준기)
+                  TEL +82-10-9169-4027 (총학생회장 윤준하)
                   <br />
-                  TEL +82-54-279-2621, 2637
+                  TEL +82-54-279-2621
                   <br />
                   FAX +82-54-279-2626
                 </p>

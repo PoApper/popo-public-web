@@ -107,7 +107,7 @@ const EquipAssociationPage: React.FunctionComponent<{
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                동아리연합회 2025
+                동아리연합회 2026
               </a>
               <br />
               <em>예시</em>
