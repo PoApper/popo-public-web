@@ -42,7 +42,17 @@ const RecruitingPage = () => {
             </li>
           </ol>
           <p>
-            <strong>Contact Us</strong> : Lead Developer, 김관호(컴공 19)
+            <strong>Contact Us</strong> : Lead Developer, 나태양(컴공 24)
+            <a href={'https://github.com/hegelty'}>
+              <Icon name={'github'} />
+            </a>
+            <Popup
+              content={'iamsun@postech.ac.kr'}
+              trigger={<Icon name={'mail'} />}
+            />
+          </p>
+          <p>
+            <strong>Previous Leads</strong> : 김관호(컴공 19)
             <a href={'https://github.com/khkim6040'}>
               <Icon name={'github'} />
             </a>
