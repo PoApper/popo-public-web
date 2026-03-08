@@ -19,6 +19,16 @@ export interface IClubIntroduce {
   youtubeUrl?: string;
 }
 
+export type AssociationType =
+  | 'executive'
+  | 'autonomous'
+  | 'media'
+  | 'specialized'
+  | '집행기구'
+  | '자치기구'
+  | '언론기구'
+  | '전문기구';
+
 export interface IAssociationIntroduce {
   uuid: string;
   name: string;
@@ -31,6 +41,7 @@ export interface IAssociationIntroduce {
   facebookUrl?: string;
   instagramUrl?: string;
   youtubeUrl?: string;
+  associationType?: AssociationType | '' | null;
 }
 
 export interface IStudentAssociationIntroduce {
