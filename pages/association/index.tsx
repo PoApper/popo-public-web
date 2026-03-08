@@ -6,71 +6,128 @@ import { Image } from 'semantic-ui-react';
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import {
+  AssociationType,
   IAssociationIntroduce,
-  IAssociationCategory,
 } from '@/types/introduce.interface';
 
+type AssociationTypeKey = 'executive' | 'autonomous' | 'media' | 'specialized';
+
 interface IGroupedAssociation {
-  category: IAssociationCategory;
+  associationType: AssociationTypeKey | 'uncategorized';
+  displayName: string;
   associations: IAssociationIntroduce[];
 }
+
+const associationTypeOrder: AssociationTypeKey[] = [
+  'executive',
+  'autonomous',
+  'media',
+  'specialized',
+];
+
+const associationTypeDisplayName: Record<AssociationTypeKey, string> = {
+  executive: '집행기구',
+  autonomous: '자치기구',
+  media: '언론기구',
+  specialized: '전문기구',
+};
+
+const associationTypeMap: Record<AssociationType, AssociationTypeKey> = {
+  executive: 'executive',
+  autonomous: 'autonomous',
+  media: 'media',
+  specialized: 'specialized',
+  집행기구: 'executive',
+  자치기구: 'autonomous',
+  언론기구: 'media',
+  전문기구: 'specialized',
+};
+
+const getAssociationType = (
+  associationType?: IAssociationIntroduce['associationType'],
+): AssociationTypeKey | null => {
+  if (!associationType) {
+    return null;
+  }
+
+  return associationTypeMap[associationType] ?? null;
+};
 
 const AssociationIndexPage: React.FunctionComponent<{
   associationList: IAssociationIntroduce[];
 }> = ({ associationList }) => {
-  // 카테고리 ID를 기준으로 그룹화
-  const groupedData = associationList.reduce(
+  // 자치단체 분류를 기준으로 그룹화
+  const groupedData = associationList.reduce<
+    Record<AssociationTypeKey | 'uncategorized', IGroupedAssociation>
+  >(
     (acc, item) => {
-      const catId = item.categoryId;
-      if (!acc[catId]) {
-        acc[catId] = {
-          category: item.category,
+      const associationType = getAssociationType(item.associationType);
+      const key = associationType ?? 'uncategorized';
+
+      if (!acc[key]) {
+        acc[key] = {
+          associationType: key,
+          displayName: associationType
+            ? associationTypeDisplayName[associationType]
+            : '미분류',
           associations: [],
         };
       }
-      acc[catId].associations.push(item);
+
+      acc[key].associations.push(item);
       return acc;
     },
-    {} as Record<number, IGroupedAssociation>,
+    {} as Record<AssociationTypeKey | 'uncategorized', IGroupedAssociation>,
   );
 
-  // 카테고리 ID 순서대로 정렬하여 배열로 변환
-  const sortedCategories = Object.values(groupedData).sort(
-    (a, b) => a.category.id - b.category.id,
-  );
+  // 원하는 순서대로 정렬하여 배열로 변환
+  const sortedCategories = associationTypeOrder
+    .map((associationType) => groupedData[associationType])
+    .filter((category): category is IGroupedAssociation => Boolean(category));
+
+  if (groupedData.uncategorized && sortedCategories.length > 0) {
+    sortedCategories.push(groupedData.uncategorized);
+  }
+
+  const introduceItems = (associationItems: IAssociationIntroduce[]) =>
+    associationItems.map((intro) => (
+      <div key={intro.uuid}>
+        <Image
+          centered
+          size="small"
+          href={`/association/introduce/${intro.name}`}
+          src={
+            intro.imageUrl ??
+            'https://react.semantic-ui.com/images/wireframe/image.png'
+          }
+          alt={`${intro.name}_logo`}
+          style={{
+            width: '150px',
+            height: '150px',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
+        <AssociationName>{intro.name}</AssociationName>
+      </div>
+    ));
 
   return (
     <Layout>
-      <PageContainer>
-        {sortedCategories.map((group) => (
-          <CategorySection key={group.category.id}>
-            <CategoryHeader>{group.category.displayName}</CategoryHeader>
-            <IntroduceGrid>
-              {group.associations.map((intro) => (
-                <div key={intro.uuid}>
-                  <Image
-                    centered
-                    size="small"
-                    href={`/association/introduce/${intro.name}`}
-                    src={
-                      intro.imageUrl ??
-                      'https://react.semantic-ui.com/images/wireframe/image.png'
-                    }
-                    alt={`${intro.name}_logo`}
-                    style={{
-                      width: '150px',
-                      height: '150px',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                    }}
-                  />
-                  <AssociationName>{intro.name}</AssociationName>
-                </div>
-              ))}
-            </IntroduceGrid>
-          </CategorySection>
-        ))}
-      </PageContainer>
+      {sortedCategories.length > 0 ? (
+        <PageContainer>
+          {sortedCategories.map((category) => (
+            <CategorySection key={category.associationType}>
+              <CategoryHeader>{category.displayName}</CategoryHeader>
+              <IntroduceGrid>
+                {introduceItems(category.associations)}
+              </IntroduceGrid>
+            </CategorySection>
+          ))}
+        </PageContainer>
+      ) : (
+        <IntroduceGrid>{introduceItems(associationList)}</IntroduceGrid>
+      )}
     </Layout>
   );
 };
@@ -87,7 +144,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       props: { associationList },
     };
-  } catch (e) {
+  } catch {
     return {
       props: { associationList: [] },
     };
