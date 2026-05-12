@@ -30,9 +30,7 @@ const ReservationDatetimePicker = ({
   const minReservationDate = getReservationRequiredDate(
     reservationRequiredDays,
   );
-  const maxReservationDate = moment()
-    .tz('Asia/Seoul')
-    .add(Math.max(30, Number(reservationRequiredDays) || 0), 'day');
+  const maxReservationDate = moment(minReservationDate).add(30, 'day');
 
   const CinemaExcludeTimes = [
     moment(date.format('YYYY-MM-DD') + 'T03:00').toDate(),
