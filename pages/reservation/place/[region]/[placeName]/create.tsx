@@ -13,6 +13,7 @@ import { minuteDiff, roundUpByDuration } from '@/lib/time-date';
 import ReservationDatetimePicker from '@/components/reservation/reservation.datetime.picker';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
+import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
 
 const RegionKorNameMapping = {
   STUDENT_HALL: '학생 회관',
@@ -47,12 +48,17 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     moment(now).add(timeIntervals, 'minute'),
   ); // HHmm
 
-  const isPossible = isOnOpeningHours(
+  const isOnAvailableTime = isOnOpeningHours(
     placeInfo.openingHours,
     date.format('dddd'), // 월요일
     startTime.format('HH:mm'),
     endTime.format('HH:mm'),
   );
+  const isLeadTimeSatisfied = isReservationLeadTimeSatisfied(
+    date.format('YYYYMMDD'),
+    placeInfo.reservationRequiredDays,
+  );
+  const isPossible = isOnAvailableTime && isLeadTimeSatisfied;
 
   useEffect(() => {
     // 로그인 확인
@@ -75,7 +81,14 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   }, [placeInfo.region, placeName, router, selectedDate]);
 
   function handleSubmit() {
-    if (!isPossible) {
+    if (!isLeadTimeSatisfied) {
+      alert(
+        `${placeInfo.name}은 최소 ${placeInfo.reservationRequiredDays}일 전 예약해야 합니다.`,
+      );
+      return;
+    }
+
+    if (!isOnAvailableTime) {
       alert(
         `예약이 불가능한 시간대입니다. ${placeInfo.name}의 사용 가능 시간을 확인해주세요.`,
       );
@@ -175,10 +188,18 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             setEndTime={setEndTime}
             timeIntervals={timeIntervals}
             isCinemaRoom={placeInfo.name.includes('시네마 룸')}
+            reservationRequiredDays={placeInfo.reservationRequiredDays}
           />
         </Form.Group>
 
-        {isPossible ? null : (
+        {isLeadTimeSatisfied ? null : (
+          <Message negative>
+            {placeInfo.name}은 최소 {placeInfo.reservationRequiredDays}일 전
+            예약해야 합니다.
+          </Message>
+        )}
+
+        {isOnAvailableTime ? null : (
           <Message negative>
             예약이 불가능한 시간대입니다. {placeInfo.name}의 사용 가능 시간을
             확인해주세요.

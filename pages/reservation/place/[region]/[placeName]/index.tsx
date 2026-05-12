@@ -3,13 +3,14 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import moment from 'moment-timezone';
-import { Button, Grid, Label } from 'semantic-ui-react';
+import { Button, Grid, Label, Message } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
 import PlaceInformationCard from '@/components/reservation/place.information.card';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IPlace } from '@/types/reservation.interface';
+import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
 
 // Due to the SSR issue, we need to use dynamic import
 const ReservationCalendar = dynamic(
@@ -30,6 +31,10 @@ const PlaceReservationPage: React.FunctionComponent<{
     .subtract(1, 'months')
     .startOf('month')
     .format('YYYYMMDD');
+  const isSelectedDateBookable = isReservationLeadTimeSatisfied(
+    selectedDate,
+    placeInfo.reservationRequiredDays,
+  );
 
   useEffect(() => {
     if (!region || !placeName) return;
@@ -54,13 +59,25 @@ const PlaceReservationPage: React.FunctionComponent<{
       <Grid columns={2} divided stackable>
         <Grid.Column width={6}>
           <PlaceInformationCard placeInfo={placeInfo} />
+          {!isSelectedDateBookable && placeInfo.reservationRequiredDays > 0 ? (
+            <Message warning>
+              이 장소는 {placeInfo.reservationRequiredDays}일 전 예약이
+              필요합니다.
+            </Message>
+          ) : null}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Link
-              href={`/reservation/place/${region}/${placeName}/create?selectedDate=${selectedDate}`}
-              passHref
-            >
-              <Button primary>예약 신청하기</Button>
-            </Link>
+            {isSelectedDateBookable ? (
+              <Link
+                href={`/reservation/place/${region}/${placeName}/create?selectedDate=${selectedDate}`}
+                passHref
+              >
+                <Button primary>예약 신청하기</Button>
+              </Link>
+            ) : (
+              <Button primary disabled>
+                예약 신청하기
+              </Button>
+            )}
             <Link href={'/auth/my-reservation'} passHref>
               <Button>내 예약 목록</Button>
             </Link>
