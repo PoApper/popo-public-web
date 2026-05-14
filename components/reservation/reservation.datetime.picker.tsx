@@ -3,6 +3,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { roundUpByDuration } from '@/lib/time-date';
+import { getReservationRequiredDate } from '@/lib/reservation-required-days';
 const ReservationDatetimePicker = ({
   date,
   startTime,
@@ -12,6 +13,7 @@ const ReservationDatetimePicker = ({
   setEndTime,
   timeIntervals,
   isCinemaRoom,
+  reservationRequiredDays,
 }: {
   date: any;
   startTime: any;
@@ -21,9 +23,14 @@ const ReservationDatetimePicker = ({
   setEndTime: any;
   timeIntervals?: number;
   isCinemaRoom?: boolean;
+  reservationRequiredDays?: number;
 }) => {
   const now: moment.Moment = roundUpByDuration(moment().tz('Asia/Seoul'), 30);
   const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
+  const minReservationDate = getReservationRequiredDate(
+    reservationRequiredDays,
+  );
+  const maxReservationDate = moment(minReservationDate).add(30, 'day');
 
   const CinemaExcludeTimes = [
     moment(date.format('YYYY-MM-DD') + 'T03:00').toDate(),
@@ -40,8 +47,12 @@ const ReservationDatetimePicker = ({
         <DatePicker
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'yyyy-MM-dd'}
-          minDate={now.toDate()}
-          maxDate={now.add(30, 'day').toDate()}
+          minDate={
+            (Number(reservationRequiredDays) || 0) > 0
+              ? minReservationDate.toDate()
+              : now.toDate()
+          }
+          maxDate={maxReservationDate.toDate()}
           selected={date.toDate()}
           onChange={(date: Date | null) => {
             if (date) {

@@ -13,6 +13,7 @@ import { IUser } from '@/types/user.interface';
 import ReservationDatetimePicker from '@/components/reservation/reservation.datetime.picker';
 import EquipReservationTable from '@/components/reservation/equip.reservation.table';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
+import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
 
 type ObjectType = {
   [key: string]: string;
@@ -53,16 +54,33 @@ const EquipReservationCreatePage: React.FunctionComponent<{
     selectedEquipments.includes(equip.uuid),
   );
 
-  const unavailableEquipments = selectedEquipmentObjects.filter((equip) => {
-    return !isOnOpeningHours(
-      equip.openingHours,
-      date.format('dddd'), // Monday
-      startTime.format('HH:mm'),
-      endTime.format('HH:mm'),
-    );
-  });
+  const unavailableOpeningHourEquipments = selectedEquipmentObjects.filter(
+    (equip) => {
+      return !isOnOpeningHours(
+        equip.openingHours,
+        date.format('dddd'), // Monday
+        startTime.format('HH:mm'),
+        endTime.format('HH:mm'),
+      );
+    },
+  );
+  const unavailableLeadTimeEquipments = selectedEquipmentObjects.filter(
+    (equip) =>
+      !isReservationLeadTimeSatisfied(
+        date.format('YYYYMMDD'),
+        equip.reservationRequiredDays,
+      ),
+  );
+  const reservationRequiredDays = Math.max(
+    0,
+    ...selectedEquipmentObjects.map(
+      (equip) => Number(equip.reservationRequiredDays) || 0,
+    ),
+  );
 
-  const isPossible = unavailableEquipments.length === 0;
+  const isPossible =
+    unavailableOpeningHourEquipments.length === 0 &&
+    unavailableLeadTimeEquipments.length === 0;
 
   useEffect(() => {
     // 로그인 확인
@@ -91,6 +109,13 @@ const EquipReservationCreatePage: React.FunctionComponent<{
     }
 
     if (!isPossible) {
+      if (unavailableLeadTimeEquipments.length > 0) {
+        alert(
+          '선택한 날짜에 예약하기에는 사전 예약 기준을 만족하지 않는 장비가 있습니다.',
+        );
+        return;
+      }
+
       alert('선택한 시간대에 사용 불가능한 장비가 있습니다.');
       return;
     }
@@ -190,6 +215,9 @@ const EquipReservationCreatePage: React.FunctionComponent<{
                   <OpeningHoursList
                     openingHours={JSON.parse(equip.openingHours)}
                   />
+                  {equip.reservationRequiredDays > 0 ? (
+                    <div>{equip.reservationRequiredDays}일 전 예약 필수</div>
+                  ) : null}
                 </div>
               </div>
             ))}
@@ -206,16 +234,36 @@ const EquipReservationCreatePage: React.FunctionComponent<{
             setDate={setDate}
             setStartTime={setStartTime}
             setEndTime={setEndTime}
+            reservationRequiredDays={reservationRequiredDays}
           />
         </Form.Group>
 
-        {!isPossible && selectedEquipments.length > 0 && (
+        {unavailableLeadTimeEquipments.length > 0 && (
+          <Message negative>
+            <Message.Header>
+              예약 신청일 기준을 만족하지 않습니다
+            </Message.Header>
+            <p>
+              다음 장비들은 최소 예약 신청일 기준을 만족해야 합니다:
+              <ul>
+                {unavailableLeadTimeEquipments.map((equip) => (
+                  <li key={equip.uuid}>
+                    {equip.name} ({equip.reservationRequiredDays}일 전 예약
+                    필수)
+                  </li>
+                ))}
+              </ul>
+            </p>
+          </Message>
+        )}
+
+        {unavailableOpeningHourEquipments.length > 0 && (
           <Message negative>
             <Message.Header>예약이 불가능한 시간대입니다</Message.Header>
             <p>
               다음 장비들이 선택한 시간대에 사용 불가능합니다:
               <ul>
-                {unavailableEquipments.map((equip) => (
+                {unavailableOpeningHourEquipments.map((equip) => (
                   <li key={equip.uuid}>{equip.name}</li>
                 ))}
               </ul>

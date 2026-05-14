@@ -14,6 +14,7 @@ export interface IPlace {
   imageUrl?: string;
   maxMinutes: number;
   maxConcurrentReservation: number;
+  reservationRequiredDays: number;
   openingHours: string;
   totalReservationCount: number;
 }
@@ -25,6 +26,7 @@ export interface IEquipment {
   fee: number;
   imageUrl?: string;
   maxMinutes: number;
+  reservationRequiredDays: number;
   openingHours: string;
 }
 

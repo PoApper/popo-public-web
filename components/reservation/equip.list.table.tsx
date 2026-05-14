@@ -57,6 +57,12 @@ const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
                   <p>{equipment.maxMinutes}분</p>
                 </div>
               )}
+              {equipment.reservationRequiredDays > 0 && (
+                <div style={{ marginTop: '1rem' }}>
+                  <h4>사전 예약 기준</h4>
+                  <p>{equipment.reservationRequiredDays}일 전 예약 필수</p>
+                </div>
+              )}
             </Modal.Content>
           </Modal>
         ))}
