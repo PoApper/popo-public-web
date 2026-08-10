@@ -243,6 +243,11 @@ const DesktopNav = () => {
               생활백서
             </LinkWithStyle>
           </Dropdown.Item>
+          <Dropdown.Item>
+            <LinkWithStyle href={'/extracurricular'} passHref>
+              비교과활동
+            </LinkWithStyle>
+          </Dropdown.Item>
           <Dropdown.Item
             text={'배달업체'}
             href={POPOLinks.PostechDeliveryLink}
