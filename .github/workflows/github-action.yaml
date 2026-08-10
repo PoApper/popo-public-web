@@ -1,11 +1,23 @@
 on:
   push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types: [published]
 
 name: Docker Build and Push
 
 env:
   ECR_REGISTRY: 151345152001.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: popo-public-web
+
+# 같은 PR 안에서는 가장 최근 push만 워크플로우를 실행하도록 설정
+concurrency:
+  group: ${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   lint:
@@ -36,6 +48,10 @@ jobs:
     name: Docker build and push
     needs: lint
     runs-on: ubuntu-24.04-arm
+    # docker_build_and_push 잡은 모든 워크플로우에서 유일하게 하나만 실행되도록 설정
+    concurrency:
+      group: docker-build
+      cancel-in-progress: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,9 +71,9 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
       - name: Determine Prod/Dev Stage
         run: |
-          if [[ ${{ github.ref_type }} == 'tag' ]]; then
+          if [[ ${{ github.event_name }} == 'release' ]]; then
             echo "PROD"
-            echo "IMAGE_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+            echo "IMAGE_TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
             echo "NEXT_PUBLIC_ENV=prod" >> $GITHUB_ENV
           else
             echo "DEV"
@@ -81,6 +97,9 @@ jobs:
   redeploy_dev_service:
     name: Redeploy Dev Service
     needs: docker_build_and_push
+    # release(=Prod 이미지 빌드) 때는 dev를 건드리지 않는다.
+    # Prod 배포는 Portainer에서 이미지 태그를 직접 바꿔주는 수동 절차다.
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
     steps:
       - name: Redeploy Dev Service
