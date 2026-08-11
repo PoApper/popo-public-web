@@ -85,26 +85,12 @@ const ReportDetailPage: React.FC = () => {
               <FileName>{report.fileName}</FileName>
             </FileBox>
             <DownloadButton href={fileUrl} download={report.fileName}>
-              📥 원본 파일 다운로드
+              다운로드
             </DownloadButton>
           </DownloadBar>
         </HeaderCard>
 
-        {report.memo && (
-          <SectionCard borderLeft="#3b82f6">
-            <SectionHeader>
-              <SectionIcon>📝</SectionIcon>
-              <SectionTitle>메모</SectionTitle>
-            </SectionHeader>
-            <MemoContent>{report.memo}</MemoContent>
-          </SectionCard>
-        )}
-
         <ViewerSection>
-          <ViewerHeader>
-            <ViewerTitle>📄 원본 문서</ViewerTitle>
-          </ViewerHeader>
-
           <ViewerBody>
             <DocumentViewer
               reportUuid={report.uuid}
@@ -166,7 +152,7 @@ const MetaRow = styled.div`
 
 const MetaTag = styled.span`
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: #4b5563;
   background-color: #f3f4f6;
   padding: 4px 10px;
@@ -175,7 +161,7 @@ const MetaTag = styled.span`
 
 const ReportTitle = styled.h1`
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 500;
   color: #111827;
   line-height: 1.4;
   margin: 0 0 24px 0;
@@ -205,7 +191,7 @@ const FileBox = styled.div`
 
 const FileIcon = styled.span<{ type: string }>`
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
   padding: 4px 8px;
   border-radius: 4px;
   color: #ffffff;
@@ -231,7 +217,7 @@ const DownloadButton = styled.a`
   padding: 10px 18px;
   border-radius: 6px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.15s ease;
   white-space: nowrap;
@@ -243,68 +229,11 @@ const DownloadButton = styled.a`
   }
 `;
 
-const SectionCard = styled.div<{ borderLeft: string }>`
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-left: 4px solid ${(props) => props.borderLeft};
-  border-radius: 8px;
-  padding: 24px;
-  margin-bottom: 24px;
-`;
-
-const SectionHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-`;
-
-const SectionIcon = styled.span`
-  font-size: 20px;
-`;
-
-const SectionTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
-`;
-
-const MemoContent = styled.p`
-  font-size: 15px;
-  color: #1f2937;
-  line-height: 1.7;
-  margin: 0;
-  white-space: pre-wrap;
-`;
-
 const ViewerSection = styled.div`
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
-`;
-
-const ViewerHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px 24px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
-
-  @media (min-width: 640px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-`;
-
-const ViewerTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0;
 `;
 
 const ViewerBody = styled.div`

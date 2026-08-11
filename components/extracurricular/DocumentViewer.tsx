@@ -150,6 +150,6 @@ const Notice = styled.div`
 
   a {
     color: #2563eb;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;

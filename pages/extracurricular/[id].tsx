@@ -76,7 +76,6 @@ const ExtracurricularDetailPage: React.FC = () => {
 
         <OverviewCard>
           <OverviewHeader>
-            <CategoryBadge>{activity.category}</CategoryBadge>
             <h1>{activity.title}</h1>
           </OverviewHeader>
 
@@ -91,9 +90,13 @@ const ExtracurricularDetailPage: React.FC = () => {
               <InfoLabel>지원 대상</InfoLabel>
               <InfoValue>{activity.target}</InfoValue>
             </InfoBox>
-            <InfoBox style={{ gridColumn: '1 / -1' }}>
+            <InfoBox>
               <InfoLabel>신청 및 선발 절차</InfoLabel>
               <InfoValue>{activity.applicationMethod}</InfoValue>
+            </InfoBox>
+            <InfoBox>
+              <InfoLabel>카테고리</InfoLabel>
+              <InfoValue>{activity.category}</InfoValue>
             </InfoBox>
           </InfoGrid>
         </OverviewCard>
@@ -151,8 +154,8 @@ const ExtracurricularDetailPage: React.FC = () => {
           <Table>
             <thead>
               <tr>
-                <th>보고서 / 수기 제목</th>
-                <th>수행 시기</th>
+                <th>보고서 제목</th>
+                <th>시기</th>
                 <th>학년</th>
                 <th>전공</th>
                 <th>작성자</th>
@@ -170,13 +173,6 @@ const ExtracurricularDetailPage: React.FC = () => {
                 >
                   <TitleTd>
                     <ReportTitle>{rep.title}</ReportTitle>
-                    {rep.memo && (
-                      <MemoSnippet>
-                        {rep.memo.length > 70
-                          ? `${rep.memo.slice(0, 70)}...`
-                          : rep.memo}
-                      </MemoSnippet>
-                    )}
                   </TitleTd>
                   <td>{rep.period}</td>
                   <td>{rep.grade}</td>
@@ -244,17 +240,6 @@ const OverviewHeader = styled.div`
   margin-bottom: 16px;
 `;
 
-const CategoryBadge = styled.span`
-  font-size: 12px;
-  font-weight: 600;
-  color: #2563eb;
-  background-color: #eff6ff;
-  padding: 4px 10px;
-  border-radius: 6px;
-  display: inline-block;
-  margin-bottom: 8px;
-`;
-
 const Description = styled.p`
   font-size: 15px;
   color: #4b5563;
@@ -279,7 +264,7 @@ const InfoBox = styled.div``;
 
 const InfoLabel = styled.div`
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: #9ca3af;
   margin-bottom: 4px;
 
@@ -302,14 +287,14 @@ const SectionTitleWrapper = styled.div`
 
 const SectionTitle = styled.h2`
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 500;
   color: #111827;
   margin: 0;
 `;
 
 const CountTag = styled.span`
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: #4b5563;
   background-color: #f3f4f6;
   padding: 2px 8px;
@@ -335,7 +320,7 @@ const FilterGroup = styled.div`
 
 const FilterLabel = styled.span`
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: #6b7280;
 `;
 
@@ -368,7 +353,7 @@ const Table = styled.table`
   th {
     background-color: #f9fafb;
     color: #4b5563;
-    font-weight: 600;
+    font-weight: 500;
     padding: 14px 16px;
     border-bottom: 1px solid #e5e7eb;
   }
@@ -397,7 +382,7 @@ const TitleTd = styled.td`
 `;
 
 const ReportTitle = styled.div`
-  font-weight: 600;
+  font-weight: 500;
   color: #111827;
   margin-bottom: 4px;
 
@@ -406,18 +391,9 @@ const ReportTitle = styled.div`
   }
 `;
 
-const MemoSnippet = styled.div`
-  font-size: 12px;
-  color: #6b7280;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
 const FileTypeBadge = styled.span<{ type: string }>`
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 500;
   padding: 2px 6px;
   border-radius: 4px;
   color: #ffffff;

@@ -49,8 +49,8 @@ const ExtracurricularIndexPage: React.FC = () => {
         <HeaderSection>
           <h1>비교과활동 수기집</h1>
           <SubTitle>
-            세계문화탐방대, 노벨위크 등 선배들의 생생한 활동 수기를 한곳에서
-            확인하세요.
+            세계문화탐방대, 노벨위크 등에 참여했던 선배들의 생생한 활동 수기를
+            한곳에서 확인하세요.
           </SubTitle>
 
           <SearchFilterWrapper>
@@ -80,7 +80,6 @@ const ExtracurricularIndexPage: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CategoryBadge>{act.category}</CategoryBadge>
-                  <IconTag>📘</IconTag>
                 </CardHeader>
                 <CardTitle>{act.title}</CardTitle>
                 <CardDescription>{act.description}</CardDescription>
@@ -97,7 +96,7 @@ const ExtracurricularIndexPage: React.FC = () => {
                 </CardMeta>
 
                 <CardFooter>
-                  <span>수기 및 상세 보기</span>
+                  <span>수기 보기</span>
                   <span>→</span>
                 </CardFooter>
               </Card>
@@ -238,20 +237,16 @@ const CardHeader = styled.div`
 
 const CategoryBadge = styled.span`
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: #374151;
   background-color: #f3f4f6;
   padding: 4px 10px;
   border-radius: 6px;
 `;
 
-const IconTag = styled.span`
-  font-size: 20px;
-`;
-
 const CardTitle = styled.h3`
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   color: #111827;
   margin: 0 0 10px 0;
 `;
@@ -298,7 +293,7 @@ const CardFooter = styled.div`
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: #2563eb;
 `;
 
