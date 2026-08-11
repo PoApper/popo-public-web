@@ -3,12 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Layout from '@/components/layout';
-import {
-  FALLBACK_REPORTS,
-  FALLBACK_ACTIVITIES,
-  ActivityReport,
-  Activity,
-} from '@/components/extracurricular/mockData';
+import { PoPoAxios } from '@/lib/axios.instance';
+import { ActivityReport, Activity } from '@/components/extracurricular/types';
 
 const ReportDetailPage: React.FC = () => {
   const router = useRouter();
@@ -17,39 +13,28 @@ const ReportDetailPage: React.FC = () => {
   const [report, setReport] = useState<ActivityReport | null>(null);
   const [activity, setActivity] = useState<Activity | null>(null);
   const [activePage, setActivePage] = useState<number>(0);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
     if (!reportId) return;
 
     const fetchData = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API || 'https://api.popo-dev.poapper.club';
-        const repRes = await fetch(`${apiUrl}/activity-report/${reportId}`);
-        if (repRes.ok) {
-          const repData = await repRes.json();
-          if (repData && repData.uuid) {
-            setReport(repData);
+        const repRes = await PoPoAxios.get<ActivityReport>(
+          `/activity-report/${reportId}`,
+        );
+        setReport(repRes.data ?? null);
 
-            // Fetch linked activity
-            if (repData.activityId) {
-              const actRes = await fetch(`${apiUrl}/activity/${repData.activityId}`);
-              if (actRes.ok) {
-                const actData = await actRes.json();
-                setActivity(actData);
-              }
-            }
-            return;
-          }
+        if (repRes.data?.activityId) {
+          const actRes = await PoPoAxios.get<Activity>(
+            `/activity/${repRes.data.activityId}`,
+          );
+          setActivity(actRes.data ?? null);
         }
       } catch (err) {
-        console.log('Using fallback report detail due to API offline:', err);
+        console.error('활동 수기를 불러오지 못했습니다:', err);
+        setLoadError(true);
       }
-
-      // Fallback
-      const foundRep = FALLBACK_REPORTS.find((r) => r.uuid === reportId) || FALLBACK_REPORTS[0];
-      setReport(foundRep);
-      const foundAct = FALLBACK_ACTIVITIES.find((a) => a.uuid === foundRep.activityId) || FALLBACK_ACTIVITIES[0];
-      setActivity(foundAct);
     };
 
     fetchData();
@@ -58,7 +43,11 @@ const ReportDetailPage: React.FC = () => {
   if (!report) {
     return (
       <Layout>
-        <LoadingContainer>보고서 로딩 중...</LoadingContainer>
+        <LoadingContainer>
+          {loadError
+            ? '활동 수기를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
+            : '보고서 로딩 중...'}
+        </LoadingContainer>
       </Layout>
     );
   }
@@ -72,7 +61,9 @@ const ReportDetailPage: React.FC = () => {
       <Container>
         <Breadcrumb>
           {activity ? (
-            <Link href={`/extracurricular/${activity.uuid}`}>← {activity.title} 상세 목록으로 돌아가기</Link>
+            <Link href={`/extracurricular/${activity.uuid}`}>
+              ← {activity.title} 상세 목록으로 돌아가기
+            </Link>
           ) : (
             <Link href="/extracurricular">← 전체 목록으로 돌아가기</Link>
           )}
@@ -90,10 +81,14 @@ const ReportDetailPage: React.FC = () => {
 
           <DownloadBar>
             <FileBox>
-              <FileIcon type={report.fileType}>{report.fileType.toUpperCase()}</FileIcon>
+              <FileIcon type={report.fileType}>
+                {report.fileType.toUpperCase()}
+              </FileIcon>
               <FileName>{report.fileName}</FileName>
             </FileBox>
-            <DownloadButton onClick={handleDownload}>📥 원본 파일 다운로드</DownloadButton>
+            <DownloadButton onClick={handleDownload}>
+              📥 원본 파일 다운로드
+            </DownloadButton>
           </DownloadBar>
         </HeaderCard>
 
@@ -138,13 +133,17 @@ const ReportDetailPage: React.FC = () => {
           <ViewerBody>
             {report.pages && report.pages.length > 0 ? (
               <DocumentPage>
-                <PageHeader>PAGE {activePage + 1} / {report.pages.length}</PageHeader>
+                <PageHeader>
+                  PAGE {activePage + 1} / {report.pages.length}
+                </PageHeader>
                 <PageText>{report.pages[activePage]}</PageText>
               </DocumentPage>
             ) : (
               <DocumentPlaceholder>
                 <p>본 문서의 미리보기 페이지가 준비되어 있습니다.</p>
-                <button onClick={handleDownload}>원문 파일 다운로드하여 열기</button>
+                <button onClick={handleDownload}>
+                  원문 파일 다운로드하여 열기
+                </button>
               </DocumentPlaceholder>
             )}
           </ViewerBody>
@@ -246,7 +245,11 @@ const FileIcon = styled.span<{ type: string }>`
   border-radius: 4px;
   color: #ffffff;
   background-color: ${(props) =>
-    props.type === 'pdf' ? '#ef4444' : props.type === 'docx' ? '#2563eb' : '#10b981'};
+    props.type === 'pdf'
+      ? '#ef4444'
+      : props.type === 'docx'
+        ? '#2563eb'
+        : '#10b981'};
 `;
 
 const FileName = styled.span`

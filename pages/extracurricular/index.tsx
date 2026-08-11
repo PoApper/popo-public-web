@@ -2,35 +2,39 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Layout from '@/components/layout';
-import { FALLBACK_ACTIVITIES, Activity } from '@/components/extracurricular/mockData';
+import { PoPoAxios } from '@/lib/axios.instance';
+import { Activity } from '@/components/extracurricular/types';
 
-const categories = ['전체', '글로벌/해외', '학술/연구', '봉사/사회공헌', '창업/취업'];
+const categories = [
+  '전체',
+  '글로벌/해외',
+  '학술/연구',
+  '봉사/사회공헌',
+  '창업/취업',
+];
 
 const ExtracurricularIndexPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [activities, setActivities] = useState<Activity[]>(FALLBACK_ACTIVITIES);
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API || 'https://api.popo-dev.poapper.club';
-        const res = await fetch(`${apiUrl}/activity`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setActivities(data);
-          }
-        }
+        const res = await PoPoAxios.get<Activity[]>('/activity');
+        setActivities(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
-        console.log('Using fallback activities due to API offline:', err);
+        console.error('비교과활동 목록을 불러오지 못했습니다:', err);
+        setLoadError(true);
       }
     };
     fetchActivities();
   }, []);
 
   const filteredActivities = activities.filter((act) => {
-    const matchesCategory = selectedCategory === '전체' || act.category === selectedCategory;
+    const matchesCategory =
+      selectedCategory === '전체' || act.category === selectedCategory;
     const matchesSearch =
       act.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       act.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -41,10 +45,10 @@ const ExtracurricularIndexPage: React.FC = () => {
     <Layout>
       <Container>
         <HeaderSection>
-          <Badge>POPO 비교과아카이브</Badge>
-          <Title>비교과활동 백과사전 & 수기집</Title>
+          <h1>비교과활동 수기집</h1>
           <SubTitle>
-            세계문화탐방대, 노벨위크, 어학연수 등 선배들의 생생한 활동 수기와 합격 지원 팁을 한곳에서 확인하세요.
+            세계문화탐방대, 노벨위크 등 선배들의 생생한 활동 수기를 한곳에서
+            확인하세요.
           </SubTitle>
 
           <SearchFilterWrapper>
@@ -101,7 +105,11 @@ const ExtracurricularIndexPage: React.FC = () => {
 
         {filteredActivities.length === 0 && (
           <EmptyState>
-            <p>검색 조건에 해당되는 비교과활동이 없습니다.</p>
+            <p>
+              {loadError
+                ? '비교과활동을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
+                : '검색 조건에 해당되는 비교과활동이 없습니다.'}
+            </p>
           </EmptyState>
         )}
       </Container>
@@ -120,26 +128,6 @@ const Container = styled.div`
 
 const HeaderSection = styled.div`
   margin-bottom: 40px;
-`;
-
-const Badge = styled.span`
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  color: #2563eb;
-  background-color: #eff6ff;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  margin-bottom: 12px;
-  border: 1px solid #dbeafe;
-`;
-
-const Title = styled.h1`
-  font-size: 32px;
-  font-weight: 800;
-  color: #111827;
-  margin: 0 0 12px 0;
-  letter-spacing: -0.02em;
 `;
 
 const SubTitle = styled.p`
@@ -227,7 +215,10 @@ const Card = styled.div`
   flex-direction: column;
   height: 100%;
   box-sizing: border-box;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);

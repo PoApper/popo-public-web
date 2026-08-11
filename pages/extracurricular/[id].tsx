@@ -3,12 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Layout from '@/components/layout';
-import {
-  FALLBACK_ACTIVITIES,
-  FALLBACK_REPORTS,
-  Activity,
-  ActivityReport,
-} from '@/components/extracurricular/mockData';
+import { PoPoAxios } from '@/lib/axios.instance';
+import { Activity, ActivityReport } from '@/components/extracurricular/types';
 
 const ExtracurricularDetailPage: React.FC = () => {
   const router = useRouter();
@@ -19,39 +15,25 @@ const ExtracurricularDetailPage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('전체');
   const [selectedMajor, setSelectedMajor] = useState<string>('전체');
   const [selectedGrade, setSelectedGrade] = useState<string>('전체');
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) return;
 
     const fetchData = async () => {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API || 'https://api.popo-dev.poapper.club';
-        const actRes = await fetch(`${apiUrl}/activity/${id}`);
-        if (actRes.ok) {
-          const actData = await actRes.json();
-          if (actData && actData.uuid) {
-            setActivity(actData);
-          }
-        }
-
-        const repRes = await fetch(`${apiUrl}/activity-report?activityId=${id}`);
-        if (repRes.ok) {
-          const repData = await repRes.json();
-          if (Array.isArray(repData) && repData.length > 0) {
-            setReports(repData);
-            return;
-          }
-        }
+        const [actRes, repRes] = await Promise.all([
+          PoPoAxios.get<Activity>(`/activity/${id}`),
+          PoPoAxios.get<ActivityReport[]>('/activity-report', {
+            params: { activityId: id },
+          }),
+        ]);
+        setActivity(actRes.data ?? null);
+        setReports(Array.isArray(repRes.data) ? repRes.data : []);
       } catch (err) {
-        console.log('Using fallback details due to API offline:', err);
+        console.error('비교과활동 상세를 불러오지 못했습니다:', err);
+        setLoadError(true);
       }
-
-      // Fallback
-      const foundAct = FALLBACK_ACTIVITIES.find((a) => a.uuid === id) || FALLBACK_ACTIVITIES[0];
-      setActivity(foundAct);
-
-      const foundReps = FALLBACK_REPORTS.filter((r) => r.activityId === id || r.activityId === foundAct.uuid);
-      setReports(foundReps.length > 0 ? foundReps : FALLBACK_REPORTS);
     };
 
     fetchData();
@@ -60,18 +42,26 @@ const ExtracurricularDetailPage: React.FC = () => {
   if (!activity) {
     return (
       <Layout>
-        <LoadingContainer>로딩 중...</LoadingContainer>
+        <LoadingContainer>
+          {loadError
+            ? '비교과활동을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
+            : '로딩 중...'}
+        </LoadingContainer>
       </Layout>
     );
   }
 
   // Filter options
-  const periods = ['전체', ...Array.from(new Set(reports.map((r) => r.period)))];
+  const periods = [
+    '전체',
+    ...Array.from(new Set(reports.map((r) => r.period))),
+  ];
   const majors = ['전체', ...Array.from(new Set(reports.map((r) => r.major)))];
   const grades = ['전체', ...Array.from(new Set(reports.map((r) => r.grade)))];
 
   const filteredReports = reports.filter((rep) => {
-    const matchPeriod = selectedPeriod === '전체' || rep.period === selectedPeriod;
+    const matchPeriod =
+      selectedPeriod === '전체' || rep.period === selectedPeriod;
     const matchMajor = selectedMajor === '전체' || rep.major === selectedMajor;
     const matchGrade = selectedGrade === '전체' || rep.grade === selectedGrade;
     return matchPeriod && matchMajor && matchGrade;
@@ -87,7 +77,7 @@ const ExtracurricularDetailPage: React.FC = () => {
         <OverviewCard>
           <OverviewHeader>
             <CategoryBadge>{activity.category}</CategoryBadge>
-            <Title>{activity.title}</Title>
+            <h1>{activity.title}</h1>
           </OverviewHeader>
 
           <Description>{activity.description}</Description>
@@ -109,14 +99,17 @@ const ExtracurricularDetailPage: React.FC = () => {
         </OverviewCard>
 
         <SectionTitleWrapper>
-          <SectionTitle>활동 보고서 및 지원 수기 DB</SectionTitle>
-          <CountTag>{filteredReports.length}건의 보고서</CountTag>
+          <SectionTitle>활동 보고서</SectionTitle>
+          <CountTag>{filteredReports.length}건</CountTag>
         </SectionTitleWrapper>
 
         <FilterBar>
           <FilterGroup>
             <FilterLabel>시기:</FilterLabel>
-            <Select value={selectedPeriod} onChange={(e) => setSelectedPeriod(e.target.value)}>
+            <Select
+              value={selectedPeriod}
+              onChange={(e) => setSelectedPeriod(e.target.value)}
+            >
               {periods.map((p) => (
                 <option key={p} value={p}>
                   {p}
@@ -127,7 +120,10 @@ const ExtracurricularDetailPage: React.FC = () => {
 
           <FilterGroup>
             <FilterLabel>전공:</FilterLabel>
-            <Select value={selectedMajor} onChange={(e) => setSelectedMajor(e.target.value)}>
+            <Select
+              value={selectedMajor}
+              onChange={(e) => setSelectedMajor(e.target.value)}
+            >
               {majors.map((m) => (
                 <option key={m} value={m}>
                   {m}
@@ -138,7 +134,10 @@ const ExtracurricularDetailPage: React.FC = () => {
 
           <FilterGroup>
             <FilterLabel>학년:</FilterLabel>
-            <Select value={selectedGrade} onChange={(e) => setSelectedGrade(e.target.value)}>
+            <Select
+              value={selectedGrade}
+              onChange={(e) => setSelectedGrade(e.target.value)}
+            >
               {grades.map((g) => (
                 <option key={g} value={g}>
                   {g}
@@ -164,19 +163,25 @@ const ExtracurricularDetailPage: React.FC = () => {
               {filteredReports.map((rep) => (
                 <tr
                   key={rep.uuid}
-                  onClick={() => router.push(`/extracurricular/report/${rep.uuid}`)}
+                  onClick={() =>
+                    router.push(`/extracurricular/report/${rep.uuid}`)
+                  }
                   style={{ cursor: 'pointer' }}
                 >
                   <TitleTd>
                     <ReportTitle>{rep.title}</ReportTitle>
-                    <AiSummarySnippet>{rep.aiSummary.slice(0, 70)}...</AiSummarySnippet>
+                    <AiSummarySnippet>
+                      {rep.aiSummary.slice(0, 70)}...
+                    </AiSummarySnippet>
                   </TitleTd>
                   <td>{rep.period}</td>
                   <td>{rep.grade}</td>
                   <td>{rep.major}</td>
                   <td>{rep.author}</td>
                   <td>
-                    <FileTypeBadge type={rep.fileType}>{rep.fileType.toUpperCase()}</FileTypeBadge>
+                    <FileTypeBadge type={rep.fileType}>
+                      {rep.fileType.toUpperCase()}
+                    </FileTypeBadge>
                   </td>
                 </tr>
               ))}
@@ -244,13 +249,6 @@ const CategoryBadge = styled.span`
   border-radius: 6px;
   display: inline-block;
   margin-bottom: 8px;
-`;
-
-const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 800;
-  color: #111827;
-  margin: 0;
 `;
 
 const Description = styled.p`
@@ -420,7 +418,11 @@ const FileTypeBadge = styled.span<{ type: string }>`
   border-radius: 4px;
   color: #ffffff;
   background-color: ${(props) =>
-    props.type === 'pdf' ? '#ef4444' : props.type === 'docx' ? '#2563eb' : '#10b981'};
+    props.type === 'pdf'
+      ? '#ef4444'
+      : props.type === 'docx'
+        ? '#2563eb'
+        : '#10b981'};
 `;
 
 const EmptyReports = styled.div`
