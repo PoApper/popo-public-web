@@ -17,10 +17,9 @@ export interface ActivityReport {
   grade: string;
   major: string;
   author: string;
-  wordsToJuniors: string;
-  aiSummary: string;
+  memo?: string;
   fileName: string;
-  fileType: 'pdf' | 'docx' | 'hwpx' | string;
+  fileType: string;
+  fileKey?: string;
   fileUrl?: string;
-  pages?: string[];
 }

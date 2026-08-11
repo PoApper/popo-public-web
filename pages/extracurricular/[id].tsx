@@ -170,9 +170,13 @@ const ExtracurricularDetailPage: React.FC = () => {
                 >
                   <TitleTd>
                     <ReportTitle>{rep.title}</ReportTitle>
-                    <AiSummarySnippet>
-                      {rep.aiSummary.slice(0, 70)}...
-                    </AiSummarySnippet>
+                    {rep.memo && (
+                      <MemoSnippet>
+                        {rep.memo.length > 70
+                          ? `${rep.memo.slice(0, 70)}...`
+                          : rep.memo}
+                      </MemoSnippet>
+                    )}
                   </TitleTd>
                   <td>{rep.period}</td>
                   <td>{rep.grade}</td>
@@ -402,7 +406,7 @@ const ReportTitle = styled.div`
   }
 `;
 
-const AiSummarySnippet = styled.div`
+const MemoSnippet = styled.div`
   font-size: 12px;
   color: #6b7280;
 

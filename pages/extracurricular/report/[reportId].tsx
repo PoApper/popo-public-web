@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Layout from '@/components/layout';
-import { PoPoAxios } from '@/lib/axios.instance';
+import { PoPoAxios, popoApiUrl } from '@/lib/axios.instance';
+import DocumentViewer from '@/components/extracurricular/DocumentViewer';
 import { ActivityReport, Activity } from '@/components/extracurricular/types';
 
 const ReportDetailPage: React.FC = () => {
@@ -12,7 +13,6 @@ const ReportDetailPage: React.FC = () => {
 
   const [report, setReport] = useState<ActivityReport | null>(null);
   const [activity, setActivity] = useState<Activity | null>(null);
-  const [activePage, setActivePage] = useState<number>(0);
   const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -52,9 +52,7 @@ const ReportDetailPage: React.FC = () => {
     );
   }
 
-  const handleDownload = () => {
-    alert(`[파일 다운로드 실행]: ${report.fileName}`);
-  };
+  const fileUrl = `${popoApiUrl}/activity-report/${report.uuid}/file`;
 
   return (
     <Layout>
@@ -86,66 +84,33 @@ const ReportDetailPage: React.FC = () => {
               </FileIcon>
               <FileName>{report.fileName}</FileName>
             </FileBox>
-            <DownloadButton onClick={handleDownload}>
+            <DownloadButton href={fileUrl} download={report.fileName}>
               📥 원본 파일 다운로드
             </DownloadButton>
           </DownloadBar>
         </HeaderCard>
 
-        {report.wordsToJuniors && (
+        {report.memo && (
           <SectionCard borderLeft="#3b82f6">
             <SectionHeader>
-              <SectionIcon>💡</SectionIcon>
-              <SectionTitle>후배에게 한마디 (지원 & 활동 노하우)</SectionTitle>
+              <SectionIcon>📝</SectionIcon>
+              <SectionTitle>메모</SectionTitle>
             </SectionHeader>
-            <WordsContent>{report.wordsToJuniors}</WordsContent>
-          </SectionCard>
-        )}
-
-        {report.aiSummary && (
-          <SectionCard borderLeft="#10b981">
-            <SectionHeader>
-              <SectionIcon>🤖</SectionIcon>
-              <SectionTitle>AI 보고서 요약 (핵심 요약)</SectionTitle>
-            </SectionHeader>
-            <SummaryContent>{report.aiSummary}</SummaryContent>
+            <MemoContent>{report.memo}</MemoContent>
           </SectionCard>
         )}
 
         <ViewerSection>
           <ViewerHeader>
-            <ViewerTitle>📄 보고서 문서 미리보기</ViewerTitle>
-            {report.pages && report.pages.length > 0 && (
-              <PageNav>
-                {report.pages.map((_, idx) => (
-                  <PageButton
-                    key={idx}
-                    active={activePage === idx}
-                    onClick={() => setActivePage(idx)}
-                  >
-                    {idx + 1} 페이지
-                  </PageButton>
-                ))}
-              </PageNav>
-            )}
+            <ViewerTitle>📄 원본 문서</ViewerTitle>
           </ViewerHeader>
 
           <ViewerBody>
-            {report.pages && report.pages.length > 0 ? (
-              <DocumentPage>
-                <PageHeader>
-                  PAGE {activePage + 1} / {report.pages.length}
-                </PageHeader>
-                <PageText>{report.pages[activePage]}</PageText>
-              </DocumentPage>
-            ) : (
-              <DocumentPlaceholder>
-                <p>본 문서의 미리보기 페이지가 준비되어 있습니다.</p>
-                <button onClick={handleDownload}>
-                  원문 파일 다운로드하여 열기
-                </button>
-              </DocumentPlaceholder>
-            )}
+            <DocumentViewer
+              reportUuid={report.uuid}
+              fileName={report.fileName}
+              fileType={report.fileType}
+            />
           </ViewerBody>
         </ViewerSection>
       </Container>
@@ -259,7 +224,7 @@ const FileName = styled.span`
   word-break: break-all;
 `;
 
-const DownloadButton = styled.button`
+const DownloadButton = styled.a`
   background-color: #2563eb;
   color: #ffffff;
   border: none;
@@ -270,6 +235,8 @@ const DownloadButton = styled.button`
   cursor: pointer;
   transition: background-color 0.15s ease;
   white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
 
   &:hover {
     background-color: #1d4ed8;
@@ -303,17 +270,9 @@ const SectionTitle = styled.h3`
   margin: 0;
 `;
 
-const WordsContent = styled.p`
+const MemoContent = styled.p`
   font-size: 15px;
   color: #1f2937;
-  line-height: 1.7;
-  margin: 0;
-  white-space: pre-wrap;
-`;
-
-const SummaryContent = styled.p`
-  font-size: 14px;
-  color: #374151;
   line-height: 1.7;
   margin: 0;
   white-space: pre-wrap;
@@ -348,73 +307,10 @@ const ViewerTitle = styled.h3`
   margin: 0;
 `;
 
-const PageNav = styled.div`
-  display: flex;
-  gap: 6px;
-`;
-
-const PageButton = styled.button<{ active: boolean }>`
-  background-color: ${(props) => (props.active ? '#111827' : '#ffffff')};
-  color: ${(props) => (props.active ? '#ffffff' : '#374151')};
-  border: 1px solid ${(props) => (props.active ? '#111827' : '#d1d5db')};
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-
-  &:hover {
-    border-color: #111827;
-  }
-`;
-
 const ViewerBody = styled.div`
   padding: 32px;
   background-color: #f3f4f6;
   min-height: 350px;
   display: flex;
   justify-content: center;
-`;
-
-const DocumentPage = styled.div`
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  width: 100%;
-  max-width: 750px;
-  min-height: 450px;
-  box-sizing: border-box;
-`;
-
-const PageHeader = styled.div`
-  font-size: 12px;
-  font-weight: 700;
-  color: #9ca3af;
-  border-bottom: 1px solid #e5e7eb;
-  padding-bottom: 8px;
-  margin-bottom: 24px;
-`;
-
-const PageText = styled.div`
-  font-size: 15px;
-  color: #1f2937;
-  line-height: 1.8;
-  white-space: pre-wrap;
-`;
-
-const DocumentPlaceholder = styled.div`
-  text-align: center;
-  align-self: center;
-  color: #6b7280;
-
-  button {
-    margin-top: 12px;
-    background: #2563eb;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
 `;
