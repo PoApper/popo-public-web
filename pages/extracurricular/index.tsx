@@ -5,16 +5,10 @@ import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { Activity } from '@/components/extracurricular/types';
 
-const categories = [
-  '전체',
-  '글로벌/해외',
-  '학술/연구',
-  '봉사/사회공헌',
-  '창업/취업',
-];
+const ALL = '전체';
 
 const ExtracurricularIndexPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  const [selectedCategory, setSelectedCategory] = useState<string>(ALL);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loadError, setLoadError] = useState<boolean>(false);
@@ -32,9 +26,17 @@ const ExtracurricularIndexPage: React.FC = () => {
     fetchActivities();
   }, []);
 
+  // 카테고리는 하드코딩하지 않고 실제 등록된 활동에서 뽑는다.
+  const categories = [
+    ALL,
+    ...Array.from(
+      new Set(activities.map((act) => act.category).filter(Boolean)),
+    ).sort((a, b) => a.localeCompare(b, 'ko')),
+  ];
+
   const filteredActivities = activities.filter((act) => {
     const matchesCategory =
-      selectedCategory === '전체' || act.category === selectedCategory;
+      selectedCategory === ALL || act.category === selectedCategory;
     const matchesSearch =
       act.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       act.description.toLowerCase().includes(searchQuery.toLowerCase());
