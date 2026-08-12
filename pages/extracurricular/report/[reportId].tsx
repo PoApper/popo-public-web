@@ -69,10 +69,10 @@ const ReportDetailPage: React.FC = () => {
 
         <HeaderCard>
           <MetaRow>
-            <MetaTag>{report.period}</MetaTag>
-            <MetaTag>{report.major}</MetaTag>
-            <MetaTag>{report.grade}</MetaTag>
-            <MetaTag>작성자: {report.author}</MetaTag>
+            {report.period && <MetaTag>{report.period}</MetaTag>}
+            {report.major && <MetaTag>{report.major}</MetaTag>}
+            {report.grade && <MetaTag>{report.grade}</MetaTag>}
+            {report.author && <MetaTag>작성자: {report.author}</MetaTag>}
           </MetaRow>
 
           <ReportTitle>{report.title}</ReportTitle>
