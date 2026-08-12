@@ -59,6 +59,11 @@ const circles = [
     icon: '/home/student_association.png',
   },
   { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
+  {
+    text: '비교과활동',
+    href: '/extracurricular',
+    icon: '/home/extracurricular.png',
+  },
   { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
     text: '배달업체',

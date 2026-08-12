@@ -42,3 +42,6 @@ yarn-error.log*
 # NextJS HTTPS
 certificates/*.pem
 /.ai/mcp/mcp.json
+
+# @rhwp/core 에서 빌드 시 복사되는 wasm 바이너리 (scripts/copy-rhwp-wasm.mjs)
+public/rhwp_bg.wasm
