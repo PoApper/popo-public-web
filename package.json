@@ -2,7 +2,9 @@
   "name": "popo-public-web-next",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-rhwp-wasm.mjs",
     "dev": "next dev --experimental-https --port 3000",
+    "prebuild": "node scripts/copy-rhwp-wasm.mjs",
     "build": "next build --no-lint",
     "start": "next start -p 3000",
     "format": "prettier --write .",
@@ -12,6 +14,7 @@
     "pc": "pre-commit run --all-files"
   },
   "dependencies": {
+    "@rhwp/core": "^0.8.4",
     "axios": "^1.12.0",
     "docx-preview": "^0.4.0",
     "moment": "^2.30.1",
