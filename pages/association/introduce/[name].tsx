@@ -4,6 +4,7 @@ import { Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
+import MarkdownView from '@/components/common/markdown.view';
 import { IAssociationIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
 
@@ -14,6 +15,30 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
   return (
     <Layout>
       <div style={{ padding: 8 }}>
+        {associationInfo.bannerUrl?.trim() && (
+          <div
+            style={{
+              width: '100%',
+              height: '240px',
+              maxHeight: '35vh',
+              borderRadius: '8px',
+              overflow: 'hidden',
+              marginBottom: '16px',
+              backgroundColor: '#f1f3f5',
+            }}
+          >
+            <img
+              src={associationInfo.bannerUrl}
+              alt={`${name}_banner`}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+              }}
+            />
+          </div>
+        )}
         <div style={{ marginBottom: 4 }}>
           <Image
             size="small"
@@ -60,8 +85,8 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
           </IconLink>
         </div>{' '}
         <i></i>
-        <div style={{ fontSize: 16, margin: '12px 0' }}>
-          {associationInfo.content}
+        <div style={{ margin: '16px 0' }}>
+          <MarkdownView content={associationInfo.content} />
         </div>
         <div>
           <p>

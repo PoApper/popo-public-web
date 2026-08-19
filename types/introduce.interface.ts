@@ -13,6 +13,7 @@ export interface IClubIntroduce {
   representative: string;
   contact: string;
   imageUrl?: string;
+  bannerUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
@@ -37,6 +38,7 @@ export interface IAssociationIntroduce {
   representative: string;
   contact: string;
   imageUrl?: string;
+  bannerUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
@@ -54,6 +56,7 @@ export interface IStudentAssociationIntroduce {
   office: string;
   contact: string;
   imageUrl?: string;
+  bannerUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
