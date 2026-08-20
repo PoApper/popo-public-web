@@ -1,42 +1,28 @@
 import React from 'react';
-import { Divider } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
-import AffiliateCards from '@/components/benefits/affiliate.cards';
-import DiscountOfferCards from '@/components/benefits/discount.cards';
-import { PoPoAxios } from '@/lib/axios.instance';
-import { IAffiliate, IDiscount } from '@/types/benefit.interface';
+import IconLink from '@/components/common/icon.link';
 
-const BenefitsIndexPage: React.FunctionComponent<{
-  affiliateList: IAffiliate[];
-  discountList: IDiscount[];
-}> = ({ affiliateList, discountList }) => {
+const BenefitsIndexPage: React.FunctionComponent = () => {
   return (
     <Layout>
-      <h3>총학생회 제휴 업체 소개</h3>
-      <AffiliateCards affiliates={affiliateList} />
-      <AffiliateDivider />
-      <h3>총학생회 할인 업체 소개</h3>
-      <DiscountOfferCards discountOffers={discountList} />
+      <div style={{ padding: '24px 16px', maxWidth: 800 }}>
+        <h2 style={{ marginBottom: 16 }}>총학생회 제휴 업체 소개</h2>
+        <p style={{ fontSize: 16, marginBottom: 16, lineHeight: 1.6 }}>
+          총학생회 제휴업체는 postech_stu 인스타그램 링크를 참고해주세요!
+        </p>
+        <div style={{ marginTop: 16 }}>
+          <IconLink link="https://www.instagram.com/postech_stu/">
+            <Image
+              src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white"
+              alt="instagram"
+            />
+          </IconLink>
+        </div>
+      </div>
     </Layout>
   );
 };
 
 export default BenefitsIndexPage;
-
-export async function getServerSideProps() {
-  const res1 = await PoPoAxios.get('benefit/affiliate');
-  const affiliateList = res1.data;
-
-  const res2 = await PoPoAxios.get('benefit/discount');
-  const discountList = res2.data;
-
-  return { props: { affiliateList, discountList } };
-}
-
-const AffiliateDivider = styled(Divider)`
-  min-height: 10px;
-  margin: 20px 20px;
-  padding: 0;
-`;
