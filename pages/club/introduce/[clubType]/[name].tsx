@@ -6,12 +6,16 @@ import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
 import { IClubIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
+import { useTranslation } from 'next-i18next/pages';
 
 const ClubSingleIntroducePage: React.FunctionComponent<{
   name: string;
   clubInfo: IClubIntroduce;
   recommendations: IClubIntroduce[];
 }> = ({ name, clubInfo }) => {
+  const { t } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -68,10 +72,11 @@ const ClubSingleIntroducePage: React.FunctionComponent<{
 
         <div>
           <p>
-            <b>동방 위치</b>: {clubInfo.location}
+            <b>{t('club.roomLocation')}</b>: {clubInfo.location}
           </p>
           <p>
-            <b>대표자</b>: {clubInfo.representative}({clubInfo.contact})
+            <b>{t('club.representative')}</b>: {clubInfo.representative}(
+            {clubInfo.contact})
           </p>
         </div>
       </div>
@@ -90,6 +95,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const clubInfo = res.data;
 
   return {
-    props: { name, clubInfo },
+    props: {
+      name,
+      clubInfo,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };

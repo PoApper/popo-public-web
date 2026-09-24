@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Dropdown, Menu } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next/pages';
 import { IUser } from '@/types/user.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const MenuItemUser = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [user, setUser] = useState<IUser | null>({
     name: '',
   });
@@ -22,7 +24,7 @@ const MenuItemUser = () => {
       await router.push('/');
       window.location.reload();
     } catch (err) {
-      alert('로그아웃에 실패했습니다.');
+      alert(t('nav.logoutFailed'));
       console.log(err);
     }
   };
@@ -32,9 +34,12 @@ const MenuItemUser = () => {
       {user ? (
         <Dropdown text={user.name}>
           <Dropdown.Menu>
-            <Dropdown.Item text={'내 정보'} href={'/auth/my-info'} />
-            <Dropdown.Item text={'내 예약'} href={'/auth/my-reservation'} />
-            <Dropdown.Item text={'로그아웃'} onClick={handleLogout} />
+            <Dropdown.Item text={t('nav.myInfo')} href={'/auth/my-info'} />
+            <Dropdown.Item
+              text={t('nav.myReservation')}
+              href={'/auth/my-reservation'}
+            />
+            <Dropdown.Item text={t('nav.logout')} onClick={handleLogout} />
           </Dropdown.Menu>
         </Dropdown>
       ) : (
@@ -42,7 +47,7 @@ const MenuItemUser = () => {
           href={'/auth/login'}
           style={{ border: 'none', background: 'none' }}
         >
-          로그인
+          {t('nav.login')}
         </Button>
       )}
     </Menu.Item>

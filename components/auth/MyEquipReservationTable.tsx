@@ -1,5 +1,6 @@
 import { Icon, Label, Table, Button, Pagination } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next/pages';
 import { convertDate, convertStatus, convertTime } from '@/lib/time-date';
 import { IEquipReservation } from '@/types/reservation.interface';
 import EquipReservationDetailModal from '../reservation/equip.reservation.detail.modal';
@@ -7,6 +8,7 @@ import DeleteConfirmModal from '../common/delete.confirm.modal';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const MyEquipReservationTable = () => {
+  const { t } = useTranslation('common');
   const [reserveList, setReserveList] = useState<IEquipReservation[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +27,7 @@ const MyEquipReservationTable = () => {
         setTotalPages(Math.ceil(res.data.total / itemsPerPage));
       })
       .catch((err) => {
-        alert('내 장비 예약 목록을 불러오는 데 실패했습니다.');
+        alert(t('auth.myReservation.loadEquipFailed'));
         console.log(err);
       });
   };
@@ -44,10 +46,18 @@ const MyEquipReservationTable = () => {
         <Table.Header>
           <Table.Row textAlign="center">
             <Table.HeaderCell width={1}>#</Table.HeaderCell>
-            <Table.HeaderCell width={5}>예약 제목</Table.HeaderCell>
-            <Table.HeaderCell width={4}>예약 장비</Table.HeaderCell>
-            <Table.HeaderCell width={3}>예약 기간</Table.HeaderCell>
-            <Table.HeaderCell width={1}>상태</Table.HeaderCell>
+            <Table.HeaderCell width={5}>
+              {t('auth.myReservation.colTitle')}
+            </Table.HeaderCell>
+            <Table.HeaderCell width={4}>
+              {t('auth.myReservation.colEquip')}
+            </Table.HeaderCell>
+            <Table.HeaderCell width={3}>
+              {t('auth.myReservation.colPeriod')}
+            </Table.HeaderCell>
+            <Table.HeaderCell width={1}>
+              {t('auth.myReservation.colStatus')}
+            </Table.HeaderCell>
             <Table.HeaderCell width={1} />
           </Table.Row>
         </Table.Header>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Label, Table } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import { IPlaceReservation } from '@/types/reservation.interface';
 import { convertDate, convertStatus, convertTime } from '@/lib/time-date';
@@ -14,6 +15,7 @@ const PlaceReservationTable = ({
   placeName,
   selectedDate,
 }: PlaceReservationTableProps) => {
+  const { t } = useTranslation('common');
   const [reservations, setReservations] = useState<IPlaceReservation[]>([]);
 
   useEffect(() => {
@@ -28,10 +30,18 @@ const PlaceReservationTable = ({
     <Table>
       <Table.Header>
         <Table.Row textAlign="center">
-          <Table.HeaderCell width={2}>사용자</Table.HeaderCell>
-          <Table.HeaderCell width={7}>예약 제목</Table.HeaderCell>
-          <Table.HeaderCell width={5}>예약 기간</Table.HeaderCell>
-          <Table.HeaderCell width={2}>상태</Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t('reservation.shared.user')}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={7}>
+            {t('reservation.shared.title')}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={5}>
+            {t('auth.myReservation.colPeriod')}
+          </Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {t('auth.myReservation.colStatus')}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -62,7 +72,7 @@ const PlaceReservationTable = ({
         ) : (
           <Table.Row>
             <Table.Cell />
-            <Table.Cell>등록된 예약이 없습니다!</Table.Cell>
+            <Table.Cell>{t('reservation.shared.empty')}</Table.Cell>
             <Table.Cell />
             <Table.Cell />
           </Table.Row>

@@ -1,15 +1,4 @@
-export const KoreanWeekday: any = {
-  Monday: '월',
-  Tuesday: '화',
-  Wednesday: '수',
-  Thursday: '목',
-  Friday: '금',
-  Saturday: '토',
-  Sunday: '일',
-  Everyday: '매일',
-};
-
-export const KoreanToEnglishMap: any = {
+export const KoreanToEnglishMap: Record<string, string> = {
   월요일: 'Monday',
   화요일: 'Tuesday',
   수요일: 'Wednesday',

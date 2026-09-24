@@ -3,6 +3,7 @@ import { Container, Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 import { GetServerSideProps } from 'next';
 import { IClubIntroduce } from '@/types/introduce.interface';
 import styled from 'styled-components';
@@ -49,7 +50,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const clubList = res.data;
 
   return {
-    props: { clubType, clubList },
+    props: {
+      clubType,
+      clubList,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };
 

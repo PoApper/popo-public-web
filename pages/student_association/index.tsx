@@ -5,6 +5,7 @@ import { Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 import { IStudentAssociationIntroduce } from '@/types/introduce.interface';
 
 const StudentAssociationIndexPage: React.FunctionComponent<{
@@ -38,14 +39,17 @@ const StudentAssociationIndexPage: React.FunctionComponent<{
 
 export default StudentAssociationIndexPage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await PoPoAxios.get<IStudentAssociationIntroduce[]>(
     'introduce/student_association',
   );
   const studentAssociationList = res.data;
 
   return {
-    props: { studentAssociationList },
+    props: {
+      studentAssociationList,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };
 

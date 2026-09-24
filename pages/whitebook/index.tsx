@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const WhiteBookIndexPage = () => {
+  const { t } = useTranslation('common');
   const [whitebookList, setWhitebookList] = useState([]);
 
   useEffect(() => {
@@ -29,11 +33,10 @@ const WhiteBookIndexPage = () => {
 
   return (
     <Layout>
-      <h1>생활백서</h1>
+      <h1>{t('whitebook.title')}</h1>
       <p style={{ fontSize: '18px', marginBottom: '2rem' }}>
-        야생의 POSTECH에서 살아남기 위한 생활백서! 📚 <br />
-        카카오톡 플러스친구 &apos;POSTECH 생활백서&apos;를 통해서도 이용하실 수
-        있습니다 😉
+        {t('whitebook.subtitle')} <br />
+        {t('whitebook.kakaoHint')}
       </p>
       <CardDiv>
         {whitebookList.map((card: any) => {
@@ -59,6 +62,10 @@ const WhiteBookIndexPage = () => {
 };
 
 export default WhiteBookIndexPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});
 
 const CardDiv = styled.div`
   display: grid;

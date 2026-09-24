@@ -4,6 +4,7 @@ import { INotice } from '@/types/notice.interface';
 import { IUser } from '@/types/user.interface';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next/pages';
 import { Image, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
@@ -14,6 +15,7 @@ interface NoticeCardProps {
 
 const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const [isLike, setIsLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
@@ -41,7 +43,7 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
 
   const handleLike = async () => {
     if (!user) {
-      alert('로그인이 필요합니다.');
+      alert(t('common.loginRequired'));
       router.push('/auth/login');
       return;
     }
@@ -51,7 +53,7 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
         .then(() => setLikeCount(likeCount - 1))
         .catch((err) => {
           const errMsg = err.response.data.message;
-          alert(`공지 좋아요 취소에 실패했습니다.\n${errMsg}`);
+          alert(t('common.noticeUnlikeFailed', { errMsg }));
           console.log(err);
         });
     } else {
@@ -62,7 +64,7 @@ const NoticeCard: React.FC<NoticeCardProps> = ({ notice, user }) => {
         .then(() => setLikeCount(likeCount + 1))
         .catch((err) => {
           const errMsg = err.response.data.message;
-          alert(`공지 좋아요에 실패했습니다.\n${errMsg}`);
+          alert(t('common.noticeLikeFailed', { errMsg }));
           console.log(err);
         });
     }

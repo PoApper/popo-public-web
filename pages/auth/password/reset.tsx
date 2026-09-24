@@ -2,23 +2,27 @@ import { Button, Container, Form, List, Message } from 'semantic-ui-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const PasswordResetPage = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [email, setEmail] = useState<string>('');
 
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        alert('이미 로그인 되었습니다.');
+        alert(t('common.alreadyLoggedIn'));
         router.push('/');
       })
       .catch(() => {});
-  }, [router]);
+  }, [router, t]);
 
   async function handlePasswordReset() {
     const body = {
@@ -27,9 +31,7 @@ const PasswordResetPage = () => {
 
     PoPoAxios.post('/auth/password/reset', body)
       .then(() => {
-        alert(
-          '비밀번호가 초기화 되었습니다. 이메일을 통해 신규 비밀번호를 확인해주세요.',
-        );
+        alert(t('auth.passwordReset.success'));
         router.push('/');
       })
       .catch((err) => {
@@ -49,21 +51,21 @@ const PasswordResetPage = () => {
           borderRadius: 8,
         }}
       >
-        <Message>POPO 가입 때 사용한 email을 이용해주세요.</Message>
+        <Message>{t('auth.passwordReset.hint')}</Message>
         <Form>
           <Form.Input
             label={'Email'}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Button primary onClick={handlePasswordReset}>
-            비밀번호 초기화
+            {t('auth.passwordReset.submit')}
           </Button>
         </Form>
 
         <List horizontal divided link size="small">
           <List.Item>
             <Link href={'/auth/register'} passHref>
-              신규 회원이신가요?
+              {t('auth.passwordReset.newMember')}
             </Link>
           </List.Item>
         </List>
@@ -73,3 +75,7 @@ const PasswordResetPage = () => {
 };
 
 export default PasswordResetPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

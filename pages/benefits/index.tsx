@@ -1,16 +1,21 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
+import { getI18nProps } from '@/lib/i18n';
 
 const BenefitsIndexPage: React.FunctionComponent = () => {
+  const { t } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: '24px 16px', maxWidth: 800 }}>
-        <h2 style={{ marginBottom: 16 }}>총학생회 제휴 업체 소개</h2>
+        <h2 style={{ marginBottom: 16 }}>{t('benefits.title')}</h2>
         <p style={{ fontSize: 16, marginBottom: 16, lineHeight: 1.6 }}>
-          총학생회 제휴업체는 postech_stu 인스타그램 링크를 참고해주세요!
+          {t('benefits.instagramHint')}
         </p>
         <div style={{ marginTop: 16 }}>
           <IconLink link="https://www.instagram.com/postech_stu/">
@@ -26,3 +31,7 @@ const BenefitsIndexPage: React.FunctionComponent = () => {
 };
 
 export default BenefitsIndexPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

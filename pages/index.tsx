@@ -1,8 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
 import { POPOLinks } from '@/components/common/popo-links';
+import { getI18nProps } from '@/lib/i18n';
 
 const HomePage: React.FunctionComponent = () => {
   return (
@@ -32,6 +35,12 @@ const HomePage: React.FunctionComponent = () => {
 
 export default HomePage;
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await getI18nProps(locale)),
+  },
+});
+
 const HomeLayout = styled.div`
   display: flex;
   gap: 20px;
@@ -40,37 +49,53 @@ const HomeLayout = styled.div`
   margin: 0;
 `;
 
-const circles = [
+const circleDefs = [
   {
-    text: '장소예약',
+    textKey: 'home.circles.placeReservation',
     href: '/reservation/place',
     icon: '/home/place_reservation.png',
   },
   {
-    text: '장비예약',
+    textKey: 'home.circles.equipReservation',
     href: '/reservation/equipment',
     icon: '/home/equipment_reservation.png',
   },
-  { text: '동아리소개', href: '/club', icon: '/home/club.png' },
-  { text: '자치단체', href: '/association', icon: '/home/association.png' },
   {
-    text: '학생단체',
+    textKey: 'home.circles.clubIntro',
+    href: '/club',
+    icon: '/home/club.png',
+  },
+  {
+    textKey: 'home.circles.association',
+    href: '/association',
+    icon: '/home/association.png',
+  },
+  {
+    textKey: 'home.circles.studentAssociation',
     href: '/student_association',
     icon: '/home/student_association.png',
   },
-  { text: '생활백서', href: '/whitebook', icon: '/home/whitebook.png' },
-  { text: '제휴업체', href: '/benefits', icon: '/home/benefits.png' },
   {
-    text: '배달업체',
+    textKey: 'home.circles.whitebook',
+    href: '/whitebook',
+    icon: '/home/whitebook.png',
+  },
+  {
+    textKey: 'home.circles.benefits',
+    href: '/benefits',
+    icon: '/home/benefits.png',
+  },
+  {
+    textKey: 'home.circles.delivery',
     href: POPOLinks.PostechDeliveryLink,
     icon: '/home/delivery.png',
   },
   {
-    text: '기록물관리',
+    textKey: 'home.circles.archive',
     href: POPOLinks.StudentCouncilArchiveLink,
     icon: '/home/record.png',
   },
-];
+] as const;
 
 const Circle = styled(Link)`
   display: flex;
@@ -137,15 +162,22 @@ const Text = styled.span`
   margin-top: 4px;
 `;
 
-const CircleSection = () => (
-  <CircleContainer>
-    {circles.map((circle, index) => (
-      <Circle href={circle.href} key={index}>
-        <IconWrapper>
-          <Icon src={circle.icon} alt={`${circle.text} 아이콘`} />
-        </IconWrapper>
-        <Text>{circle.text}</Text>
-      </Circle>
-    ))}
-  </CircleContainer>
-);
+const CircleSection = () => {
+  const { t } = useTranslation('common');
+
+  return (
+    <CircleContainer>
+      {circleDefs.map((circle, index) => {
+        const text = t(circle.textKey);
+        return (
+          <Circle href={circle.href} key={index}>
+            <IconWrapper>
+              <Icon src={circle.icon} alt={t('home.iconAlt', { text })} />
+            </IconWrapper>
+            <Text>{text}</Text>
+          </Circle>
+        );
+      })}
+    </CircleContainer>
+  );
+};

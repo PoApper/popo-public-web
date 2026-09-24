@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const PrivacyPolicyPage = () => {
+  const { t } = useTranslation('common');
   const [STUEmail, setSTUEmail] = useState('');
 
   useEffect(() => {
@@ -11,7 +15,7 @@ const PrivacyPolicyPage = () => {
 
   return (
     <Layout>
-      <h2>개인정보 처리방침</h2>
+      <h2>{t('common.privacyPolicyTitle')}</h2>
       <p>
         &lt;포항공대 총학생회&gt;(이하 &lt;학생회&gt;)은(는) 개인정보보호법에
         따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한
@@ -277,3 +281,7 @@ const PrivacyPolicyPage = () => {
 };
 
 export default PrivacyPolicyPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

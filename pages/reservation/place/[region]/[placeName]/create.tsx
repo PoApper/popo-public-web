@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { Divider, Form, Message } from 'semantic-ui-react';
 import moment from 'moment';
+import { useTranslation } from 'next-i18next/pages';
 
 import { IPlace } from '@/types/reservation.interface';
 import Layout from '@/components/layout';
@@ -14,13 +15,14 @@ import ReservationDatetimePicker from '@/components/reservation/reservation.date
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
 import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
+import { getI18nProps } from '@/lib/i18n';
 
-const RegionKorNameMapping = {
-  STUDENT_HALL: '학생 회관',
-  JIGOK_CENTER: '지곡 회관',
-  OTHERS: '기타',
-  COMMUNITY_CENTER: '커뮤니티 센터',
-  RESIDENTIAL_COLLEGE: 'RC',
+const RegionKeyMapping: { [key: string]: string } = {
+  STUDENT_HALL: 'reservation.place.regions.studentHall',
+  JIGOK_CENTER: 'reservation.place.regions.jigok',
+  OTHERS: 'reservation.place.regions.others',
+  COMMUNITY_CENTER: 'reservation.place.regions.communityCenter',
+  RESIDENTIAL_COLLEGE: 'reservation.place.regions.rc',
 };
 
 const PlaceReservationCreatePage: React.FunctionComponent<{
@@ -29,6 +31,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   placeName: string;
 }> = ({ placeInfo, selectedDate, placeName }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [userInfo, setUserInfo] = useState<IUser | null>({
     name: '',
@@ -60,6 +63,8 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   );
   const isPossible = isOnAvailableTime && isLeadTimeSatisfied;
 
+  const regionLabel = t(RegionKeyMapping[placeInfo.region]);
+
   useEffect(() => {
     // 로그인 확인
     PoPoAxios.get('/auth/verifyToken')
@@ -67,36 +72,39 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         setUserInfo(res.data);
       })
       .catch(() => {
-        alert('로그인 후 예약할 수 있습니다.');
+        alert(t('reservation.shared.loginRequired'));
         router.push('/auth/login');
       });
     // 오늘 이후의 날짜를 선택했는지 확인
     const today = moment().format('YYYYMMDD');
     if (moment(selectedDate).isBefore(today)) {
       setTimeout(() => {
-        alert('오늘 이후의 날짜를 선택해주세요.');
+        alert(t('reservation.shared.selectFutureDate'));
         router.push(`/reservation/place/${placeInfo.region}/${placeName}`);
       }, 100);
     }
-  }, [placeInfo.region, placeName, router, selectedDate]);
+  }, [placeInfo.region, placeName, router, selectedDate, t]);
 
   function handleSubmit() {
     if (!isLeadTimeSatisfied) {
       alert(
-        `${placeInfo.name}은 최소 ${placeInfo.reservationRequiredDays}일 전 예약해야 합니다.`,
+        t('reservation.shared.leadTimeRequiredNamed', {
+          name: placeInfo.name,
+          days: placeInfo.reservationRequiredDays,
+        }),
       );
       return;
     }
 
     if (!isOnAvailableTime) {
       alert(
-        `예약이 불가능한 시간대입니다. ${placeInfo.name}의 사용 가능 시간을 확인해주세요.`,
+        t('reservation.shared.unavailableSlot', { name: placeInfo.name }),
       );
       return;
     }
 
     if (title.length == 1 || description.length == 1) {
-      alert('예약 설명이 너무 짧습니다.');
+      alert(t('reservation.shared.descriptionTooShort'));
       return;
     }
 
@@ -110,32 +118,37 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
       endTime: endTime.format('HHmm'), // HHmm
     })
       .then(() => {
-        alert('예약을 생성했습니다!');
+        alert(t('reservation.shared.createSuccess'));
         router.push('/auth/my-reservation');
       })
       .catch((error) => {
-        alert(`예약 생성에 실패했습니다: ${error.response.data.message}`);
+        alert(
+          t('reservation.shared.createFailed', {
+            message: error.response.data.message,
+          }),
+        );
       });
   }
 
   return (
     <Layout>
-      <h1>장소 예약: {placeInfo.name}</h1>
+      <h1>
+        {t('reservation.place.createTitle', { name: placeInfo.name })}
+      </h1>
 
       <Form>
         <Form.Group>
           <Form.Input
             required
             readOnly
-            label={'지역'}
+            label={t('reservation.place.regionLabel')}
             name="region"
-            // @ts-ignore
-            value={RegionKorNameMapping[placeInfo.region]}
+            value={regionLabel}
           />
           <Form.Input
             required
             readOnly
-            label={'장소'}
+            label={t('reservation.place.placeLabel')}
             name="place"
             value={placeInfo.name}
           />
@@ -144,33 +157,33 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         <Form.Input
           required
           readOnly
-          label={'사용자'}
+          label={t('reservation.shared.user')}
           value={userInfo ? userInfo.name : ''}
         />
 
         <Form.Input
           required
-          label={'전화번호'}
+          label={t('reservation.shared.phone')}
           placeholder={'010-xxxx-xxxx'}
           onChange={(e) => setPhone(e.target.value)}
         />
         <Form.Input
           required
-          label={'예약 제목'}
-          placeholder={'예약 제목을 작성해주세요.'}
+          label={t('reservation.shared.title')}
+          placeholder={t('reservation.shared.titlePlaceholder')}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Form.TextArea
           required
-          label={'설명'}
-          placeholder={'사용 인원을 꼭 작성 해주세요.'}
+          label={t('reservation.shared.description')}
+          placeholder={t('reservation.place.descPlaceholder')}
           onChange={(e) => setDescription(e.target.value)}
         />
 
         <Divider />
 
         <div className={'field'} style={{ maxWidth: 240 }}>
-          <label>사용 가능 시간</label>
+          <label>{t('reservation.shared.openingHours')}</label>
           <div style={{ color: 'gray' }}>
             <OpeningHoursList
               openingHours={JSON.parse(placeInfo.openingHours)}
@@ -194,20 +207,23 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
 
         {isLeadTimeSatisfied ? null : (
           <Message negative>
-            {placeInfo.name}은 최소 {placeInfo.reservationRequiredDays}일 전
-            예약해야 합니다.
+            {t('reservation.shared.leadTimeRequiredNamed', {
+              name: placeInfo.name,
+              days: placeInfo.reservationRequiredDays,
+            })}
           </Message>
         )}
 
         {isOnAvailableTime ? null : (
           <Message negative>
-            예약이 불가능한 시간대입니다. {placeInfo.name}의 사용 가능 시간을
-            확인해주세요.
+            {t('reservation.shared.unavailableSlot', {
+              name: placeInfo.name,
+            })}
           </Message>
         )}
 
         <div className={'field'}>
-          <label>예약 현황</label>
+          <label>{t('reservation.shared.currentReservations')}</label>
           <div>
             <PlaceReservationTable
               placeName={placeName}
@@ -218,39 +234,40 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
 
         {placeInfo.name.includes('시네마 룸') ? (
           <Message>
-            RC 시네마 룸의 예약은
-            <br />
-            18:00 ~ 21:00 / 21:00 ~ 24:00 / 00:00 ~ 03:00
-            <br />
-            3가지 시간대만 가능 합니다.
+            {t('reservation.place.cinemaNotice')
+              .split('\n')
+              .map((line: string, idx: number) => (
+                <React.Fragment key={idx}>
+                  {idx > 0 ? <br /> : null}
+                  {line}
+                </React.Fragment>
+              ))}
           </Message>
         ) : null}
         {placeInfo.name.includes('그룹스터디룸') ? (
           <Message>
-            <Message.Header>⚠️ 그룹스터디룸 이용 안내</Message.Header>
-            <p>
-              그룹스터디룸은 <strong>과외 목적으로 예약이 불가능</strong>합니다.
-              <br />
-              학습 및 스터디 목적으로만 사용해주시기 바랍니다.
-            </p>
+            <Message.Header>
+              {t('reservation.place.groupStudyHeader')}
+            </Message.Header>
+            <p>{t('reservation.place.groupStudyBody')}</p>
           </Message>
         ) : null}
 
         <Message>
           <Message.Header>
-            예약 장소와 예약 시간을 꼭 확인해주세요!
+            {t('reservation.place.confirmHeader')}
           </Message.Header>
           <p>
-            {
-              // @ts-ignore
-              RegionKorNameMapping[placeInfo.region]
-            }{' '}
-            {placeInfo.name}, {minuteDiff(startTime, endTime)}분 예약입니다.
+            {t('reservation.place.confirmSummary', {
+              region: regionLabel,
+              name: placeInfo.name,
+              minutes: minuteDiff(startTime, endTime),
+            })}
           </p>
         </Message>
 
         <Form.Button onClick={handleSubmit} disabled={!isPossible}>
-          생성
+          {t('reservation.shared.create')}
         </Form.Button>
       </Form>
     </Layout>
@@ -260,12 +277,18 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
 export default PlaceReservationCreatePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale;
   const { placeName, selectedDate } = context.query;
 
   const res = await PoPoAxios.get<IPlace[]>(`place/name/${placeName}`);
   const placeInfo = res.data;
 
   return {
-    props: { placeName, placeInfo, selectedDate },
+    props: {
+      placeName,
+      placeInfo,
+      selectedDate,
+      ...(await getI18nProps(locale)),
+    },
   };
 };

@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { Dropdown, Icon, Image, Menu } from 'semantic-ui-react';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next/pages';
 import MenuItemUser from './menu.item.user';
+import LanguageSwitcher from './language.switcher';
 import { POPOLinks } from '@/components/common/popo-links';
 
 const Navbar = () => {
@@ -27,6 +29,7 @@ const NavbarNav = styled.nav`
 
   font-weight: bold;
   width: 100%;
+  overflow: visible;
 
   position: fixed;
   top: 0;
@@ -38,20 +41,56 @@ const NavbarDiv = styled.div`
   flex-direction: row;
   align-items: center;
   margin: auto;
-
+  width: 100%;
   max-width: ${({ theme }) => theme.contentWidth};
+  padding: 0 0.75rem;
+  box-sizing: border-box;
 `;
 
 const NavbarMenu = styled(Menu)`
-  display: flex;
+  display: flex !important;
   flex-direction: row;
   align-items: center;
+  flex-wrap: nowrap;
   margin: auto;
-  gap: 1rem;
+  gap: 0.25rem;
 
   box-shadow: none !important;
   border: none !important;
   width: 100% !important;
+  min-width: 0 !important;
+`;
+
+const DesktopMenu = styled(NavbarMenu)`
+  > .ui.dropdown.item {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 10rem;
+    overflow: visible;
+    padding-left: 0.55em !important;
+    padding-right: 0.55em !important;
+  }
+
+  > .nav-brand.item,
+  > .right.item {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+
+  /* Ellipsis only on the label — never on the dropdown item (clips the menu) */
+  > .ui.dropdown.item > .text {
+    display: inline-block;
+    max-width: calc(100% - 1.2em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+
+  > .ui.dropdown.item > .menu {
+    overflow: visible;
+    min-width: 12rem;
+  }
 `;
 
 const PopoFullText = styled.h1`
@@ -75,77 +114,80 @@ const MobileDiv = styled.div`
 
 const DesktopDiv = styled.span`
   width: 100%;
+  min-width: 0;
   @media only screen and (max-width: 768px) {
     display: none;
   }
 `;
 
 const MobileNav = () => {
+  const { t } = useTranslation('common');
+
   return (
     <NavbarMenu borderless>
       <Dropdown item icon={'sidebar'}>
         <Dropdown.Menu style={{ width: 200 }}>
-          <Dropdown item text="장소/장비 예약">
+          <Dropdown item text={t('nav.reservationMenu')}>
             <Dropdown.Menu>
               <Dropdown.Item>
                 <LinkWithStyle href={'/reservation/place'} passHref>
-                  장소 예약
+                  {t('nav.placeReservation')}
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
                 <LinkWithStyle href={'/reservation/equipment'} passHref>
-                  장비 예약
+                  {t('nav.equipReservation')}
                 </LinkWithStyle>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown item text="총학생회">
+          <Dropdown item text={t('nav.studentCouncil')}>
             <Dropdown.Menu>
               <Dropdown.Item>
                 <LinkWithStyle href={'/association'} passHref>
-                  자치단체 소개
+                  {t('nav.associationIntro')}
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
                 <LinkWithStyle href={'/benefits'} passHref>
-                  제휴 및 할인업체 소개
+                  {t('nav.benefitsIntro')}
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
                 <a href={POPOLinks.StudentCouncilArchiveLink} target="_blank">
-                  총학생회 기록물관리기관 <Icon name="external" />
+                  {t('nav.archive')} <Icon name="external" />
                 </a>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown item text="동아리">
+          <Dropdown item text={t('nav.club')}>
             <Dropdown.Menu>
               <Dropdown.Item>
                 <LinkWithStyle href={'/club'} passHref>
-                  동아리 소개
+                  {t('nav.clubIntro')}
                 </LinkWithStyle>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown item text="학생단체">
+          <Dropdown item text={t('nav.studentAssociation')}>
             <Dropdown.Menu>
               <Dropdown.Item>
                 <LinkWithStyle href={'/student_association'} passHref>
-                  학생단체 소개
+                  {t('nav.studentAssociationIntro')}
                 </LinkWithStyle>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown item text="생활백서">
+          <Dropdown item text={t('nav.whitebook')}>
             <Dropdown.Menu>
               <Dropdown.Item>
                 <LinkWithStyle href={'/whitebook'} passHref>
-                  생활백서
+                  {t('nav.whitebook')}
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
                 <a href={POPOLinks.PostechDeliveryLink} target={'_blank'}>
-                  배달업체 <Icon name="external" />
+                  {t('nav.delivery')} <Icon name="external" />
                 </a>
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -164,15 +206,18 @@ const MobileNav = () => {
         </Link>
       </Menu.Item>
 
+      <LanguageSwitcher />
       <MenuItemUser />
     </NavbarMenu>
   );
 };
 
 const DesktopNav = () => {
+  const { t } = useTranslation('common');
+
   return (
-    <NavbarMenu borderless>
-      <Menu.Item style={{ paddingLeft: 0 }}>
+    <DesktopMenu borderless>
+      <Menu.Item className="nav-brand" style={{ paddingLeft: 0 }}>
         <LinkWithStyle href={'/'} passHref>
           <span style={{ textAlign: 'center' }}>
             <Image centered src={'/popo.svg'} alt={'logo'} size={'small'} />
@@ -181,77 +226,78 @@ const DesktopNav = () => {
         </LinkWithStyle>
       </Menu.Item>
 
-      <Dropdown item simple text="장소/장비 예약">
+      <Dropdown item simple text={t('nav.reservationMenu')}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <LinkWithStyle href={'/reservation/place'} passHref>
-              장소 예약
+              {t('nav.placeReservation')}
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item>
             <LinkWithStyle href={'/reservation/equipment'} passHref>
-              장비 예약
+              {t('nav.equipReservation')}
             </LinkWithStyle>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown item simple text="총학생회">
+      <Dropdown item simple text={t('nav.studentCouncil')}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <LinkWithStyle href={'/association'} passHref>
-              자치단체 소개
+              {t('nav.associationIntro')}
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item>
             <LinkWithStyle href={'/benefits'} passHref>
-              제휴 및 할인업체 소개
+              {t('nav.benefitsIntro')}
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item
-            text={'총학생회 기록물관리기관'}
+            text={t('nav.archive')}
             target="_blank"
             href={POPOLinks.StudentCouncilArchiveLink}
           />
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown item simple text="동아리">
+      <Dropdown item simple text={t('nav.club')}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <LinkWithStyle href={'/club'} passHref>
-              동아리 소개
+              {t('nav.clubIntro')}
             </LinkWithStyle>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown item simple text="학생단체">
+      <Dropdown item simple text={t('nav.studentAssociation')}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <LinkWithStyle href={'/student_association'} passHref>
-              학생단체 소개
+              {t('nav.studentAssociationIntro')}
             </LinkWithStyle>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown item simple text="생활백서">
+      <Dropdown item simple text={t('nav.whitebook')}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <LinkWithStyle href={'/whitebook'} passHref>
-              생활백서
+              {t('nav.whitebook')}
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item
-            text={'배달업체'}
+            text={t('nav.delivery')}
             href={POPOLinks.PostechDeliveryLink}
             target={'_blank'}
           />
         </Dropdown.Menu>
       </Dropdown>
 
+      <LanguageSwitcher />
       <MenuItemUser />
-    </NavbarMenu>
+    </DesktopMenu>
   );
 };

@@ -1,8 +1,13 @@
 import moment from 'moment';
 
+function getDateFormat(locale?: string): string {
+  const lang = locale ?? moment.locale();
+  return lang === 'en' ? 'YYYY-MM-DD' : 'YYYY년 MM월 DD일';
+}
+
 // dt: YYYMMDD
-export function convertDate(dt: string) {
-  return moment(dt, 'YYYYMMDD').format('YYYY년 MM월 DD일');
+export function convertDate(dt: string, format?: string) {
+  return moment(dt, 'YYYYMMDD').format(format ?? getDateFormat());
 }
 
 // time: HHmm

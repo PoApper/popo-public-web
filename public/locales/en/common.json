@@ -1,0 +1,358 @@
+{
+  "nav": {
+    "reservationMenu": "Place / Equipment Reservation",
+    "placeReservation": "Place Reservation",
+    "equipReservation": "Equipment Reservation",
+    "studentCouncil": "Student Council",
+    "associationIntro": "Student Organizations",
+    "benefitsIntro": "Affiliates & Discounts",
+    "archive": "Student Council Archives",
+    "club": "Clubs",
+    "clubIntro": "Club Directory",
+    "studentAssociation": "Student Groups",
+    "studentAssociationIntro": "Student Groups Directory",
+    "whitebook": "Campus Guide",
+    "delivery": "Delivery Services",
+    "myInfo": "My Info",
+    "myReservation": "My Reservations",
+    "logout": "Log out",
+    "login": "Log in",
+    "logoutFailed": "Logout failed.",
+    "switchLanguage": "Switch language"
+  },
+  "layout": {
+    "pageTitle": "POPO Public Page",
+    "metaDescription": "POPO Public Page",
+    "reportBug": "Report a Bug",
+    "appLaunchFab": "POPO App is here!"
+  },
+  "footer": {
+    "stuCouncil": "POSTECH Student Council",
+    "presidentTel": "TEL {{contact}} (President {{name}})",
+    "popoInquiry": "POPO inquiries: {{email}}",
+    "recruiting": "We're Hiring Developers",
+    "postechHomepage": "POSTECH Homepage",
+    "library": "Tae-Joon Park Digital Library",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "home": {
+    "circles": {
+      "placeReservation": "Place Reservation",
+      "equipReservation": "Equipment Reservation",
+      "clubIntro": "Clubs",
+      "association": "Organizations",
+      "studentAssociation": "Student Groups",
+      "whitebook": "Campus Guide",
+      "benefits": "Affiliates",
+      "delivery": "Delivery",
+      "archive": "Archives"
+    },
+    "iconAlt": "{{text}} icon",
+    "appPromo": {
+      "title": "POPO App is here — including carpool!",
+      "body": "Everything you need for campus life in one place. Install now for a faster experience."
+    }
+  },
+  "notFound": {
+    "title": "This page does not exist.",
+    "body": "The link may be wrong, or the page may have been removed or moved. 🚫",
+    "goHome": "Go to POPO <0>home page</0> 🚀"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Confirm Delete",
+    "deleteConfirmBody": "{{target}} will be deleted. Are you sure?",
+    "deleteFailed": "Delete failed.\n{{errMsg}}",
+    "loginRequired": "Please log in.",
+    "loginRequiredToView": "Please log in to view this page.",
+    "alreadyLoggedIn": "You are already logged in.",
+    "errorOccurred": "An error occurred.",
+    "noticeLikeFailed": "Failed to like the notice.\n{{errMsg}}",
+    "noticeUnlikeFailed": "Failed to remove like.\n{{errMsg}}",
+    "privacyPolicyTitle": "Privacy Policy"
+  },
+  "openingHours": {
+    "Monday": "Mon",
+    "Tuesday": "Tue",
+    "Wednesday": "Wed",
+    "Thursday": "Thu",
+    "Friday": "Fri",
+    "Saturday": "Sat",
+    "Sunday": "Sun",
+    "Everyday": "Daily",
+    "others": "Other days:"
+  },
+  "timeDate": {
+    "calendarEventDate": "MMM D, dddd"
+  },
+  "auth": {
+    "login": {
+      "hint": "Please log in with the email you used to register for POPO.",
+      "password": "Password",
+      "findPassword": "Forgot password",
+      "register": "Sign up",
+      "invalidCredentials": "⚠ Unrecognized email/password. ⚠\n\"{{message}}\""
+    },
+    "register": {
+      "userTypeStudent": "Student (undergrad/grad)",
+      "userTypeStaff": "Faculty/Staff",
+      "emailPlaceholder": "Only POSTECH Mail addresses can register.",
+      "invalidEmail": "Invalid email address.",
+      "emailVerifyHint": "A verification email will be sent to this address!",
+      "passwordPlaceholder": "8–64 characters",
+      "passwordLengthError": "Password must be 8–64 characters.",
+      "passwordConfirm": "Confirm password",
+      "passwordMismatch": "Passwords do not match.",
+      "name": "Name",
+      "namePlaceholder": "Korean full name shown on reservations",
+      "userType": "User type",
+      "userTypePlaceholder": "Select a user type.",
+      "userTypeWarningHeader": "Did you select the correct user type?",
+      "userTypeWarningBody": "Incorrect user information may limit your access to services.",
+      "privacyAgree": "I agree to the <0>Privacy Policy</0>.",
+      "submit": "Sign up",
+      "invalidValues": "Please enter valid values! 😱",
+      "success": "Sign-up successful! 😁\nPlease check your POPO registration email! 📧\n(It may take about a minute.)",
+      "failed": "Sign-up failed. 😢\n\"{{message}}\""
+    },
+    "passwordReset": {
+      "hint": "Please use the email you registered with for POPO.",
+      "submit": "Reset password",
+      "success": "Your password has been reset. Check your email for the new password.",
+      "newMember": "New member?"
+    },
+    "myInfo": {
+      "changePassword": "Change password",
+      "changePasswordSuccess": "Password changed successfully!",
+      "changePasswordFailed": "Failed to update password. 😢\n\"{{message}}\"",
+      "joinedAt": "Joined on",
+      "withdraw": "Delete account",
+      "withdrawConfirm": "Deleting your account permanently removes all data and cannot be undone.",
+      "withdrawSuccess": "Your account has been deleted.",
+      "withdrawFailed": "Failed to delete account. 😢\n\"{{message}}\""
+    },
+    "myReservation": {
+      "hint": "Click a reservation title to see details.",
+      "loadPlaceFailed": "Failed to load your place reservations.",
+      "loadEquipFailed": "Failed to load your equipment reservations.",
+      "colTitle": "Title",
+      "colDescription": "Description",
+      "colPlace": "Place",
+      "colEquip": "Equipment",
+      "colPeriod": "Period",
+      "colStatus": "Status"
+    },
+    "activate": {
+      "loading": "Verifying your account...",
+      "successTitle": "Your account is activated!",
+      "successBody": "POPO, run by the POSTECH Student Council, supports student welfare and convenience.\nExplore what POPO has to offer!",
+      "goLogin": "Go to login",
+      "invalidAccess": "Invalid access."
+    }
+  },
+  "reservation": {
+    "shared": {
+      "user": "User",
+      "phone": "Phone",
+      "title": "Reservation title",
+      "titlePlaceholder": "Enter a reservation title.",
+      "description": "Description",
+      "openingHours": "Available hours",
+      "currentReservations": "Reservations",
+      "create": "Create",
+      "apply": "Request reservation",
+      "myList": "My reservations",
+      "reserve": "Reserve",
+      "deleteReservation": "Delete reservation",
+      "createdAt": "Created at",
+      "empty": "No reservations yet!",
+      "loginRequired": "Please log in to make a reservation.",
+      "selectFutureDate": "Please select a date after today.",
+      "descriptionTooShort": "Reservation description is too short.",
+      "createSuccess": "Reservation created!",
+      "createFailed": "Failed to create reservation: {{message}}",
+      "unavailableSlot": "This time slot is unavailable. Please check available hours for {{name}}.",
+      "leadTimeRequiredNamed": "{{name}} must be reserved at least {{days}} day(s) in advance.",
+      "daysBeforeRequired": "Must reserve {{days}} day(s) ahead",
+      "date": "Date",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "statusPending": "Pending",
+      "statusPassed": "Approved",
+      "statusRejected": "Rejected"
+    },
+    "place": {
+      "indexTitle": "Place Reservation",
+      "otherReservations": "Other reservations",
+      "regions": {
+        "studentHall": "Student Hall",
+        "jigok": "Jigok Community Center",
+        "communityCenter": "Community Center",
+        "others": "Other",
+        "rc": "RC"
+      },
+      "classroomFacilities": "Classrooms & athletic facilities",
+      "povisMeta": "POVIS Applications > Facility Use",
+      "logCabin": "Log Cabin",
+      "regionTitle": "{{region}} — Reserve a place",
+      "sortAlphabetic": "A–Z",
+      "sortPopular": "Most reserved",
+      "leadTimeWarning": "This place must be reserved {{days}} day(s) in advance.",
+      "pickDateHint": "Pick a date to see reservations! 😎",
+      "calendarDotHint": "If any reservation exists that day, it is marked on the calendar.",
+      "statusLegendPrefix": "Pending",
+      "statusLegendMid1": ",",
+      "statusLegendPassed": "approved",
+      "statusLegendMid2": ",",
+      "statusLegendRejected": "rejected",
+      "statusLegendSuffix": "are shown with colored dots.",
+      "createTitle": "Place reservation: {{name}}",
+      "regionLabel": "Region",
+      "placeLabel": "Place",
+      "descPlaceholder": "Please include the number of people.",
+      "confirmHeader": "Please double-check the place and time!",
+      "confirmSummary": "{{region}} {{name}}, {{minutes}} minute(s).",
+      "cinemaNotice": "RC Cinema Room can only be reserved in these slots:\n18:00–21:00 / 21:00–24:00 / 00:00–03:00.",
+      "groupStudyHeader": "⚠️ Group study room guidelines",
+      "groupStudyBody": "Group study rooms cannot be reserved for tutoring. Please use them only for studying.",
+      "maxDuration": "Max duration: {{minutes}} min",
+      "maxConcurrent": "Max concurrent reservations: {{count}}",
+      "detailModalTitle": "Place Reservation"
+    },
+    "equipment": {
+      "indexTitle": "Equipment Reservation",
+      "owners": {
+        "dongyeon": "Club Union",
+        "dormunion": "Dormitory Union",
+        "saengna": "Saengna"
+      },
+      "dongyeonDesc": "Mics, speakers, mixers, cameras, projectors, and more",
+      "dormunionDesc": "Carts and tools",
+      "locations": {
+        "dongyeon": "Club Union office (Student Hall 301)",
+        "dormunion": "Dormitory Union office (Dorm 4)",
+        "saengna": "Saengna office (Student Hall 108)"
+      },
+      "reserveTitle": "{{name}} — Reserve equipment",
+      "dongyeon": {
+        "process": "Rental process:",
+        "processSteps": "POPO request & payment → join KakaoTalk channel → approval → pickup & return",
+        "bankLabel": "Payment account:",
+        "bankNameHint": "*Use the same name as the reservation holder.",
+        "afterPayment": "After paying the deposit, join the KakaoTalk channel and send",
+        "kakaoMessageFields": "borrower name / rental date / items / transfer screenshot",
+        "kakaoLinkLabel": "KakaoTalk channel link:",
+        "example": "Example",
+        "exampleName": "Jeong Jongmin",
+        "exampleDate": "Monday, March 10",
+        "exampleItems": "Main speaker 1 / audio interface / wired vocal mics 1–3",
+        "serviceHours": "Pickup/return hours:",
+        "serviceHoursHint": "*Pickup/return outside these hours is difficult.",
+        "pickupLocation": "Pickup location:",
+        "liability": "You may be held responsible for lost equipment or late returns.",
+        "contact": "Contact:"
+      },
+      "genericHintClick": "Click equipment to see photos! 🖼️",
+      "genericHintPickup": "Pick up reserved equipment at {{location}}. 🏢️",
+      "genericHintPenalty": "Lost equipment or overtime may restrict future reservations. 🚨",
+      "createTitle": "Equipment reservation: {{name}}",
+      "descPlaceholder": "Please describe the intended use.",
+      "selectEquip": "Select equipment",
+      "selectEquipPlaceholder": "Select equipment to reserve.",
+      "selectedOpeningHours": "Available hours for selected equipment",
+      "leadTimeAlert": "Some selected equipment does not meet the advance-booking requirement for this date.",
+      "unavailableAlert": "Some selected equipment is unavailable in this time slot.",
+      "leadTimeHeader": "Advance-booking requirement not met",
+      "leadTimeListIntro": "These items require advance booking:",
+      "unavailableHeader": "This time slot is unavailable",
+      "unavailableListIntro": "These items are unavailable in the selected slot:",
+      "checkOpeningHours": "Please check each item's available hours.",
+      "feeConfirmHeader": "Please confirm the rental fee!",
+      "feeSummary": "{{count}} item(s), {{hours}} hour(s), total fee {{fee}} KRW.",
+      "equipNameCol": "Equipment name",
+      "feeCol": "Fee",
+      "feeWon": "{{fee}} KRW",
+      "maxMinutes": "Max reservation time",
+      "maxMinutesValue": "{{minutes}} min",
+      "advanceRule": "Advance booking rule",
+      "equipListCol": "Equipment list",
+      "detailModalTitle": "Equipment Reservation"
+    }
+  },
+  "club": {
+    "types": {
+      "performance1": "Performance 1",
+      "performance2": "Performance 2",
+      "sports": "Sports",
+      "hobbyAndExhibition": "Hobby & Exhibition",
+      "study": "Academic",
+      "societyAndReligion": "Society & Religion"
+    },
+    "roomLocation": "Club room",
+    "representative": "Representative"
+  },
+  "association": {
+    "types": {
+      "executive": "Executive bodies",
+      "autonomous": "Autonomous bodies",
+      "media": "Media bodies",
+      "specialized": "Specialized bodies",
+      "uncategorized": "Uncategorized"
+    },
+    "officeLocation": "Office location",
+    "adminTeam": "Partner admin team"
+  },
+  "whitebook": {
+    "title": "Campus Guide",
+    "subtitle": "Your survival guide for life at POSTECH! 📚",
+    "kakaoHint": "Also available via KakaoTalk Plus Friend 'POSTECH 생활백서' 😉"
+  },
+  "benefits": {
+    "title": "Student Council Affiliates",
+    "instagramHint": "See @postech_stu on Instagram for affiliate partners!",
+    "openHours": "Hours: {{hours}}",
+    "phone": "Phone: {{phone}}",
+    "discountDetails": "Discount details"
+  },
+  "recruiting": {
+    "title": "We're Hiring Developers 👨‍💻",
+    "p1": "While the Student Council runs POPO, PoApper builds and maintains it. 💪",
+    "p2": "The POPO team believes campus data at POSTECH is underused.",
+    "p3": "We also feel platforms for collecting POSTECH data are lacking.",
+    "p4": "We build <strong>platforms</strong>, accumulate <strong>data</strong>, and turn ideas into <strong>reality</strong> through active development and collaboration! 🤩",
+    "p5": "Build and grow that platform with us! 😎 Our door is always open 🔑",
+    "li1": "Build the website yourself and experience front-end and back-end!",
+    "li2": "Grow with mentorship from senior POPO developers!",
+    "li3": "Discover possibilities in POSTECH data collected via POPO!",
+    "contactLead": "Contact Us: Lead Developer, Taeyang Na (CSE '24)",
+    "prevLead1": "Previous Leads: Gwanho Kim (CSE '19)",
+    "prevLead2": "Previous Leads: Seokyoon Ha (CSE '18)"
+  },
+  "shuttle": {
+    "title": "🚌 Campus Shuttle Schedule (In Session)",
+    "facultySection": "Faculty Apartment Area",
+    "am": "AM",
+    "pm": "PM",
+    "facultyBldg8": "Faculty Bldg 8",
+    "facultyBldg5": "Faculty Bldg 5",
+    "tempParking": "Temporary parking",
+    "campusSection": "Campus Shuttle (POSTECH Campus Area)",
+    "stops": {
+      "jigok": "Jigok Hall",
+      "greenMaterials": "Green Materials\nGraduate School",
+      "lab": "Lab Bldg",
+      "accelerator": "Accelerator",
+      "envBldg": "Env. Bldg"
+    },
+    "noStop": "No stop",
+    "monThu": "Mon–Thu\n12:20",
+    "mueunjae": "(Mueunjae)",
+    "weekdayOnly": "* Operates weekdays (Mon–Fri) only",
+    "noWeekend": "* No service on holidays or weekends",
+    "semesterPeriod": "- In-session period: 2025.02.17 (Mon) – 2025.06.05 (Thu)",
+    "effectiveDate": "- Effective: 2025.02.17 (Mon)",
+    "contact": "- Contact: 054-279-3536 (Vehicle Unit)",
+    "stopsMap": "Shuttle Bus Stops"
+  }
+}

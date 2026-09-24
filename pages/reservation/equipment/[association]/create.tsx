@@ -3,6 +3,7 @@ import moment from 'moment';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { Divider, Form, Message } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import { hourDiff, roundUpByDuration } from '@/lib/time-date';
 import { isOnOpeningHours } from '@/lib/opening_hours';
@@ -14,15 +15,16 @@ import ReservationDatetimePicker from '@/components/reservation/reservation.date
 import EquipReservationTable from '@/components/reservation/equip.reservation.table';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
+import { getI18nProps } from '@/lib/i18n';
 
 type ObjectType = {
   [key: string]: string;
 };
 
-const OWNER_NAME_MAP: ObjectType = {
-  dongyeon: '동아리연합회',
-  dormunion: '생활관자치회',
-  saengna: '생각나눔',
+const OWNER_NAME_KEY_MAP: ObjectType = {
+  dongyeon: 'reservation.equipment.owners.dongyeon',
+  dormunion: 'reservation.equipment.owners.dormunion',
+  saengna: 'reservation.equipment.owners.saengna',
 };
 
 const EquipReservationCreatePage: React.FunctionComponent<{
@@ -31,6 +33,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
   selectedDate: string;
 }> = ({ association, equipmentList, selectedDate }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [userInfo, setUserInfo] = useState<IUser | null>({
     name: '',
@@ -89,34 +92,32 @@ const EquipReservationCreatePage: React.FunctionComponent<{
         setUserInfo(res.data);
       })
       .catch(() => {
-        alert('로그인 후 예약할 수 있습니다.');
+        alert(t('reservation.shared.loginRequired'));
         router.push('/auth/login');
       });
     // 오늘 이후의 날짜를 선택했는지 확인
     const today = moment().format('YYYYMMDD');
     if (moment(selectedDate).isBefore(today)) {
       setTimeout(() => {
-        alert('오늘 이후의 날짜를 선택해주세요.');
+        alert(t('reservation.shared.selectFutureDate'));
         router.push(`/reservation/equipment/${association}`);
       }, 100);
     }
-  }, [association, router, selectedDate]);
+  }, [association, router, selectedDate, t]);
 
   function handleSubmit() {
     if (title.length == 1 || description.length == 1) {
-      alert('예약 설명이 너무 짧습니다.');
+      alert(t('reservation.shared.descriptionTooShort'));
       return;
     }
 
     if (!isPossible) {
       if (unavailableLeadTimeEquipments.length > 0) {
-        alert(
-          '선택한 날짜에 예약하기에는 사전 예약 기준을 만족하지 않는 장비가 있습니다.',
-        );
+        alert(t('reservation.equipment.leadTimeAlert'));
         return;
       }
 
-      alert('선택한 시간대에 사용 불가능한 장비가 있습니다.');
+      alert(t('reservation.equipment.unavailableAlert'));
       return;
     }
 
@@ -131,41 +132,49 @@ const EquipReservationCreatePage: React.FunctionComponent<{
       endTime: endTime.format('HHmm'), // HHmm
     })
       .then(() => {
-        alert('예약을 생성했습니다!');
+        alert(t('reservation.shared.createSuccess'));
         router.push('/auth/my-reservation');
       })
       .catch((error) => {
-        alert(`예약 생성에 실패했습니다: ${error.response.data.message}`);
+        alert(
+          t('reservation.shared.createFailed', {
+            message: error.response.data.message,
+          }),
+        );
       });
   }
 
   return (
     <Layout>
-      <h2>장비 예약: {OWNER_NAME_MAP[association]}</h2>
+      <h2>
+        {t('reservation.equipment.createTitle', {
+          name: t(OWNER_NAME_KEY_MAP[association]),
+        })}
+      </h2>
       <Form>
         <Form.Input
           required
           readOnly
-          label={'사용자'}
+          label={t('reservation.shared.user')}
           value={userInfo ? userInfo.name : ''}
         />
 
         <Form.Input
           required
-          label={'전화번호'}
+          label={t('reservation.shared.phone')}
           placeholder={'010-xxxx-xxxx'}
           onChange={(e) => setPhone(e.target.value)}
         />
         <Form.Input
           required
-          label={'예약 제목'}
-          placeholder={'예약 제목을 작성해주세요.'}
+          label={t('reservation.shared.title')}
+          placeholder={t('reservation.shared.titlePlaceholder')}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Form.TextArea
           required
-          label={'설명'}
-          placeholder={'사용처를 반드시 작성해주세요.'}
+          label={t('reservation.shared.description')}
+          placeholder={t('reservation.equipment.descPlaceholder')}
           onChange={(e) => setDescription(e.target.value)}
         />
 
@@ -177,8 +186,8 @@ const EquipReservationCreatePage: React.FunctionComponent<{
           multiple
           search
           selection
-          label={'장비 선택'}
-          placeholder={'예약할 장비들을 선택해주세요.'}
+          label={t('reservation.equipment.selectEquip')}
+          placeholder={t('reservation.equipment.selectEquipPlaceholder')}
           options={equipmentList.map((equip, idx) => ({
             key: idx,
             text: equip.name,
@@ -205,7 +214,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 
         {selectedEquipmentObjects.length > 0 && (
           <div className={'field'} style={{ maxWidth: 400 }}>
-            <label>선택한 장비의 사용 가능 시간</label>
+            <label>{t('reservation.equipment.selectedOpeningHours')}</label>
             {selectedEquipmentObjects.map((equip) => (
               <div key={equip.uuid} style={{ marginBottom: 12 }}>
                 <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
@@ -216,7 +225,11 @@ const EquipReservationCreatePage: React.FunctionComponent<{
                     openingHours={JSON.parse(equip.openingHours)}
                   />
                   {equip.reservationRequiredDays > 0 ? (
-                    <div>{equip.reservationRequiredDays}일 전 예약 필수</div>
+                    <div>
+                      {t('reservation.shared.daysBeforeRequired', {
+                        days: equip.reservationRequiredDays,
+                      })}
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -241,15 +254,18 @@ const EquipReservationCreatePage: React.FunctionComponent<{
         {unavailableLeadTimeEquipments.length > 0 && (
           <Message negative>
             <Message.Header>
-              예약 신청일 기준을 만족하지 않습니다
+              {t('reservation.equipment.leadTimeHeader')}
             </Message.Header>
             <p>
-              다음 장비들은 최소 예약 신청일 기준을 만족해야 합니다:
+              {t('reservation.equipment.leadTimeListIntro')}
               <ul>
                 {unavailableLeadTimeEquipments.map((equip) => (
                   <li key={equip.uuid}>
-                    {equip.name} ({equip.reservationRequiredDays}일 전 예약
-                    필수)
+                    {equip.name} (
+                    {t('reservation.shared.daysBeforeRequired', {
+                      days: equip.reservationRequiredDays,
+                    })}
+                    )
                   </li>
                 ))}
               </ul>
@@ -259,21 +275,23 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 
         {unavailableOpeningHourEquipments.length > 0 && (
           <Message negative>
-            <Message.Header>예약이 불가능한 시간대입니다</Message.Header>
+            <Message.Header>
+              {t('reservation.equipment.unavailableHeader')}
+            </Message.Header>
             <p>
-              다음 장비들이 선택한 시간대에 사용 불가능합니다:
+              {t('reservation.equipment.unavailableListIntro')}
               <ul>
                 {unavailableOpeningHourEquipments.map((equip) => (
                   <li key={equip.uuid}>{equip.name}</li>
                 ))}
               </ul>
-              각 장비의 사용 가능 시간을 확인해주세요.
+              {t('reservation.equipment.checkOpeningHours')}
             </p>
           </Message>
         )}
 
         <div className={'field'}>
-          <label>예약 현황</label>
+          <label>{t('reservation.shared.currentReservations')}</label>
           <div>
             <EquipReservationTable
               associationName={association}
@@ -284,18 +302,20 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 
         <Message>
           <Message.Header>
-            예약한 장비의 예약비를 꼭 확인해주세요!
+            {t('reservation.equipment.feeConfirmHeader')}
           </Message.Header>
           <p>
-            {selectedEquipments.length}개 장비, {hourDiff(startTime, endTime)}
-            시간 예약, 총 예약비는 <b>
-              {Number(feeSum).toLocaleString()}원
-            </b>{' '}
-            입니다.
+            {t('reservation.equipment.feeSummary', {
+              count: selectedEquipments.length,
+              hours: hourDiff(startTime, endTime),
+              fee: Number(feeSum).toLocaleString(),
+            })}
           </p>
         </Message>
 
-        <Form.Button onClick={handleSubmit}>생성</Form.Button>
+        <Form.Button onClick={handleSubmit}>
+          {t('reservation.shared.create')}
+        </Form.Button>
       </Form>
     </Layout>
   );
@@ -304,12 +324,18 @@ const EquipReservationCreatePage: React.FunctionComponent<{
 export default EquipReservationCreatePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale;
   const { association, selectedDate } = context.query;
 
   const res = await PoPoAxios.get<IEquipment[]>(`equip/owner/${association}`);
   const equipmentList = res.data;
 
   return {
-    props: { association, equipmentList, selectedDate },
+    props: {
+      association,
+      equipmentList,
+      selectedDate,
+      ...(await getI18nProps(locale)),
+    },
   };
 };

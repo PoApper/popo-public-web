@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styled, { ThemeProvider } from 'styled-components';
+import { useTranslation } from 'next-i18next/pages';
 import theme from '@/styles/theme';
 import Navbar from './navbar/navbar';
 import AppPromoFab from '@/components/home/AppPromoFab';
@@ -12,12 +13,14 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => {
+  const { t } = useTranslation('common');
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <Head>
-          <title>POPO 퍼블릭 페이지</title>
-          <meta name="description" content="POPO 퍼블릭 페이지" />
+          <title>{t('layout.pageTitle')}</title>
+          <meta name="description" content={t('layout.metaDescription')} />
           <link rel="icon" href={'/favicon.ico'} />
         </Head>
         <main>
@@ -34,16 +37,15 @@ const Layout = ({ children }: LayoutProps) => {
         rel="noopener noreferrer"
       >
         <Image src="/home/siren.ico" alt="Siren Icon" width={30} height={30} />
-        <span>오류 신고</span>
+        <span>{t('layout.reportBug')}</span>
       </FloatingButton>
       <AppInstallButton
         onClick={() =>
           document.dispatchEvent(new CustomEvent('open-app-promo'))
         }
       >
-        <span>POPO 앱 출시!</span>
+        <span>{t('layout.appLaunchFab')}</span>
       </AppInstallButton>
-      {/* 트리거 버튼은 별도로 노출하지 않고(오류 신고와 겹침 방지) 이벤트로만 열림 */}
       <AppPromoFab />
     </>
   );
@@ -89,10 +91,9 @@ const FloatingButton = styled.a`
 
 export default Layout;
 
-// 설치 FAB (오류 신고 버튼 위)
 const AppInstallButton = styled.button`
   position: fixed;
-  bottom: 78px; /* 오류 신고 위 58px + 여유 */
+  bottom: 78px;
   right: 40px;
   background-color: #333435;
   color: white;

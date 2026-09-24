@@ -2,12 +2,16 @@ import { Button, Container, Form, List, Message } from 'semantic-ui-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const LoginPage = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [email, setEmail] = useState<string>('');
   const [password, setPW] = useState<string>('');
@@ -15,11 +19,11 @@ const LoginPage = () => {
   useEffect(() => {
     PoPoAxios.get('/auth/verifyToken')
       .then(() => {
-        alert('이미 로그인되었습니다.');
+        alert(t('common.alreadyLoggedIn'));
         router.push('/');
       })
       .catch(() => {});
-  }, [router]);
+  }, [router, t]);
 
   async function handleLogin() {
     const body = {
@@ -34,7 +38,9 @@ const LoginPage = () => {
       .catch((err) => {
         const response = err.response;
         alert(
-          `⚠ 등록되지 않은 Email/PW 입니다. ⚠\n"${response.data.message}"`,
+          t('auth.login.invalidCredentials', {
+            message: response.data.message,
+          }),
         );
       });
   }
@@ -50,7 +56,7 @@ const LoginPage = () => {
           borderRadius: 8,
         }}
       >
-        <Message>POPO 가입 때 사용한 email을 통해 로그인해주세요.</Message>
+        <Message>{t('auth.login.hint')}</Message>
 
         <Form>
           <Form.Input
@@ -58,24 +64,24 @@ const LoginPage = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Input
-            label={'비밀번호'}
+            label={t('auth.login.password')}
             type={'password'}
             onChange={(e) => setPW(e.target.value)}
           />
           <Button primary onClick={handleLogin}>
-            로그인
+            {t('nav.login')}
           </Button>
         </Form>
 
         <List horizontal divided link size="small">
           <List.Item>
             <Link href={'/auth/password/reset'} passHref>
-              비밀번호 찾기
+              {t('auth.login.findPassword')}
             </Link>
           </List.Item>
           <List.Item>
             <Link href={'/auth/register'} passHref>
-              회원가입
+              {t('auth.login.register')}
             </Link>
           </List.Item>
         </List>
@@ -85,3 +91,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

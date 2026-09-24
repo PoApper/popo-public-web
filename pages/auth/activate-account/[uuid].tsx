@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 import { Button } from 'semantic-ui-react';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const ActivateAccountPage = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
   const userUuid = router.query.uuid;
 
   const [isLoading, setIsLoading] = useState(true);
@@ -23,30 +27,26 @@ const ActivateAccountPage = () => {
         console.log(err);
         setIsLoading(false);
         setIsValidAccount(false);
-        alert('올바르지 않은 접근입니다.');
+        alert(t('auth.activate.invalidAccess'));
       });
-  }, [userUuid]);
+  }, [userUuid, t]);
 
   return (
     <div>
       {isLoading ? (
-        <div>계정 정보를 확인하고 있습니다...</div>
+        <div>{t('auth.activate.loading')}</div>
       ) : isValidAccount ? (
         <div>
-          <h2>계정이 활성화되었습니다!</h2>
-          <p>
-            POSTECH 총학생회에서 운영하는 POPO는 학생 복지와 편의를 제공합니다.
-            <br />
-            POPO에서 여러 기능들을 사용해보세요!
-          </p>
+          <h2>{t('auth.activate.successTitle')}</h2>
+          <p style={{ whiteSpace: 'pre-line' }}>{t('auth.activate.successBody')}</p>
           <br />
           <Button primary href={'/auth/login'}>
-            로그인 하러 가기
+            {t('auth.activate.goLogin')}
           </Button>
         </div>
       ) : (
         <div>
-          <h2>올바르지 않은 접근입니다.</h2>
+          <h2>{t('auth.activate.invalidAccess')}</h2>
         </div>
       )}
     </div>
@@ -54,3 +54,7 @@ const ActivateAccountPage = () => {
 };
 
 export default ActivateAccountPage;
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});
