@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import moment from 'moment-timezone';
 import { Button, Grid, Label, Message } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
@@ -11,6 +12,7 @@ import PlaceInformationCard from '@/components/reservation/place.information.car
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IPlace } from '@/types/reservation.interface';
 import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
+import { getI18nProps } from '@/lib/i18n';
 
 // Due to the SSR issue, we need to use dynamic import
 const ReservationCalendar = dynamic(
@@ -23,6 +25,7 @@ const PlaceReservationPage: React.FunctionComponent<{
   placeName: string;
   placeInfo: IPlace;
 }> = ({ region, placeName, placeInfo }) => {
+  const { t } = useTranslation('common');
   const [selectedDate, setSelectedDate] = useState(
     moment().tz('Asia/Seoul').format('YYYYMMDD'),
   );
@@ -61,8 +64,9 @@ const PlaceReservationPage: React.FunctionComponent<{
           <PlaceInformationCard placeInfo={placeInfo} />
           {!isSelectedDateBookable && placeInfo.reservationRequiredDays > 0 ? (
             <Message warning>
-              이 장소는 {placeInfo.reservationRequiredDays}일 전 예약이
-              필요합니다.
+              {t('reservation.place.leadTimeWarning', {
+                days: placeInfo.reservationRequiredDays,
+              })}
             </Message>
           ) : null}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -71,15 +75,15 @@ const PlaceReservationPage: React.FunctionComponent<{
                 href={`/reservation/place/${region}/${placeName}/create?selectedDate=${selectedDate}`}
                 passHref
               >
-                <Button primary>예약 신청하기</Button>
+                <Button primary>{t('reservation.shared.apply')}</Button>
               </Link>
             ) : (
               <Button primary disabled>
-                예약 신청하기
+                {t('reservation.shared.apply')}
               </Button>
             )}
             <Link href={'/auth/my-reservation'} passHref>
-              <Button>내 예약 목록</Button>
+              <Button>{t('reservation.shared.myList')}</Button>
             </Link>
           </div>
         </Grid.Column>
@@ -96,18 +100,23 @@ const PlaceReservationPage: React.FunctionComponent<{
               </Grid.Row>
 
               <Grid.Row style={{ marginBottom: '1em' }}>
-                <p>날짜를 고르면, 예약 현황을 확인할 수 있습니다! 😎</p>
+                <p>{t('reservation.place.pickDateHint')}</p>
                 <div>
-                  해당 날짜에 예약이 하나라도 존재하면, 달력에{' '}
-                  <Label circular color={'orange'} empty />로 표시됩니다.
+                  {t('reservation.place.calendarDotHint')}{' '}
+                  <Label circular color={'orange'} empty />
                 </div>
                 <div>
-                  <b>심사중</b>은 <Label circular color={'black'} empty /> 로,
+                  {t('reservation.place.statusLegendPrefix')}{' '}
+                  <Label circular color={'black'} empty />{' '}
+                  {t('reservation.place.statusLegendMid1')}
                   &nbsp;
-                  <b>통과</b>는 <Label circular color={'green'} empty /> 로,
+                  {t('reservation.place.statusLegendPassed')}{' '}
+                  <Label circular color={'green'} empty />{' '}
+                  {t('reservation.place.statusLegendMid2')}
                   &nbsp;
-                  <b>거절</b>은 <Label circular color={'red'} empty /> 로
-                  표시됩니다.
+                  {t('reservation.place.statusLegendRejected')}{' '}
+                  <Label circular color={'red'} empty />{' '}
+                  {t('reservation.place.statusLegendSuffix')}
                 </div>
               </Grid.Row>
 
@@ -128,12 +137,18 @@ const PlaceReservationPage: React.FunctionComponent<{
 export default PlaceReservationPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale;
   const { region, placeName } = context.query;
 
   const res = await PoPoAxios.get<IPlace[]>(`place/name/${placeName}`);
   const placeInfo = res.data;
 
   return {
-    props: { region, placeName, placeInfo },
+    props: {
+      region,
+      placeName,
+      placeInfo,
+      ...(await getI18nProps(locale)),
+    },
   };
 };

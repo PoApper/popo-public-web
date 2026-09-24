@@ -1,0 +1,358 @@
+{
+  "nav": {
+    "reservationMenu": "장소/장비 예약",
+    "placeReservation": "장소 예약",
+    "equipReservation": "장비 예약",
+    "studentCouncil": "총학생회",
+    "associationIntro": "자치단체 소개",
+    "benefitsIntro": "제휴 및 할인업체 소개",
+    "archive": "총학생회 기록물관리기관",
+    "club": "동아리",
+    "clubIntro": "동아리 소개",
+    "studentAssociation": "학생단체",
+    "studentAssociationIntro": "학생단체 소개",
+    "whitebook": "생활백서",
+    "delivery": "배달업체",
+    "myInfo": "내 정보",
+    "myReservation": "내 예약",
+    "logout": "로그아웃",
+    "login": "로그인",
+    "logoutFailed": "로그아웃에 실패했습니다.",
+    "switchLanguage": "언어 변경"
+  },
+  "layout": {
+    "pageTitle": "POPO 퍼블릭 페이지",
+    "metaDescription": "POPO 퍼블릭 페이지",
+    "reportBug": "오류 신고",
+    "appLaunchFab": "POPO 앱 출시!"
+  },
+  "footer": {
+    "stuCouncil": "POSTECH 총학생회",
+    "presidentTel": "TEL {{contact}} (총학생회장 {{name}})",
+    "popoInquiry": "POPO 관련 문의: {{email}}",
+    "recruiting": "개발자 모집",
+    "postechHomepage": "포항공대 홈페이지",
+    "library": "박태준 학술정보관",
+    "privacyPolicy": "개인정보처리방침"
+  },
+  "home": {
+    "circles": {
+      "placeReservation": "장소예약",
+      "equipReservation": "장비예약",
+      "clubIntro": "동아리소개",
+      "association": "자치단체",
+      "studentAssociation": "학생단체",
+      "whitebook": "생활백서",
+      "benefits": "제휴업체",
+      "delivery": "배달업체",
+      "archive": "기록물관리"
+    },
+    "iconAlt": "{{text}} 아이콘",
+    "appPromo": {
+      "title": "POPO 앱 출시, 카풀 기능까지!",
+      "body": "학교 생활에 필요한 기능을 한 곳에서. 지금 설치하고 더 빠르게 이용해보세요."
+    }
+  },
+  "notFound": {
+    "title": "페이지가 존재하지 않습니다.",
+    "body": "링크를 잘못 입력하셨거나 페이지가 삭제/이동되었을 수 있습니다. 🚫",
+    "goHome": "POPO로 <0>메인 페이지</0>로 이동 🚀"
+  },
+  "common": {
+    "cancel": "취소",
+    "delete": "삭제",
+    "deleteConfirmTitle": "삭제 확인",
+    "deleteConfirmBody": "{{target}}이 삭제됩니다. 정말 삭제 하시겠습니까?",
+    "deleteFailed": "삭제에 실패했습니다.\n{{errMsg}}",
+    "loginRequired": "로그인이 필요합니다.",
+    "loginRequiredToView": "로그인 후 조회할 수 있습니다.",
+    "alreadyLoggedIn": "이미 로그인되었습니다.",
+    "errorOccurred": "오류가 발생했습니다.",
+    "noticeLikeFailed": "공지 좋아요에 실패했습니다.\n{{errMsg}}",
+    "noticeUnlikeFailed": "공지 좋아요 취소에 실패했습니다.\n{{errMsg}}",
+    "privacyPolicyTitle": "개인정보 처리방침"
+  },
+  "openingHours": {
+    "Monday": "월",
+    "Tuesday": "화",
+    "Wednesday": "수",
+    "Thursday": "목",
+    "Friday": "금",
+    "Saturday": "토",
+    "Sunday": "일",
+    "Everyday": "매일",
+    "others": "그외:"
+  },
+  "timeDate": {
+    "calendarEventDate": "MM월 DD일 dddd"
+  },
+  "auth": {
+    "login": {
+      "hint": "POPO 가입 때 사용한 email을 통해 로그인해주세요.",
+      "password": "비밀번호",
+      "findPassword": "비밀번호 찾기",
+      "register": "회원가입",
+      "invalidCredentials": "⚠ 등록되지 않은 Email/PW 입니다. ⚠\n\"{{message}}\""
+    },
+    "register": {
+      "userTypeStudent": "학생 (학부/대학원)",
+      "userTypeStaff": "교직원",
+      "emailPlaceholder": "POSTECH Mail만 가입 가능합니다.",
+      "invalidEmail": "유효하지 않은 이메일입니다.",
+      "emailVerifyHint": "이 이메일로 인증 메일이 발송됩니다!",
+      "passwordPlaceholder": "8자리 이상 64자리 이하",
+      "passwordLengthError": "비밀번호는 8~64자 사이여야 합니다.",
+      "passwordConfirm": "Password 확인",
+      "passwordMismatch": "비밀번호가 일치하지 않습니다.",
+      "name": "이름",
+      "namePlaceholder": "예약에 표시될 한글 실명",
+      "userType": "유저 타입",
+      "userTypePlaceholder": "유저 타입을 선택하세요.",
+      "userTypeWarningHeader": "적절한 유저 타입을 선택했나요?",
+      "userTypeWarningBody": "유저 정보가 올바르지 않으면 서비스 이용에 불이익이 있을 수 있습니다.",
+      "privacyAgree": "<0>개인정보처리방침</0>에 동의합니다.",
+      "submit": "가입하기",
+      "invalidValues": "유효한 값을 입력해주세요! 😱",
+      "success": "회원가입에 성공했습니다! 😁\nPOPO 가입 메일을 확인해주세요! 📧\n(1분 정도 지연될 수 있습니다.)",
+      "failed": "회원가입에 실패했습니다. 😢\n\"{{message}}\""
+    },
+    "passwordReset": {
+      "hint": "POPO 가입 때 사용한 email을 이용해주세요.",
+      "submit": "비밀번호 초기화",
+      "success": "비밀번호가 초기화 되었습니다. 이메일을 통해 신규 비밀번호를 확인해주세요.",
+      "newMember": "신규 회원이신가요?"
+    },
+    "myInfo": {
+      "changePassword": "비밀번호 변경",
+      "changePasswordSuccess": "비밀번호 변경에 성공했습니다!",
+      "changePasswordFailed": "비밀번호 업데이트에 실패했습니다. 😢\n\"{{message}}\"",
+      "joinedAt": "가입일",
+      "withdraw": "회원 탈퇴",
+      "withdrawConfirm": "회원 탈퇴 시 모든 정보가 삭제되며 복구되지 않습니다.",
+      "withdrawSuccess": "회원 탈퇴가 완료되었습니다.",
+      "withdrawFailed": "회원 탈퇴에 실패했습니다. 😢\n\"{{message}}\""
+    },
+    "myReservation": {
+      "hint": "예약 제목을 클릭하면 자세한 예약 정보를 볼 수 있습니다.",
+      "loadPlaceFailed": "내 장소 예약 목록을 불러오는 데 실패했습니다.",
+      "loadEquipFailed": "내 장비 예약 목록을 불러오는 데 실패했습니다.",
+      "colTitle": "예약 제목",
+      "colDescription": "예약 설명",
+      "colPlace": "예약 장소",
+      "colEquip": "예약 장비",
+      "colPeriod": "예약 기간",
+      "colStatus": "상태"
+    },
+    "activate": {
+      "loading": "계정 정보를 확인하고 있습니다...",
+      "successTitle": "계정이 활성화되었습니다!",
+      "successBody": "POSTECH 총학생회에서 운영하는 POPO는 학생 복지와 편의를 제공합니다.\nPOPO에서 여러 기능들을 사용해보세요!",
+      "goLogin": "로그인 하러 가기",
+      "invalidAccess": "올바르지 않은 접근입니다."
+    }
+  },
+  "reservation": {
+    "shared": {
+      "user": "사용자",
+      "phone": "전화번호",
+      "title": "예약 제목",
+      "titlePlaceholder": "예약 제목을 작성해주세요.",
+      "description": "설명",
+      "openingHours": "사용 가능 시간",
+      "currentReservations": "예약 현황",
+      "create": "생성",
+      "apply": "예약 신청하기",
+      "myList": "내 예약 목록",
+      "reserve": "예약하기",
+      "deleteReservation": "예약 삭제",
+      "createdAt": "생성일",
+      "empty": "등록된 예약이 없습니다!",
+      "loginRequired": "로그인 후 예약할 수 있습니다.",
+      "selectFutureDate": "오늘 이후의 날짜를 선택해주세요.",
+      "descriptionTooShort": "예약 설명이 너무 짧습니다.",
+      "createSuccess": "예약을 생성했습니다!",
+      "createFailed": "예약 생성에 실패했습니다: {{message}}",
+      "unavailableSlot": "예약이 불가능한 시간대입니다. {{name}}의 사용 가능 시간을 확인해주세요.",
+      "leadTimeRequiredNamed": "{{name}}은 최소 {{days}}일 전 예약해야 합니다.",
+      "daysBeforeRequired": "{{days}}일 전 예약 필수",
+      "date": "날짜",
+      "startTime": "시작 시간",
+      "endTime": "종료 시간",
+      "statusPending": "심사중",
+      "statusPassed": "통과",
+      "statusRejected": "거절"
+    },
+    "place": {
+      "indexTitle": "장소 예약",
+      "otherReservations": "기타 예약",
+      "regions": {
+        "studentHall": "학생회관",
+        "jigok": "지곡회관",
+        "communityCenter": "커뮤니티 센터",
+        "others": "기타",
+        "rc": "RC"
+      },
+      "classroomFacilities": "강의실 및 체육시설",
+      "povisMeta": "POVIS 신고신청 > 시설이용",
+      "logCabin": "통나무집",
+      "regionTitle": "{{region}} - 장소 예약하기",
+      "sortAlphabetic": "가나다순",
+      "sortPopular": "예약 많은 순",
+      "leadTimeWarning": "이 장소는 {{days}}일 전 예약이 필요합니다.",
+      "pickDateHint": "날짜를 고르면, 예약 현황을 확인할 수 있습니다! 😎",
+      "calendarDotHint": "해당 날짜에 예약이 하나라도 존재하면, 달력에 ○로 표시됩니다.",
+      "statusLegendPrefix": "심사중은",
+      "statusLegendMid1": "로,",
+      "statusLegendPassed": "통과는",
+      "statusLegendMid2": "로,",
+      "statusLegendRejected": "거절은",
+      "statusLegendSuffix": "로 표시됩니다.",
+      "createTitle": "장소 예약: {{name}}",
+      "regionLabel": "지역",
+      "placeLabel": "장소",
+      "descPlaceholder": "사용 인원을 꼭 작성 해주세요.",
+      "confirmHeader": "예약 장소와 예약 시간을 꼭 확인해주세요!",
+      "confirmSummary": "{{region}} {{name}}, {{minutes}}분 예약입니다.",
+      "cinemaNotice": "RC 시네마 룸의 예약은\n18:00 ~ 21:00 / 21:00 ~ 24:00 / 00:00 ~ 03:00\n3가지 시간대만 가능 합니다.",
+      "groupStudyHeader": "⚠️ 그룹스터디룸 이용 안내",
+      "groupStudyBody": "그룹스터디룸은 과외 목적으로 예약이 불가능합니다. 학습 및 스터디 목적으로만 사용해주시기 바랍니다.",
+      "maxDuration": "최대 예약 기간: {{minutes}}분",
+      "maxConcurrent": "동시 예약 가능 갯수: 최대 {{count}}개 예약",
+      "detailModalTitle": "장소 예약"
+    },
+    "equipment": {
+      "indexTitle": "장비 예약",
+      "owners": {
+        "dongyeon": "동아리연합회",
+        "dormunion": "생활관자치회",
+        "saengna": "생각나눔"
+      },
+      "dongyeonDesc": "마이크, 스피커, 믹서 등의 음향장비, 카메라, 빔 프로젝터 등",
+      "dormunionDesc": "카트, 공구류",
+      "locations": {
+        "dongyeon": "동아리연합회 사무실(학생회관 301호)",
+        "dormunion": "생활관자치회 사무실(생활관 4동)",
+        "saengna": "생각나눔 사무실(학생회관 108호)"
+      },
+      "reserveTitle": "{{name}} - 장비 예약하기",
+      "dongyeon": {
+        "process": "물품 대여 순서 :",
+        "processSteps": "POPO 신청&입금 - 카카오톡 채널 입장 - 승인 - 대여&반납",
+        "bankLabel": "예약비 입금 계좌 :",
+        "bankNameHint": "*입금자명은 예약자명과 동일하게 해주세요.",
+        "afterPayment": "예약금 납부 후, 카카오톡 채널에 입장하여",
+        "kakaoMessageFields": "대여자명 / 대여일 / 대여품목 / 송금 화면 발송",
+        "kakaoLinkLabel": "카카오톡 채널 링크 :",
+        "example": "예시",
+        "exampleName": "정종민",
+        "exampleDate": "3월 10일 월요일",
+        "exampleItems": "메인스피커1 / 오디오 인터페이스 / 유선 보컬 마이크 1~3",
+        "serviceHours": "대여/반납 시간 :",
+        "serviceHoursHint": "*그 외 시간에 대여와 반납은 어렵습니다.",
+        "pickupLocation": "수령 장소 :",
+        "liability": "장비 분실 및 반납 시간을 어길 시 책임을 물을 수 있습니다.",
+        "contact": "문의 :"
+      },
+      "genericHintClick": "장비를 클릭하면 장비 사진을 볼 수 있습니다! 🖼️",
+      "genericHintPickup": "예약한 장비는 {{location}}에서 수령하실 수 있습니다. 🏢️",
+      "genericHintPenalty": "장비가 분실되거나 예약 시간을 초과할 경우, 차후 예약에 제한을 둘 수 있습니다. 🚨",
+      "createTitle": "장비 예약: {{name}}",
+      "descPlaceholder": "사용처를 반드시 작성해주세요.",
+      "selectEquip": "장비 선택",
+      "selectEquipPlaceholder": "예약할 장비들을 선택해주세요.",
+      "selectedOpeningHours": "선택한 장비의 사용 가능 시간",
+      "leadTimeAlert": "선택한 날짜에 예약하기에는 사전 예약 기준을 만족하지 않는 장비가 있습니다.",
+      "unavailableAlert": "선택한 시간대에 사용 불가능한 장비가 있습니다.",
+      "leadTimeHeader": "예약 신청일 기준을 만족하지 않습니다",
+      "leadTimeListIntro": "다음 장비들은 최소 예약 신청일 기준을 만족해야 합니다:",
+      "unavailableHeader": "예약이 불가능한 시간대입니다",
+      "unavailableListIntro": "다음 장비들이 선택한 시간대에 사용 불가능합니다:",
+      "checkOpeningHours": "각 장비의 사용 가능 시간을 확인해주세요.",
+      "feeConfirmHeader": "예약한 장비의 예약비를 꼭 확인해주세요!",
+      "feeSummary": "{{count}}개 장비, {{hours}}시간 예약, 총 예약비는 {{fee}}원 입니다.",
+      "equipNameCol": "장비 이름",
+      "feeCol": "예약비",
+      "feeWon": "{{fee}}원",
+      "maxMinutes": "최대 예약 가능 시간",
+      "maxMinutesValue": "{{minutes}}분",
+      "advanceRule": "사전 예약 기준",
+      "equipListCol": "장비 목록",
+      "detailModalTitle": "장비 예약"
+    }
+  },
+  "club": {
+    "types": {
+      "performance1": "공연1",
+      "performance2": "공연2",
+      "sports": "체육",
+      "hobbyAndExhibition": "취미전시",
+      "study": "학술",
+      "societyAndReligion": "사회종교"
+    },
+    "roomLocation": "동방 위치",
+    "representative": "대표자"
+  },
+  "association": {
+    "types": {
+      "executive": "집행기구",
+      "autonomous": "자치기구",
+      "media": "언론기구",
+      "specialized": "전문기구",
+      "uncategorized": "미분류"
+    },
+    "officeLocation": "사무실 위치",
+    "adminTeam": "협력 행정팀"
+  },
+  "whitebook": {
+    "title": "생활백서",
+    "subtitle": "야생의 POSTECH에서 살아남기 위한 생활백서! 📚",
+    "kakaoHint": "카카오톡 플러스친구 'POSTECH 생활백서'를 통해서도 이용하실 수 있습니다 😉"
+  },
+  "benefits": {
+    "title": "총학생회 제휴 업체 소개",
+    "instagramHint": "총학생회 제휴업체는 postech_stu 인스타그램 링크를 참고해주세요!",
+    "openHours": "영업 시간: {{hours}}",
+    "phone": "가게 번호: {{phone}}",
+    "discountDetails": "할인 내용"
+  },
+  "recruiting": {
+    "title": "개발자 모집👨‍💻",
+    "p1": "총학생회가 POPO를 운영한다면, PoApper는 POPO 개발과 유지/보수를 맡고 있습니다. 💪",
+    "p2": "POPO 개발팀은 POSTECH에서 발생하는 데이터가 제대로 활용되지 못하고 있다고 생각합니다.",
+    "p3": "그리고 POSTECH의 데이터를 수집하는 플랫폼 역시 빈약하다고 느끼고 있습니다.",
+    "p4": "POPO 개발팀은 적극적으로 개발하고 아이디어를 교환하면서, <strong>플랫폼</strong>을 만들고 <strong>데이터</strong>를 축적해 상상을 <strong>현실</strong>로 구현하는 팀입니다! 🤩",
+    "p5": "그런 플랫폼을 여러분의 손으로 만들고 발전시켜 보세요! 😎 개발의 문은 언제나 열려있습니다 🔑",
+    "li1": "직접 홈페이지를 개발해보면서, 프론트와 백엔드를 경험해보세요!",
+    "li2": "선임 POPO 개발자의 도움을 받으며 성장해보세요!",
+    "li3": "POPO를 통해 축적된 POSTECH 데이터에서 가능성을 발굴해보세요!",
+    "contactLead": "Contact Us : Lead Developer, 나태양(컴공 24)",
+    "prevLead1": "Previous Leads : 김관호(컴공 19)",
+    "prevLead2": "Previous Leads : 하석윤(컴공 18)"
+  },
+  "shuttle": {
+    "title": "🚌 교내 셔틀버스 운행시간 안내 (학기 중)",
+    "facultySection": "교수 아파트(Faculty Apartment Area)",
+    "am": "오전(AM)",
+    "pm": "오후(PM)",
+    "facultyBldg8": "교수 8동",
+    "facultyBldg5": "교수 5동",
+    "tempParking": "임시주차장",
+    "campusSection": "교내 셔틀(POSTECH Campus Area)",
+    "stops": {
+      "jigok": "지곡회관",
+      "greenMaterials": "친환경소재\n대학원",
+      "lab": "실험동",
+      "accelerator": "가속기",
+      "envBldg": "환경동"
+    },
+    "noStop": "미정차",
+    "monThu": "월-목\n12:20",
+    "mueunjae": "(무은재)",
+    "weekdayOnly": "* 주중(월~금)에만 운행 (Shuttle bus operates only on weekdays)",
+    "noWeekend": "* 휴일 및 주말에는 차량 운행 없음. (There is no campus shuttle bus support on holidays and weekends)",
+    "semesterPeriod": "- 학기중 운행 기간: 2025.02.17(월) ~ 2025.06.05(목)",
+    "effectiveDate": "- 시행일자: 2025.02.17(월)",
+    "contact": "- 문의처: 054-279-3536 (차량반)",
+    "stopsMap": "셔틀버스 정류장(Shuttle Bus Stop)"
+  }
+}

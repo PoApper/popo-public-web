@@ -1,16 +1,20 @@
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
 import { IAssociationIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const AssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
   associationInfo: IAssociationIntroduce;
 }> = ({ name, associationInfo }) => {
+  const { t } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -65,10 +69,10 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
         </div>
         <div>
           <p>
-            <b>사무실 위치</b>: {associationInfo.location}
+            <b>{t('association.officeLocation')}</b>: {associationInfo.location}
           </p>
           <p>
-            <b>대표자</b>: {associationInfo.representative}(
+            <b>{t('club.representative')}</b>: {associationInfo.representative}(
             {associationInfo.contact})
           </p>
         </div>
@@ -88,6 +92,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const associationInfo = res.data;
 
   return {
-    props: { name, associationInfo },
+    props: {
+      name,
+      associationInfo,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };

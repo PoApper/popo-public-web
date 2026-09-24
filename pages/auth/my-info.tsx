@@ -3,7 +3,10 @@ import Layout from '@/components/layout';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { GetStaticProps } from 'next';
+import { useTranslation } from 'next-i18next/pages';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 interface MyInformation {
   email: string;
@@ -14,6 +17,7 @@ interface MyInformation {
 
 const MyInfoPage = () => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [myInfo, setMyInfo] = useState<MyInformation>({
     email: '',
@@ -33,38 +37,42 @@ const MyInfoPage = () => {
     PoPoAxios.get('/auth/myInfo')
       .then((res) => setMyInfo(res.data))
       .catch(() => {
-        alert('로그인 후 조회할 수 있습니다.');
+        alert(t('common.loginRequiredToView'));
         router.push('/auth/login');
       });
-  }, [router]);
+  }, [router, t]);
 
   async function submitNewPassword() {
     try {
       await PoPoAxios.post('/auth/password/update', {
         password: password,
       });
-      alert('비밀번호 변경에 성공했습니다!');
+      alert(t('auth.myInfo.changePasswordSuccess'));
       window.location.reload();
     } catch (err: any) {
       const response = err.response;
-      alert(`비밀번호 업데이트에 실패했습니다. 😢\n"${response.data.message}"`);
+      alert(
+        t('auth.myInfo.changePasswordFailed', {
+          message: response.data.message,
+        }),
+      );
     }
   }
 
   async function withdrawMembership() {
-    const isConfirmed = confirm(
-      '회원 탈퇴 시 모든 정보가 삭제되며 복구되지 않습니다.',
-    );
+    const isConfirmed = confirm(t('auth.myInfo.withdrawConfirm'));
 
     if (isConfirmed) {
       try {
         await PoPoAxios.delete('/user/me');
-        alert('회원 탈퇴가 완료되었습니다.');
+        alert(t('auth.myInfo.withdrawSuccess'));
         router.push('/');
       } catch (err: any) {
         const response = err.response;
         alert(
-          `회원 탈퇴에 실패했습니다. 😢\n"${response?.data?.message || '오류가 발생했습니다.'}"`,
+          t('auth.myInfo.withdrawFailed', {
+            message: response?.data?.message || t('common.errorOccurred'),
+          }),
         );
       }
     }
@@ -80,7 +88,7 @@ const MyInfoPage = () => {
           borderRadius: '8px',
         }}
       >
-        <h2>내 정보</h2>
+        <h2>{t('nav.myInfo')}</h2>
         <Segment.Group>
           <Segment>
             <h4>email</h4>
@@ -88,7 +96,7 @@ const MyInfoPage = () => {
           </Segment>
 
           <Segment>
-            <h4>비밀번호 변경</h4>
+            <h4>{t('auth.myInfo.changePassword')}</h4>
             <Form>
               <Form.Group style={{ marginBottom: '8px' }}>
                 <Form.Input
@@ -96,11 +104,11 @@ const MyInfoPage = () => {
                   type="password"
                   width={8}
                   label="Password"
-                  placeholder="8자리 이상 64자리 이하"
+                  placeholder={t('auth.register.passwordPlaceholder')}
                   onChange={(e) => setPW(e.target.value)}
                   error={
                     isPasswordInvalid
-                      ? '비밀번호는 8~64자 사이여야 합니다.'
+                      ? t('auth.register.passwordLengthError')
                       : null
                   }
                 />
@@ -109,40 +117,40 @@ const MyInfoPage = () => {
                   required
                   type="password"
                   width={8}
-                  label="Password 확인"
+                  label={t('auth.register.passwordConfirm')}
                   onChange={(e) => setPwAgain(e.target.value)}
                   error={
                     isPasswordAgainInvalid
-                      ? '비밀번호가 일치하지 않습니다.'
+                      ? t('auth.register.passwordMismatch')
                       : null
                   }
                 />
               </Form.Group>
               <Form.Button primary size="mini" onClick={submitNewPassword}>
-                비밀번호 변경
+                {t('auth.myInfo.changePassword')}
               </Form.Button>
             </Form>
           </Segment>
 
           <Segment>
-            <h4>이름</h4>
+            <h4>{t('auth.register.name')}</h4>
             <Container>{myInfo.name}</Container>
           </Segment>
 
           <Segment>
-            <h4>유저 타입</h4>
+            <h4>{t('auth.register.userType')}</h4>
             <Container>{myInfo.userType}</Container>
           </Segment>
 
           <Segment>
-            <h4>가입일</h4>
+            <h4>{t('auth.myInfo.joinedAt')}</h4>
             <Container>
               {moment(myInfo.createdAt).format('YYYY.MM.DD HH:mm')}
             </Container>
           </Segment>
 
           <Segment>
-            <h4>회원 탈퇴</h4>
+            <h4>{t('auth.myInfo.withdraw')}</h4>
             <Container>
               <Form.Button
                 negative
@@ -150,7 +158,7 @@ const MyInfoPage = () => {
                 onClick={withdrawMembership}
                 style={{ marginTop: '10px' }}
               >
-                회원 탈퇴
+                {t('auth.myInfo.withdraw')}
               </Form.Button>
             </Container>
           </Segment>
@@ -161,3 +169,7 @@ const MyInfoPage = () => {
 };
 
 export default MyInfoPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

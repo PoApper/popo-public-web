@@ -1,16 +1,20 @@
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
 import { IStudentAssociationIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
   studentAssociationInfo: IStudentAssociationIntroduce;
 }> = ({ name, studentAssociationInfo }) => {
+  const { t } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -71,16 +75,19 @@ const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
         <div>
           {studentAssociationInfo.location?.trim() && (
             <p>
-              <b>사무실 위치</b>: {studentAssociationInfo.location}
+              <b>{t('association.officeLocation')}</b>:{' '}
+              {studentAssociationInfo.location}
             </p>
           )}
           {studentAssociationInfo.office?.trim() && (
             <p>
-              <b>협력 행정팀</b>: {studentAssociationInfo.office}
+              <b>{t('association.adminTeam')}</b>:{' '}
+              {studentAssociationInfo.office}
             </p>
           )}
           <p>
-            <b>대표자</b>: {studentAssociationInfo.representative} (
+            <b>{t('club.representative')}</b>:{' '}
+            {studentAssociationInfo.representative} (
             {studentAssociationInfo.contact})
           </p>
         </div>
@@ -100,6 +107,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const studentAssociationInfo = res.data;
 
   return {
-    props: { name, studentAssociationInfo },
+    props: {
+      name,
+      studentAssociationInfo,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };

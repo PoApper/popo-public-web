@@ -4,12 +4,14 @@ import { GetServerSideProps } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Button, Grid } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import EquipReservationTable from '@/components/reservation/equip.reservation.table';
 import EquipListTable from '@/components/reservation/equip.list.table';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IEquipment } from '@/types/reservation.interface';
+import { getI18nProps } from '@/lib/i18n';
 
 // Due to the SSR issue, we need to use dynamic import
 const ReservationCalendar = dynamic(
@@ -21,22 +23,24 @@ type ObjectType = {
   [key: string]: string;
 };
 
-const OWNER_NAME_MAP: ObjectType = {
-  dongyeon: '동아리연합회',
-  dormunion: '생활관자치회',
-  saengna: '생각나눔',
+const OWNER_NAME_KEY_MAP: ObjectType = {
+  dongyeon: 'reservation.equipment.owners.dongyeon',
+  dormunion: 'reservation.equipment.owners.dormunion',
+  saengna: 'reservation.equipment.owners.saengna',
 };
 
-const OWNER_LOCATION_MAP: ObjectType = {
-  dongyeon: '동아리연합회 사무실(학생회관 301호)',
-  dormunion: '생활관자치회 사무실(생활관 4동)',
-  saengna: '생각나눔 사무실(학생회관 108호)',
+const OWNER_LOCATION_KEY_MAP: ObjectType = {
+  dongyeon: 'reservation.equipment.locations.dongyeon',
+  dormunion: 'reservation.equipment.locations.dormunion',
+  saengna: 'reservation.equipment.locations.saengna',
 };
 
 const EquipAssociationPage: React.FunctionComponent<{
   association: string;
   equipmentList: IEquipment[];
 }> = ({ association, equipmentList }) => {
+  const { t } = useTranslation('common');
+
   const sortedEquipList = equipmentList.sort((a, b) => {
     return a.name > b.name ? 1 : -1;
   });
@@ -53,8 +57,8 @@ const EquipAssociationPage: React.FunctionComponent<{
     .startOf('month')
     .format('YYYYMMDD');
 
-  const associationKorName = OWNER_NAME_MAP[association];
-  const associationLocation = OWNER_LOCATION_MAP[association];
+  const associationKorName = t(OWNER_NAME_KEY_MAP[association]);
+  const associationLocation = t(OWNER_LOCATION_KEY_MAP[association]);
 
   useEffect(() => {
     if (!association) return;
@@ -82,31 +86,40 @@ const EquipAssociationPage: React.FunctionComponent<{
 
   return (
     <Layout>
-      <h1>{associationKorName} - 장비 예약하기</h1>
+      <h1>
+        {t('reservation.equipment.reserveTitle', {
+          name: associationKorName,
+        })}
+      </h1>
       <Grid columns={2} divided stackable>
         <Grid.Column width={6}>
           <EquipListTable equipments={sortedEquipList} />
           {association == 'dongyeon' ? (
             <ul>
               <li>
-                물품 대여 순서 :{' '}
+                {t('reservation.equipment.dongyeon.process')}{' '}
                 <strong>
-                  POPO 신청&입금 - 카카오톡 채널 입장 - 승인 - 대여&반납
+                  {t('reservation.equipment.dongyeon.processSteps')}
                 </strong>
               </li>
               <li>
-                예약비 입금 계좌 :<strong> {dongyeonBank}</strong>
+                {t('reservation.equipment.dongyeon.bankLabel')}
+                <strong> {dongyeonBank}</strong>
                 <br />
-                <em>*입금자명은 예약자명과 동일하게 해주세요.</em>
+                <em>{t('reservation.equipment.dongyeon.bankNameHint')}</em>
               </li>
               <br />
               <li>
-                예약금 납부 후, 카카오톡 채널에 입장하여{' '}
-                <strong>대여자명 / 대여일 / 대여품목 / 송금 화면 발송</strong>
+                {t('reservation.equipment.dongyeon.afterPayment')}{' '}
+                <strong>
+                  {t('reservation.equipment.dongyeon.kakaoMessageFields')}
+                </strong>
               </li>
               {dongyeonKakaoLink && dongyeonKakaoTitle && (
                 <>
-                  <strong>카카오톡 채널 링크 : </strong>
+                  <strong>
+                    {t('reservation.equipment.dongyeon.kakaoLinkLabel')}{' '}
+                  </strong>
                   <a
                     href={dongyeonKakaoLink}
                     target="_blank"
@@ -117,38 +130,45 @@ const EquipAssociationPage: React.FunctionComponent<{
                 </>
               )}
               <br />
-              <em>예시</em>
+              <em>{t('reservation.equipment.dongyeon.example')}</em>
               <br />
-              정종민
+              {t('reservation.equipment.dongyeon.exampleName')}
               <br />
-              3월 10일 월요일
+              {t('reservation.equipment.dongyeon.exampleDate')}
               <br />
-              메인스피커1 / 오디오 인터페이스 / 유선 보컬 마이크 1~3
+              {t('reservation.equipment.dongyeon.exampleItems')}
               <br />
               <br />
               <li>
-                대여/반납 시간 :<strong> {dongyeonServiceTime}</strong>
+                {t('reservation.equipment.dongyeon.serviceHours')}
+                <strong> {dongyeonServiceTime}</strong>
                 <br />
-                <em>*그 외 시간에 대여와 반납은 어렵습니다.</em>
+                <em>{t('reservation.equipment.dongyeon.serviceHoursHint')}</em>
               </li>
               <li>
-                수령 장소 : <strong>동아리연합회 사무실(학생회관 301호)</strong>
+                {t('reservation.equipment.dongyeon.pickupLocation')}{' '}
+                <strong>
+                  {t('reservation.equipment.locations.dongyeon')}
+                </strong>
               </li>
               <li>
                 <strong style={{ color: 'red' }}>
-                  장비 분실 및 반납 시간을 어길 시 책임을 물을 수 있습니다.
+                  {t('reservation.equipment.dongyeon.liability')}
                 </strong>
               </li>
-              <li>문의 : {dongyeonContact} </li>
+              <li>
+                {t('reservation.equipment.dongyeon.contact')} {dongyeonContact}{' '}
+              </li>
             </ul>
           ) : (
             <p style={{ marginTop: '10px' }}>
-              장비를 클릭하면 장비 사진을 볼 수 있습니다! 🖼️
+              {t('reservation.equipment.genericHintClick')}
               <br />
-              예약한 장비는 {associationLocation}에서 수령하실 수 있습니다. 🏢️
+              {t('reservation.equipment.genericHintPickup', {
+                location: associationLocation,
+              })}
               <br />
-              장비가 분실되거나 예약 시간을 초과할 경우, 차후 예약에 제한을 둘
-              수 있습니다. 🚨
+              {t('reservation.equipment.genericHintPenalty')}
               <br />
             </p>
           )}
@@ -158,10 +178,10 @@ const EquipAssociationPage: React.FunctionComponent<{
               href={`/reservation/equipment/${association}/create?selectedDate=${selectedDate}`}
               passHref
             >
-              <Button primary>예약 신청하기</Button>
+              <Button primary>{t('reservation.shared.apply')}</Button>
             </Link>
             <Link href={'/auth/my-reservation'} passHref>
-              <Button>내 예약 목록</Button>
+              <Button>{t('reservation.shared.myList')}</Button>
             </Link>
           </div>
         </Grid.Column>
@@ -193,12 +213,17 @@ const EquipAssociationPage: React.FunctionComponent<{
 export default EquipAssociationPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale;
   const { association } = context.query;
 
   const res = await PoPoAxios.get<IEquipment[]>(`equip/owner/${association}`);
   const equipmentList = res.data;
 
   return {
-    props: { association, equipmentList },
+    props: {
+      association,
+      equipmentList,
+      ...(await getI18nProps(locale)),
+    },
   };
 };
