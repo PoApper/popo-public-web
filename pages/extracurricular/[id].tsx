@@ -172,7 +172,12 @@ const ExtracurricularDetailPage: React.FC = () => {
                   style={{ cursor: 'pointer' }}
                 >
                   <TitleTd>
-                    <ReportTitle>{rep.title}</ReportTitle>
+                    <ReportTitle
+                      href={`/extracurricular/report/${rep.uuid}`}
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      {rep.title}
+                    </ReportTitle>
                   </TitleTd>
                   <td>{rep.period}</td>
                   <td>{rep.grade}</td>
@@ -381,13 +386,21 @@ const TitleTd = styled.td`
   max-width: 400px;
 `;
 
-const ReportTitle = styled.div`
+const ReportTitle = styled(Link)`
+  display: block;
   font-weight: 500;
   color: #111827;
   margin-bottom: 4px;
+  text-decoration: none;
 
   &:hover {
     color: #2563eb;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 4px;
+    border-radius: 2px;
   }
 `;
 
