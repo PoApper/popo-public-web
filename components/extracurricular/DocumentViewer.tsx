@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { popoApiUrl } from '@/lib/axios.instance';
+import { useFileDownload } from '@/lib/use-file-download';
 
 interface Props {
   reportUuid: string;
@@ -38,6 +39,18 @@ const DocumentViewer: React.FC<Props> = ({
 
   const type = (fileType || '').toLowerCase();
   const fileUrl = `${popoApiUrl}/activity-report/${reportUuid}/file`;
+  const { download, isDownloading, downloadError } = useFileDownload(
+    fileUrl,
+    fileName,
+  );
+  const downloadButton = (
+    <>
+      <button type="button" onClick={download} disabled={isDownloading}>
+        {isDownloading ? '다운로드 준비 중…' : '원본 내려받기'}
+      </button>
+      {downloadError && <p role="alert">{downloadError}</p>}
+    </>
+  );
   const isDocx = DOCX_RENDERABLE.includes(type);
   const isPdf = NATIVELY_VIEWABLE.includes(type);
   const isHwp = HWP_RENDERABLE.includes(type);
@@ -156,12 +169,7 @@ const DocumentViewer: React.FC<Props> = ({
       <>
         {status === 'loading' && <Notice>문서를 불러오는 중입니다…</Notice>}
         {status === 'error' && (
-          <Notice>
-            문서를 표시하지 못했습니다.{' '}
-            <a href={fileUrl} download={fileName}>
-              원본 내려받기
-            </a>
-          </Notice>
+          <Notice>문서를 표시하지 못했습니다. {downloadButton}</Notice>
         )}
         <DocxContainer ref={containerRef} $hidden={status !== 'ready'} />
       </>
@@ -175,12 +183,7 @@ const DocumentViewer: React.FC<Props> = ({
           <Notice>한글 문서를 불러오는 중입니다…</Notice>
         )}
         {status === 'error' && (
-          <Notice>
-            문서를 표시하지 못했습니다.{' '}
-            <a href={fileUrl} download={fileName}>
-              원본 내려받기
-            </a>
-          </Notice>
+          <Notice>문서를 표시하지 못했습니다. {downloadButton}</Notice>
         )}
         <HwpContainer ref={hwpContainerRef} $hidden={status !== 'ready'} />
       </>
@@ -192,9 +195,7 @@ const DocumentViewer: React.FC<Props> = ({
       <strong>{type ? type.toUpperCase() : '이'} 형식</strong>은 웹에서 바로 볼
       수 없습니다.
       <br />
-      <a href={fileUrl} download={fileName}>
-        원본 내려받기
-      </a>
+      {downloadButton}
     </Notice>
   );
 };
@@ -212,6 +213,8 @@ const PdfFrame = styled.iframe`
 
 const DocxContainer = styled.div<{ $hidden: boolean }>`
   display: ${(props) => (props.$hidden ? 'none' : 'block')};
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
@@ -221,6 +224,7 @@ const DocxContainer = styled.div<{ $hidden: boolean }>`
   .docx-wrapper {
     background: transparent;
     padding: 0;
+    align-items: flex-start;
   }
 
   .docx {
@@ -230,6 +234,8 @@ const DocxContainer = styled.div<{ $hidden: boolean }>`
 
 const HwpContainer = styled.div<{ $hidden: boolean }>`
   display: ${(props) => (props.$hidden ? 'none' : 'block')};
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
@@ -264,8 +270,19 @@ const Notice = styled.div`
   border: 1px solid #e5e7eb;
   border-radius: 8px;
 
-  a {
+  button {
     color: #2563eb;
     font-weight: 500;
+    font-size: inherit;
+    border: none;
+    padding: 0;
+    background: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
   }
 `;

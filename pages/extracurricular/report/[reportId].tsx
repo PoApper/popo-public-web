@@ -6,6 +6,7 @@ import Layout from '@/components/layout';
 import { PoPoAxios, popoApiUrl } from '@/lib/axios.instance';
 import DocumentViewer from '@/components/extracurricular/DocumentViewer';
 import { ActivityReport, Activity } from '@/components/extracurricular/types';
+import { useFileDownload } from '@/lib/use-file-download';
 
 const ReportDetailPage: React.FC = () => {
   const router = useRouter();
@@ -14,6 +15,13 @@ const ReportDetailPage: React.FC = () => {
   const [report, setReport] = useState<ActivityReport | null>(null);
   const [activity, setActivity] = useState<Activity | null>(null);
   const [loadError, setLoadError] = useState<boolean>(false);
+  const fileUrl = report
+    ? `${popoApiUrl}/activity-report/${report.uuid}/file`
+    : '';
+  const { download, isDownloading, downloadError } = useFileDownload(
+    fileUrl,
+    report?.fileName ?? '',
+  );
 
   useEffect(() => {
     if (!reportId) return;
@@ -52,8 +60,6 @@ const ReportDetailPage: React.FC = () => {
     );
   }
 
-  const fileUrl = `${popoApiUrl}/activity-report/${report.uuid}/file`;
-
   return (
     <Layout>
       <Container>
@@ -84,10 +90,17 @@ const ReportDetailPage: React.FC = () => {
               </FileIcon>
               <FileName>{report.fileName}</FileName>
             </FileBox>
-            <DownloadButton href={fileUrl} download={report.fileName}>
-              다운로드
+            <DownloadButton
+              type="button"
+              onClick={download}
+              disabled={isDownloading}
+            >
+              {isDownloading ? '다운로드 준비 중…' : '다운로드'}
             </DownloadButton>
           </DownloadBar>
+          {downloadError && (
+            <DownloadError role="alert">{downloadError}</DownloadError>
+          )}
         </HeaderCard>
 
         <ViewerSection>
@@ -210,7 +223,7 @@ const FileName = styled.span`
   word-break: break-all;
 `;
 
-const DownloadButton = styled.a`
+const DownloadButton = styled.button`
   background-color: #2563eb;
   color: #ffffff;
   border: none;
@@ -227,6 +240,16 @@ const DownloadButton = styled.a`
   &:hover {
     background-color: #1d4ed8;
   }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.65;
+  }
+`;
+
+const DownloadError = styled.p`
+  color: #b91c1c;
+  margin: 12px 0 0;
 `;
 
 const ViewerSection = styled.div`
