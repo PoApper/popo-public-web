@@ -144,6 +144,11 @@ const MobileNav = () => {
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
+                <LinkWithStyle href={'/extracurricular'} passHref>
+                  비교과활동
+                </LinkWithStyle>
+              </Dropdown.Item>
+              <Dropdown.Item>
                 <a href={POPOLinks.PostechDeliveryLink} target={'_blank'}>
                   배달업체 <Icon name="external" />
                 </a>
@@ -241,6 +246,11 @@ const DesktopNav = () => {
           <Dropdown.Item>
             <LinkWithStyle href={'/whitebook'} passHref>
               생활백서
+            </LinkWithStyle>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <LinkWithStyle href={'/extracurricular'} passHref>
+              비교과활동
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item

@@ -127,6 +127,9 @@ const Footer = () => {
             <List.Item as="a" href="/other/privacy-policy">
               개인정보처리방침
             </List.Item>
+            <List.Item as="a" href="/other/open-source-licenses">
+              오픈소스 라이선스
+            </List.Item>
             <List.Item>
               <a
                 href={`https://github.com/PoApper/popo-public-web/commits/${process.env.NEXT_PUBLIC_POPO_VERSION}`}
