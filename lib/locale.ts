@@ -2,10 +2,7 @@ export const locales = ['ko', 'en'] as const;
 export const defaultLocale = 'ko';
 
 /** Prefix a path for non-default locales (matches Next.js i18n routing). */
-export function withLocalePrefix(
-  path: string,
-  locale?: string | null,
-): string {
+export function withLocalePrefix(path: string, locale?: string | null): string {
   const normalized = path.startsWith('/') ? path : `/${path}`;
   if (!locale || locale === defaultLocale) return normalized;
   return `/${locale}${normalized}`;

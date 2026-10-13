@@ -70,9 +70,7 @@ const PlaceIndexPage = () => {
           <Card as={Link} href={'/reservation/place/others'} centered>
             <Image src={'/reservation/dormitory.jpg'} alt={'others'} />
             <Card.Content>
-              <Card.Header>
-                {t('reservation.place.regions.others')}
-              </Card.Header>
+              <Card.Header>{t('reservation.place.regions.others')}</Card.Header>
               {showEnglishMeta ? <Card.Meta>etc</Card.Meta> : null}
             </Card.Content>
           </Card>

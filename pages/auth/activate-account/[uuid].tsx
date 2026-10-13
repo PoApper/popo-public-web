@@ -39,7 +39,9 @@ const ActivateAccountPage = () => {
       ) : isValidAccount ? (
         <div>
           <h2>{t('auth.activate.successTitle')}</h2>
-          <p style={{ whiteSpace: 'pre-line' }}>{t('auth.activate.successBody')}</p>
+          <p style={{ whiteSpace: 'pre-line' }}>
+            {t('auth.activate.successBody')}
+          </p>
           <br />
           <Button as={Link} primary href={'/auth/login'}>
             {t('auth.activate.goLogin')}

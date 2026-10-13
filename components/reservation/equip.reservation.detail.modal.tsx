@@ -18,9 +18,7 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
     >
-      <Modal.Header>
-        {t('reservation.equipment.detailModalTitle')}
-      </Modal.Header>
+      <Modal.Header>{t('reservation.equipment.detailModalTitle')}</Modal.Header>
       <Modal.Content>
         <Segment.Group>
           <Segment>

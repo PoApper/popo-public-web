@@ -97,9 +97,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     }
 
     if (!isOnAvailableTime) {
-      alert(
-        t('reservation.shared.unavailableSlot', { name: placeInfo.name }),
-      );
+      alert(t('reservation.shared.unavailableSlot', { name: placeInfo.name }));
       return;
     }
 
@@ -132,9 +130,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
 
   return (
     <Layout>
-      <h1>
-        {t('reservation.place.createTitle', { name: placeInfo.name })}
-      </h1>
+      <h1>{t('reservation.place.createTitle', { name: placeInfo.name })}</h1>
 
       <Form>
         <Form.Group>

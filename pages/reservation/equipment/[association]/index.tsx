@@ -147,9 +147,7 @@ const EquipAssociationPage: React.FunctionComponent<{
               </li>
               <li>
                 {t('reservation.equipment.dongyeon.pickupLocation')}{' '}
-                <strong>
-                  {t('reservation.equipment.locations.dongyeon')}
-                </strong>
+                <strong>{t('reservation.equipment.locations.dongyeon')}</strong>
               </li>
               <li>
                 <strong style={{ color: 'red' }}>
