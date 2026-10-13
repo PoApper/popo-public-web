@@ -2,6 +2,7 @@ import Layout from '@/components/layout';
 import { Card, Image } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { useTranslation } from 'next-i18next/pages';
 import { getI18nProps } from '@/lib/i18n';
 
@@ -22,6 +23,7 @@ const ClubIndexPage = () => {
       <ClubTypesGrid>
         {clubTypes.map(({ slug }) => (
           <Card
+            as={Link}
             key={slug}
             href={`/club/introduce/${slug}`}
             style={{ margin: '0 auto' }}

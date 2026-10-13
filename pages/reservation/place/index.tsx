@@ -1,5 +1,6 @@
 import { Card, Grid, Icon, Image } from 'semantic-ui-react';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
@@ -15,7 +16,7 @@ const PlaceIndexPage = () => {
       <h2>{t('reservation.place.indexTitle')}</h2>
       <Grid stackable centered columns={3} style={{ maxWidth: 900 }}>
         <Grid.Column>
-          <Card href={'/reservation/place/student-hall'} centered>
+          <Card as={Link} href={'/reservation/place/student-hall'} centered>
             <Image src={'/reservation/student_hall.jpg'} alt={'student_hall'} />
             <Card.Content>
               <Card.Header>
@@ -26,7 +27,7 @@ const PlaceIndexPage = () => {
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/jigok'} centered>
+          <Card as={Link} href={'/reservation/place/jigok'} centered>
             <Image src={'/reservation/jigok.jpg'} alt={'jigok'} />
             <Card.Content>
               <Card.Header>{t('reservation.place.regions.jigok')}</Card.Header>
@@ -37,7 +38,7 @@ const PlaceIndexPage = () => {
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/community-center'} centered>
+          <Card as={Link} href={'/reservation/place/community-center'} centered>
             <Image
               src={'/reservation/community_center.jpg'}
               alt={'community_center'}
@@ -51,7 +52,11 @@ const PlaceIndexPage = () => {
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/residential-college'} centered>
+          <Card
+            as={Link}
+            href={'/reservation/place/residential-college'}
+            centered
+          >
             <Image src={'/reservation/rc.jpg'} alt={'rc'} />
             <Card.Content>
               <Card.Header>{t('reservation.place.regions.rc')}</Card.Header>
@@ -62,7 +67,7 @@ const PlaceIndexPage = () => {
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/others'} centered>
+          <Card as={Link} href={'/reservation/place/others'} centered>
             <Image src={'/reservation/dormitory.jpg'} alt={'others'} />
             <Card.Content>
               <Card.Header>

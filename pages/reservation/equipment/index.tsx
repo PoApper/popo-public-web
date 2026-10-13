@@ -1,6 +1,7 @@
 import { Card, Grid, Image } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
@@ -16,7 +17,7 @@ const EquipmentIndexPage = () => {
       <h2>{t('reservation.equipment.indexTitle')}</h2>
       <Grid stackable columns={3} centered>
         <Grid.Column>
-          <Card href={'/reservation/equipment/dongyeon'} centered>
+          <Card as={Link} href={'/reservation/equipment/dongyeon'} centered>
             <LogoImage src={'/reservation/dongyeon.png'} alt={'dongyeon'} />
             <Card.Content>
               <Card.Header>
@@ -32,7 +33,7 @@ const EquipmentIndexPage = () => {
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/equipment/dormunion'} centered>
+          <Card as={Link} href={'/reservation/equipment/dormunion'} centered>
             <LogoImage src={'/reservation/dormUnion.png'} alt={'dormUnion'} />
             <Card.Content>
               <Card.Header>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next/pages';
@@ -40,7 +41,7 @@ const ActivateAccountPage = () => {
           <h2>{t('auth.activate.successTitle')}</h2>
           <p style={{ whiteSpace: 'pre-line' }}>{t('auth.activate.successBody')}</p>
           <br />
-          <Button primary href={'/auth/login'}>
+          <Button as={Link} primary href={'/auth/login'}>
             {t('auth.activate.goLogin')}
           </Button>
         </div>

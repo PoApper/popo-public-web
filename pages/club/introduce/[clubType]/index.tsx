@@ -1,4 +1,5 @@
 import React from 'next/router';
+import Link from 'next/link';
 import { Container, Image } from 'semantic-ui-react';
 
 import Layout from '@/components/layout';
@@ -20,16 +21,17 @@ const ClubTypeIndexPage: React.FunctionComponent<{
             key={clubInfo.uuid}
             style={{ width: '12em', lineHeight: '12em' }}
           >
-            <Image
-              centered
-              size="small"
-              href={`/club/introduce/${clubType}/${clubInfo.name}`}
-              src={
-                clubInfo.imageUrl ??
-                'https://react.semantic-ui.com/images/wireframe/image.png'
-              }
-              alt={`${clubInfo.name}_logo`}
-            />
+            <Link href={`/club/introduce/${clubType}/${clubInfo.name}`}>
+              <Image
+                centered
+                size="small"
+                src={
+                  clubInfo.imageUrl ??
+                  'https://react.semantic-ui.com/images/wireframe/image.png'
+                }
+                alt={`${clubInfo.name}_logo`}
+              />
+            </Link>
             <h3 style={{ margin: '5px 0 0' }}>{clubInfo.name}</h3>
             <p style={{ color: 'gray' }}>{clubInfo.shortDesc}</p>
           </Container>

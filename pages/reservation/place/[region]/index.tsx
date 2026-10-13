@@ -1,4 +1,5 @@
 import React from 'next/router';
+import Link from 'next/link';
 import { Button, Card, Icon, Select } from 'semantic-ui-react';
 import { useTranslation } from 'next-i18next/pages';
 
@@ -86,6 +87,7 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
                   <Card.Description>{place.description}</Card.Description>
                   <Card.Description style={{ marginTop: '0.8em' }}>
                     <Button
+                      as={Link}
                       basic
                       compact
                       href={`/reservation/place/${region}/${place.name}`}

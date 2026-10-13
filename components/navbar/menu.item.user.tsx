@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Dropdown, Menu } from 'semantic-ui-react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next/pages';
 import { IUser } from '@/types/user.interface';
@@ -34,8 +35,13 @@ const MenuItemUser = () => {
       {user ? (
         <Dropdown text={user.name}>
           <Dropdown.Menu>
-            <Dropdown.Item text={t('nav.myInfo')} href={'/auth/my-info'} />
             <Dropdown.Item
+              as={Link}
+              text={t('nav.myInfo')}
+              href={'/auth/my-info'}
+            />
+            <Dropdown.Item
+              as={Link}
               text={t('nav.myReservation')}
               href={'/auth/my-reservation'}
             />
@@ -44,6 +50,7 @@ const MenuItemUser = () => {
         </Dropdown>
       ) : (
         <Button
+          as={Link}
           href={'/auth/login'}
           style={{ border: 'none', background: 'none' }}
         >

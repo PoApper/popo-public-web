@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Image } from 'semantic-ui-react';
 
@@ -16,18 +17,21 @@ const StudentAssociationIndexPage: React.FunctionComponent<{
       <IntroduceGrid>
         {studentAssociationList.map((studentAssociationInfo) => (
           <div key={studentAssociationInfo.uuid}>
-            <Image
-              centered
-              size="small"
+            <Link
               href={`/student_association/introduce/${studentAssociationInfo.name}`}
-              src={
-                studentAssociationInfo.imageUrl &&
-                studentAssociationInfo.imageUrl.trim() !== ''
-                  ? studentAssociationInfo.imageUrl
-                  : 'https://react.semantic-ui.com/images/wireframe/image.png'
-              }
-              alt={`${studentAssociationInfo.name}_logo`}
-            />
+            >
+              <Image
+                centered
+                size="small"
+                src={
+                  studentAssociationInfo.imageUrl &&
+                  studentAssociationInfo.imageUrl.trim() !== ''
+                    ? studentAssociationInfo.imageUrl
+                    : 'https://react.semantic-ui.com/images/wireframe/image.png'
+                }
+                alt={`${studentAssociationInfo.name}_logo`}
+              />
+            </Link>
             <h3 style={{ margin: '5px 0 0' }}>{studentAssociationInfo.name}</h3>
             <p style={{ color: 'gray' }}>{studentAssociationInfo.shortDesc}</p>
           </div>

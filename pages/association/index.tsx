@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Image } from 'semantic-ui-react';
 import { useTranslation } from 'next-i18next/pages';
@@ -85,22 +86,23 @@ const AssociationIndexPage: React.FunctionComponent<{
   const introduceItems = (associationItems: IAssociationIntroduce[]) =>
     associationItems.map((intro) => (
       <div key={intro.uuid}>
-        <Image
-          centered
-          size="small"
-          href={`/association/introduce/${intro.name}`}
-          src={
-            intro.imageUrl ??
-            'https://react.semantic-ui.com/images/wireframe/image.png'
-          }
-          alt={`${intro.name}_logo`}
-          style={{
-            width: '150px',
-            height: '150px',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
-        />
+        <Link href={`/association/introduce/${intro.name}`}>
+          <Image
+            centered
+            size="small"
+            src={
+              intro.imageUrl ??
+              'https://react.semantic-ui.com/images/wireframe/image.png'
+            }
+            alt={`${intro.name}_logo`}
+            style={{
+              width: '150px',
+              height: '150px',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+          />
+        </Link>
         <AssociationName>{intro.name}</AssociationName>
       </div>
     ));
