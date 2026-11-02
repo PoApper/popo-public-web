@@ -18,7 +18,8 @@
     "logout": "Log out",
     "login": "Log in",
     "logoutFailed": "Logout failed.",
-    "switchLanguage": "Switch language"
+    "switchLanguage": "Switch language",
+    "extracurricular": "Extracurricular Activities"
   },
   "layout": {
     "pageTitle": "POPO Public Page",
@@ -33,7 +34,8 @@
     "recruiting": "We're Hiring Developers",
     "postechHomepage": "POSTECH Homepage",
     "library": "Tae-Joon Park Digital Library",
-    "privacyPolicy": "Privacy Policy"
+    "privacyPolicy": "Privacy Policy",
+    "openSourceLicenses": "Open Source Licenses"
   },
   "home": {
     "circles": {
@@ -45,7 +47,8 @@
       "whitebook": "Campus Guide",
       "benefits": "Affiliates",
       "delivery": "Delivery",
-      "archive": "Archives"
+      "archive": "Archives",
+      "extracurricular": "Extracurricular Activities"
     },
     "iconAlt": "{{text}} icon",
     "appPromo": {

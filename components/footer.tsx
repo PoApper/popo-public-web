@@ -135,6 +135,9 @@ const Footer = () => {
             <List.Item as={Link} href="/other/privacy-policy">
               {t('footer.privacyPolicy')}
             </List.Item>
+            <List.Item as={Link} href="/other/open-source-licenses">
+              {t('footer.openSourceLicenses')}
+            </List.Item>
             <List.Item>
               <a
                 href={`https://github.com/PoApper/popo-public-web/commits/${process.env.NEXT_PUBLIC_POPO_VERSION}`}

@@ -81,6 +81,11 @@ const circleDefs = [
     icon: '/home/whitebook.png',
   },
   {
+    textKey: 'home.circles.extracurricular',
+    href: '/extracurricular',
+    icon: '/home/extracurricular.png',
+  },
+  {
     textKey: 'home.circles.benefits',
     href: '/benefits',
     icon: '/home/benefits.png',

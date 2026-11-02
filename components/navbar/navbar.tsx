@@ -186,6 +186,11 @@ const MobileNav = () => {
                 </LinkWithStyle>
               </Dropdown.Item>
               <Dropdown.Item>
+                <LinkWithStyle href={'/extracurricular'} passHref>
+                  {t('nav.extracurricular')}
+                </LinkWithStyle>
+              </Dropdown.Item>
+              <Dropdown.Item>
                 <a href={POPOLinks.PostechDeliveryLink} target={'_blank'}>
                   {t('nav.delivery')} <Icon name="external" />
                 </a>
@@ -286,6 +291,11 @@ const DesktopNav = () => {
           <Dropdown.Item>
             <LinkWithStyle href={'/whitebook'} passHref>
               {t('nav.whitebook')}
+            </LinkWithStyle>
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <LinkWithStyle href={'/extracurricular'} passHref>
+              {t('nav.extracurricular')}
             </LinkWithStyle>
           </Dropdown.Item>
           <Dropdown.Item

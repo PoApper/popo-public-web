@@ -18,7 +18,8 @@
     "logout": "로그아웃",
     "login": "로그인",
     "logoutFailed": "로그아웃에 실패했습니다.",
-    "switchLanguage": "언어 변경"
+    "switchLanguage": "언어 변경",
+    "extracurricular": "비교과활동"
   },
   "layout": {
     "pageTitle": "POPO 퍼블릭 페이지",
@@ -33,7 +34,8 @@
     "recruiting": "개발자 모집",
     "postechHomepage": "포항공대 홈페이지",
     "library": "박태준 학술정보관",
-    "privacyPolicy": "개인정보처리방침"
+    "privacyPolicy": "개인정보처리방침",
+    "openSourceLicenses": "오픈소스 라이선스"
   },
   "home": {
     "circles": {
@@ -45,7 +47,8 @@
       "whitebook": "생활백서",
       "benefits": "제휴업체",
       "delivery": "배달업체",
-      "archive": "기록물관리"
+      "archive": "기록물관리",
+      "extracurricular": "비교과활동"
     },
     "iconAlt": "{{text}} 아이콘",
     "appPromo": {
