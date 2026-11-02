@@ -43,7 +43,6 @@ const NavbarDiv = styled.div`
   margin: auto;
   width: 100%;
   max-width: ${({ theme }) => theme.contentWidth};
-  padding: 0 0.75rem;
   box-sizing: border-box;
 `;
 
@@ -53,7 +52,7 @@ const NavbarMenu = styled(Menu)`
   align-items: center;
   flex-wrap: nowrap;
   margin: auto;
-  gap: 0.25rem;
+  gap: 1rem;
 
   box-shadow: none !important;
   border: none !important;
@@ -63,33 +62,36 @@ const NavbarMenu = styled(Menu)`
 
 const DesktopMenu = styled(NavbarMenu)`
   > .ui.dropdown.item {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 10rem;
+    flex: 0 0 auto;
     overflow: visible;
-    padding-left: 0.55em !important;
-    padding-right: 0.55em !important;
   }
 
   > .nav-brand.item,
-  > .right.item {
+  > .right.menu {
     flex: 0 0 auto;
     max-width: none;
   }
 
-  /* Ellipsis only on the label — never on the dropdown item (clips the menu) */
   > .ui.dropdown.item > .text {
-    display: inline-block;
-    max-width: calc(100% - 1.2em);
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
-    vertical-align: bottom;
+  }
+
+  > .ui.dropdown.item > .dropdown.icon {
+    flex-shrink: 0;
   }
 
   > .ui.dropdown.item > .menu {
     overflow: visible;
     min-width: 12rem;
+  }
+
+  @media only screen and (max-width: 1100px) {
+    gap: 0.5rem;
+
+    > .ui.dropdown.item {
+      padding-left: 0.55em !important;
+      padding-right: 0.55em !important;
+    }
   }
 `;
 
@@ -107,7 +109,12 @@ const LinkWithStyle = styled(Link)`
 
 const MobileDiv = styled.div`
   width: 100%;
-  @media only screen and (min-width: 800px) {
+
+  > .ui.menu {
+    gap: 0.5rem;
+  }
+
+  @media only screen and (min-width: 1024px) {
     display: none;
   }
 `;
@@ -115,7 +122,7 @@ const MobileDiv = styled.div`
 const DesktopDiv = styled.span`
   width: 100%;
   min-width: 0;
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1023px) {
     display: none;
   }
 `;
@@ -211,8 +218,10 @@ const MobileNav = () => {
         </Link>
       </Menu.Item>
 
-      <LanguageSwitcher />
-      <MenuItemUser />
+      <Menu.Menu position="right">
+        <LanguageSwitcher />
+        <MenuItemUser />
+      </Menu.Menu>
     </NavbarMenu>
   );
 };
@@ -306,8 +315,10 @@ const DesktopNav = () => {
         </Dropdown.Menu>
       </Dropdown>
 
-      <LanguageSwitcher />
-      <MenuItemUser />
+      <Menu.Menu position="right">
+        <LanguageSwitcher />
+        <MenuItemUser />
+      </Menu.Menu>
     </DesktopMenu>
   );
 };
