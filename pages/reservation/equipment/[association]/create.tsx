@@ -16,6 +16,7 @@ import EquipReservationTable from '@/components/reservation/equip.reservation.ta
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
 import { getI18nProps } from '@/lib/i18n';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 type ObjectType = {
   [key: string]: string;
@@ -33,7 +34,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
   selectedDate: string;
 }> = ({ association, equipmentList, selectedDate }) => {
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   const [userInfo, setUserInfo] = useState<IUser | null>({
     name: '',
@@ -190,7 +191,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
           placeholder={t('reservation.equipment.selectEquipPlaceholder')}
           options={equipmentList.map((equip, idx) => ({
             key: idx,
-            text: equip.name,
+            text: getLocalizedResourceName(equip, i18n.language),
             value: equip.uuid,
           }))}
           onKeyDown={(e: KeyboardEvent) => e.preventDefault()}
@@ -218,7 +219,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
             {selectedEquipmentObjects.map((equip) => (
               <div key={equip.uuid} style={{ marginBottom: 12 }}>
                 <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
-                  {equip.name}
+                  {getLocalizedResourceName(equip, i18n.language)}
                 </div>
                 <div style={{ color: 'gray', fontSize: '0.9em' }}>
                   <OpeningHoursList
@@ -261,7 +262,7 @@ const EquipReservationCreatePage: React.FunctionComponent<{
               <ul>
                 {unavailableLeadTimeEquipments.map((equip) => (
                   <li key={equip.uuid}>
-                    {equip.name} (
+                    {getLocalizedResourceName(equip, i18n.language)} (
                     {t('reservation.shared.daysBeforeRequired', {
                       days: equip.reservationRequiredDays,
                     })}
@@ -282,7 +283,9 @@ const EquipReservationCreatePage: React.FunctionComponent<{
               {t('reservation.equipment.unavailableListIntro')}
               <ul>
                 {unavailableOpeningHourEquipments.map((equip) => (
-                  <li key={equip.uuid}>{equip.name}</li>
+                  <li key={equip.uuid}>
+                    {getLocalizedResourceName(equip, i18n.language)}
+                  </li>
                 ))}
               </ul>
               {t('reservation.equipment.checkOpeningHours')}

@@ -12,6 +12,7 @@ import EquipListTable from '@/components/reservation/equip.list.table';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { IEquipment } from '@/types/reservation.interface';
 import { getI18nProps } from '@/lib/i18n';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 // Due to the SSR issue, we need to use dynamic import
 const ReservationCalendar = dynamic(
@@ -39,10 +40,13 @@ const EquipAssociationPage: React.FunctionComponent<{
   association: string;
   equipmentList: IEquipment[];
 }> = ({ association, equipmentList }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
-  const sortedEquipList = equipmentList.sort((a, b) => {
-    return a.name > b.name ? 1 : -1;
+  const sortedEquipList = [...equipmentList].sort((a, b) => {
+    return getLocalizedResourceName(a, i18n.language).localeCompare(
+      getLocalizedResourceName(b, i18n.language),
+      i18n.language,
+    );
   });
 
   const [selectedDate, setSelectedDate] = useState(moment().format('YYYYMMDD'));

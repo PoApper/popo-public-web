@@ -2,11 +2,12 @@ import { Button, Icon, Label, Modal, Segment } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 import DeleteConfirmModal from '../common/delete.confirm.modal';
 
 // @ts-ignore
 const EquipReservationDetailModal = ({ reservation, trigger }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,7 +28,7 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
               {reservation.equipments.map((equipment: any) => {
                 return (
                   <Label key={equipment.uuid} style={{ margin: '4px' }}>
-                    {equipment.name}
+                    {getLocalizedResourceName(equipment, i18n.language)}
                   </Label>
                 );
               })}

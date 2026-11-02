@@ -1,6 +1,7 @@
 import { Button, Icon, Label, Table, Pagination } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 import { convertDate, convertStatus, convertTime } from '@/lib/time-date';
 import { IPlaceReservation } from '@/types/reservation.interface';
@@ -10,7 +11,7 @@ import { PoPoAxios } from '@/lib/axios.instance';
 import Link from 'next/link';
 
 const MyPlaceReservationTable = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [reserveList, setReserveList] = useState<IPlaceReservation[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -92,7 +93,7 @@ const MyPlaceReservationTable = () => {
                   <Link
                     href={`/reservation/place/${reservation.place.region}/${reservation.place.name}`}
                   >
-                    {reservation.place.name}
+                    {getLocalizedResourceName(reservation.place, i18n.language)}
                   </Link>
                 </Table.Cell>
 

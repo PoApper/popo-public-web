@@ -2,11 +2,12 @@ import { Button, Icon, Modal, Segment } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 import DeleteConfirmModal from '../common/delete.confirm.modal';
 
 // @ts-ignore
 const PlaceReservationDetailModal = ({ reservation, trigger }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,7 +24,9 @@ const PlaceReservationDetailModal = ({ reservation, trigger }) => {
         <Segment.Group>
           <Segment>
             <h4>{t('reservation.place.placeLabel')}</h4>
-            <div>{reservation.place.name}</div>
+            <div>
+              {getLocalizedResourceName(reservation.place, i18n.language)}
+            </div>
           </Segment>
           <Segment>
             <h4>{t('reservation.shared.phone')}</h4>

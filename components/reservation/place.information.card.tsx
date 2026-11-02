@@ -1,6 +1,7 @@
 import { Card, Image } from 'semantic-ui-react';
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 import { IPlace } from '@/types/reservation.interface';
 import OpeningHoursList from './opening_hours.list';
@@ -8,7 +9,7 @@ import OpeningHoursList from './opening_hours.list';
 const PlaceInformationCard: FunctionComponent<{
   placeInfo: IPlace;
 }> = ({ placeInfo }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   return (
     <Card fluid>
@@ -22,7 +23,9 @@ const PlaceInformationCard: FunctionComponent<{
         alt={'place_image'}
       />
       <Card.Content>
-        <Card.Header>{placeInfo.name}</Card.Header>
+        <Card.Header>
+          {getLocalizedResourceName(placeInfo, i18n.language)}
+        </Card.Header>
         <Card.Meta>{placeInfo.location}</Card.Meta>
         <Card.Description>{placeInfo.description}</Card.Description>
         <Card.Meta style={{ marginTop: 8 }}>

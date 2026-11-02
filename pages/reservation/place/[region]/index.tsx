@@ -9,6 +9,7 @@ import { PoPoAxios } from '@/lib/axios.instance';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { getI18nProps } from '@/lib/i18n';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 type ObjectType = {
   [key: string]: string;
@@ -34,7 +35,7 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
   region: string;
   placeList: IPlace[];
 }> = ({ region, placeList }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [selectedSortType, setSelectedSortType] = useState('alphabetic');
 
   const SelectClubTypeOptions = [
@@ -50,9 +51,12 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
     },
   ];
 
-  const sortedPlaceList = placeList.sort((a, b) => {
+  const sortedPlaceList = [...placeList].sort((a, b) => {
     if (selectedSortType === 'alphabetic') {
-      return a.name > b.name ? 1 : -1;
+      return getLocalizedResourceName(a, i18n.language).localeCompare(
+        getLocalizedResourceName(b, i18n.language),
+        i18n.language,
+      );
     } else if (selectedSortType === 'popular') {
       return a.totalReservationCount < b.totalReservationCount ? 1 : -1;
     } else {
@@ -82,7 +86,9 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
             return (
               <Card fluid key={place.uuid}>
                 <Card.Content>
-                  <Card.Header>{place.name}</Card.Header>
+                  <Card.Header>
+                    {getLocalizedResourceName(place, i18n.language)}
+                  </Card.Header>
                   <Card.Meta>{place.location}</Card.Meta>
                   <Card.Description>{place.description}</Card.Description>
                   <Card.Description style={{ marginTop: '0.8em' }}>

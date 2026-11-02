@@ -1,6 +1,7 @@
 import { Icon, Label, Table, Button, Pagination } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 import { convertDate, convertStatus, convertTime } from '@/lib/time-date';
 import { IEquipReservation } from '@/types/reservation.interface';
 import EquipReservationDetailModal from '../reservation/equip.reservation.detail.modal';
@@ -8,7 +9,7 @@ import DeleteConfirmModal from '../common/delete.confirm.modal';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const MyEquipReservationTable = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [reserveList, setReserveList] = useState<IEquipReservation[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,7 +82,11 @@ const MyEquipReservationTable = () => {
 
                 <Table.Cell>
                   {reservation.equipments.map((equipment) => {
-                    return <Label key={equipment.uuid}>{equipment.name}</Label>;
+                    return (
+                      <Label key={equipment.uuid}>
+                        {getLocalizedResourceName(equipment, i18n.language)}
+                      </Label>
+                    );
                   })}
                 </Table.Cell>
 

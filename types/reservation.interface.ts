@@ -8,6 +8,7 @@ import { IUser } from './user.interface';
 export interface IPlace {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   region: string;
   location: string;
   description: string;
@@ -22,6 +23,7 @@ export interface IPlace {
 export interface IEquipment {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   description: string;
   fee: number;
   imageUrl?: string;

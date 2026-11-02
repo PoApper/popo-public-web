@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Label, Table } from 'semantic-ui-react';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 import { convertDate, convertStatus, convertTime } from '@/lib/time-date';
 import { IEquipReservation } from '@/types/reservation.interface';
@@ -15,7 +16,7 @@ const EquipReservationTable = ({
   associationName,
   selectedDate,
 }: EquipReservationTableProps) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [reservations, setReservations] = useState<IEquipReservation[]>([]);
 
   useEffect(() => {
@@ -58,7 +59,7 @@ const EquipReservationTable = ({
                         ? reservation.equipments.map((equip) => {
                             return (
                               <Label key={equip.uuid} style={{ margin: 2 }}>
-                                {equip.name}
+                                {getLocalizedResourceName(equip, i18n.language)}
                               </Label>
                             );
                           })

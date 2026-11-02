@@ -1,11 +1,12 @@
 import { Image, Modal, Table } from 'semantic-ui-react';
 import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 import { IEquipment } from '@/types/reservation.interface';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
 
 const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   return (
     <Table>
@@ -28,19 +29,23 @@ const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
             trigger={
               <Table.Row>
                 <Table.Cell>{idx + 1}</Table.Cell>
-                <Table.Cell>{equipment.name}</Table.Cell>
+                <Table.Cell>
+                  {getLocalizedResourceName(equipment, i18n.language)}
+                </Table.Cell>
                 <Table.Cell>{equipment.fee.toLocaleString()}</Table.Cell>
               </Table.Row>
             }
           >
-            <Modal.Header>{equipment.name}</Modal.Header>
+            <Modal.Header>
+              {getLocalizedResourceName(equipment, i18n.language)}
+            </Modal.Header>
             <Modal.Content>
               <Image
                 src={
                   equipment.imageUrl ??
                   'https://via.placeholder.com/200?text=NoImage'
                 }
-                alt={`${equipment.name}_logo`}
+                alt={`${getLocalizedResourceName(equipment, i18n.language)}_logo`}
               />
               <div style={{ marginTop: '1rem' }}>
                 <h4>{t('reservation.shared.description')}</h4>

@@ -16,6 +16,7 @@ import OpeningHoursList from '@/components/reservation/opening_hours.list';
 import PlaceReservationTable from '@/components/reservation/place.reservation.table';
 import { isReservationLeadTimeSatisfied } from '@/lib/reservation-required-days';
 import { getI18nProps } from '@/lib/i18n';
+import { getLocalizedResourceName } from '@/lib/locale';
 
 const RegionKeyMapping: { [key: string]: string } = {
   STUDENT_HALL: 'reservation.place.regions.studentHall',
@@ -31,7 +32,8 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
   placeName: string;
 }> = ({ placeInfo, selectedDate, placeName }) => {
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
+  const displayName = getLocalizedResourceName(placeInfo, i18n.language);
 
   const [userInfo, setUserInfo] = useState<IUser | null>({
     name: '',
@@ -89,7 +91,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     if (!isLeadTimeSatisfied) {
       alert(
         t('reservation.shared.leadTimeRequiredNamed', {
-          name: placeInfo.name,
+          name: displayName,
           days: placeInfo.reservationRequiredDays,
         }),
       );
@@ -97,7 +99,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
     }
 
     if (!isOnAvailableTime) {
-      alert(t('reservation.shared.unavailableSlot', { name: placeInfo.name }));
+      alert(t('reservation.shared.unavailableSlot', { name: displayName }));
       return;
     }
 
@@ -130,7 +132,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
 
   return (
     <Layout>
-      <h1>{t('reservation.place.createTitle', { name: placeInfo.name })}</h1>
+      <h1>{t('reservation.place.createTitle', { name: displayName })}</h1>
 
       <Form>
         <Form.Group>
@@ -146,7 +148,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
             readOnly
             label={t('reservation.place.placeLabel')}
             name="place"
-            value={placeInfo.name}
+            value={displayName}
           />
         </Form.Group>
 
@@ -204,7 +206,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         {isLeadTimeSatisfied ? null : (
           <Message negative>
             {t('reservation.shared.leadTimeRequiredNamed', {
-              name: placeInfo.name,
+              name: displayName,
               days: placeInfo.reservationRequiredDays,
             })}
           </Message>
@@ -213,7 +215,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
         {isOnAvailableTime ? null : (
           <Message negative>
             {t('reservation.shared.unavailableSlot', {
-              name: placeInfo.name,
+              name: displayName,
             })}
           </Message>
         )}
@@ -256,7 +258,7 @@ const PlaceReservationCreatePage: React.FunctionComponent<{
           <p>
             {t('reservation.place.confirmSummary', {
               region: regionLabel,
-              name: placeInfo.name,
+              name: displayName,
               minutes: minuteDiff(startTime, endTime),
             })}
           </p>
