@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   Container,
   Divider,
@@ -89,7 +90,7 @@ const Footer = () => {
                 target="_blank"
               />
               <List link>
-                <List.Item as="a" href="/other/recruiting">
+                <List.Item as={Link} href="/other/recruiting">
                   {t('footer.recruiting')}
                 </List.Item>
               </List>
@@ -131,7 +132,7 @@ const Footer = () => {
 
           <Divider section style={{ marginBottom: '1vh' }} />
           <List horizontal divided link size="small">
-            <List.Item as="a" href="/other/privacy-policy">
+            <List.Item as={Link} href="/other/privacy-policy">
               {t('footer.privacyPolicy')}
             </List.Item>
             <List.Item>

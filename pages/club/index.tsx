@@ -30,7 +30,7 @@ const ClubIndexPage = () => {
           >
             <Card.Content style={{ height: '12em' }}>
               <Image
-                src={`club/${slug}.svg`}
+                src={`/club/${slug}.svg`}
                 alt={slug}
                 style={{
                   height: '100%',
