@@ -1,3 +1,5 @@
+import { getLocalizedField } from '@/lib/locale';
+import { useTranslation } from 'next-i18next/pages';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -12,13 +14,14 @@ import { IStudentAssociationIntroduce } from '@/types/introduce.interface';
 const StudentAssociationIndexPage: React.FunctionComponent<{
   studentAssociationList: IStudentAssociationIntroduce[];
 }> = ({ studentAssociationList }) => {
+  const { i18n } = useTranslation('common');
   return (
     <Layout>
       <IntroduceGrid>
         {studentAssociationList.map((studentAssociationInfo) => (
           <div key={studentAssociationInfo.uuid}>
             <Link
-              href={`/student_association/introduce/${studentAssociationInfo.name}`}
+              href={`/student_association/introduce/${encodeURIComponent(studentAssociationInfo.name)}`}
             >
               <Image
                 centered
@@ -29,11 +32,19 @@ const StudentAssociationIndexPage: React.FunctionComponent<{
                     ? studentAssociationInfo.imageUrl
                     : 'https://react.semantic-ui.com/images/wireframe/image.png'
                 }
-                alt={`${studentAssociationInfo.name}_logo`}
+                alt={`${getLocalizedField(studentAssociationInfo, 'name', i18n.language)}_logo`}
               />
             </Link>
-            <h3 style={{ margin: '5px 0 0' }}>{studentAssociationInfo.name}</h3>
-            <p style={{ color: 'gray' }}>{studentAssociationInfo.shortDesc}</p>
+            <h3 style={{ margin: '5px 0 0' }}>
+              {getLocalizedField(studentAssociationInfo, 'name', i18n.language)}
+            </h3>
+            <p style={{ color: 'gray' }}>
+              {getLocalizedField(
+                studentAssociationInfo,
+                'shortDesc',
+                i18n.language,
+              )}
+            </p>
           </div>
         ))}
       </IntroduceGrid>

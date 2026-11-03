@@ -1,13 +1,15 @@
+import { useTranslation } from 'next-i18next/pages';
 import { useEffect, useRef, useState } from 'react';
 
 export const useFileDownload = (fileUrl: string, fileName: string) => {
+  const { t } = useTranslation('common');
   const requestRef = useRef<AbortController | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     setIsDownloading(false);
-    setDownloadError(null);
+    setHasError(false);
     return () => {
       requestRef.current?.abort();
       requestRef.current = null;
@@ -19,7 +21,7 @@ export const useFileDownload = (fileUrl: string, fileName: string) => {
     const request = new AbortController();
     requestRef.current = request;
     setIsDownloading(true);
-    setDownloadError(null);
+    setHasError(false);
 
     try {
       const response = await fetch(fileUrl, {
@@ -45,7 +47,7 @@ export const useFileDownload = (fileUrl: string, fileName: string) => {
       }
     } catch {
       if (!request.signal.aborted) {
-        setDownloadError('파일을 내려받지 못했습니다. 다시 시도해주세요.');
+        setHasError(true);
       }
     } finally {
       if (requestRef.current === request) {
@@ -55,5 +57,9 @@ export const useFileDownload = (fileUrl: string, fileName: string) => {
     }
   };
 
-  return { download, isDownloading, downloadError };
+  return {
+    download,
+    isDownloading,
+    downloadError: hasError ? t('fileDownload.error') : null,
+  };
 };

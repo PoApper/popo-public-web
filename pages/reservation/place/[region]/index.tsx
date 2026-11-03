@@ -9,7 +9,7 @@ import { PoPoAxios } from '@/lib/axios.instance';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { getI18nProps } from '@/lib/i18n';
-import { getLocalizedResourceName } from '@/lib/locale';
+import { getLocalizedResourceName, getLocalizedField } from '@/lib/locale';
 
 type ObjectType = {
   [key: string]: string;
@@ -89,14 +89,18 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
                   <Card.Header>
                     {getLocalizedResourceName(place, i18n.language)}
                   </Card.Header>
-                  <Card.Meta>{place.location}</Card.Meta>
-                  <Card.Description>{place.description}</Card.Description>
+                  <Card.Meta>
+                    {getLocalizedField(place, 'location', i18n.language)}
+                  </Card.Meta>
+                  <Card.Description style={{ whiteSpace: 'pre-line' }}>
+                    {getLocalizedField(place, 'description', i18n.language)}
+                  </Card.Description>
                   <Card.Description style={{ marginTop: '0.8em' }}>
                     <Button
                       as={Link}
                       basic
                       compact
-                      href={`/reservation/place/${region}/${place.name}`}
+                      href={`/reservation/place/${region}/${encodeURIComponent(place.name)}`}
                     >
                       <Icon name={'calendar plus outline'} />{' '}
                       {t('reservation.shared.reserve')}

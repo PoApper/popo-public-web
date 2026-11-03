@@ -1,3 +1,4 @@
+import { getLocalizedField } from '@/lib/locale';
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -51,7 +52,7 @@ const getAssociationType = (
 const AssociationIndexPage: React.FunctionComponent<{
   associationList: IAssociationIntroduce[];
 }> = ({ associationList }) => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
 
   // 자치단체 분류를 기준으로 그룹화
   const groupedData = associationList.reduce<
@@ -86,7 +87,7 @@ const AssociationIndexPage: React.FunctionComponent<{
   const introduceItems = (associationItems: IAssociationIntroduce[]) =>
     associationItems.map((intro) => (
       <div key={intro.uuid}>
-        <Link href={`/association/introduce/${intro.name}`}>
+        <Link href={`/association/introduce/${encodeURIComponent(intro.name)}`}>
           <Image
             centered
             size="small"
@@ -94,7 +95,7 @@ const AssociationIndexPage: React.FunctionComponent<{
               intro.imageUrl ??
               'https://react.semantic-ui.com/images/wireframe/image.png'
             }
-            alt={`${intro.name}_logo`}
+            alt={`${getLocalizedField(intro, 'name', i18n.language)}_logo`}
             style={{
               width: '150px',
               height: '150px',
@@ -103,7 +104,9 @@ const AssociationIndexPage: React.FunctionComponent<{
             }}
           />
         </Link>
-        <AssociationName>{intro.name}</AssociationName>
+        <AssociationName>
+          {getLocalizedField(intro, 'name', i18n.language)}
+        </AssociationName>
       </div>
     ));
 

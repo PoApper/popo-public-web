@@ -11,7 +11,9 @@ export interface IPlace {
   nameEn?: string | null;
   region: string;
   location: string;
+  locationEn?: string | null;
   description: string;
+  descriptionEn?: string | null;
   imageUrl?: string;
   maxMinutes: number;
   maxConcurrentReservation: number;
@@ -25,6 +27,7 @@ export interface IEquipment {
   name: string;
   nameEn?: string | null;
   description: string;
+  descriptionEn?: string | null;
   fee: number;
   imageUrl?: string;
   maxMinutes: number;

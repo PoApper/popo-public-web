@@ -1,13 +1,24 @@
 export const locales = ['ko', 'en'] as const;
 export const defaultLocale = 'ko';
 
+export function getLocalizedField<T extends object>(
+  resource: T,
+  field: keyof T,
+  locale?: string | null,
+): string {
+  const translated = resource[`${String(field)}En` as keyof T];
+  if (locale === 'en' && typeof translated === 'string' && translated.trim()) {
+    return translated.trim();
+  }
+  const original = resource[field];
+  return typeof original === 'string' ? original : '';
+}
+
 export function getLocalizedResourceName(
   resource: { name: string; nameEn?: string | null },
   locale?: string | null,
 ): string {
-  return locale === 'en'
-    ? resource.nameEn?.trim() || resource.name
-    : resource.name;
+  return getLocalizedField(resource, 'name', locale);
 }
 
 /** Prefix a path for non-default locales (matches Next.js i18n routing). */

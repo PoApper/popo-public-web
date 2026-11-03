@@ -1,3 +1,4 @@
+import { getLocalizedField } from '@/lib/locale';
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
@@ -12,8 +13,8 @@ import { getI18nProps } from '@/lib/i18n';
 const AssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
   associationInfo: IAssociationIntroduce;
-}> = ({ name, associationInfo }) => {
-  const { t } = useTranslation('common');
+}> = ({ associationInfo }) => {
+  const { t, i18n } = useTranslation('common');
 
   return (
     <Layout>
@@ -25,10 +26,12 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
               associationInfo.imageUrl ??
               'https://react.semantic-ui.com/images/wireframe/image.png'
             }
-            alt={`${name}_logo`}
+            alt={`${getLocalizedField(associationInfo, 'name', i18n.language)}_logo`}
           />
         </div>
-        <h1 style={{ margin: '0' }}>{name}</h1>
+        <h1 style={{ margin: '0' }}>
+          {getLocalizedField(associationInfo, 'name', i18n.language)}
+        </h1>
         <div style={{ fontSize: 18 }}>
           <IconLink link={associationInfo.homepageUrl}>
             <Image
@@ -64,16 +67,22 @@ const AssociationSingleIntroducePage: React.FunctionComponent<{
           </IconLink>
         </div>{' '}
         <i></i>
-        <div style={{ fontSize: 16, margin: '12px 0' }}>
-          {associationInfo.content}
+        <div style={{ fontSize: 16, margin: '12px 0', whiteSpace: 'pre-line' }}>
+          {getLocalizedField(associationInfo, 'content', i18n.language)}
         </div>
         <div>
           <p>
-            <b>{t('association.officeLocation')}</b>: {associationInfo.location}
+            <b>{t('association.officeLocation')}</b>:{' '}
+            {getLocalizedField(associationInfo, 'location', i18n.language)}
           </p>
           <p>
-            <b>{t('club.representative')}</b>: {associationInfo.representative}(
-            {associationInfo.contact})
+            <b>{t('club.representative')}</b>:{' '}
+            {getLocalizedField(
+              associationInfo,
+              'representative',
+              i18n.language,
+            )}
+            ({getLocalizedField(associationInfo, 'contact', i18n.language)})
           </p>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { getLocalizedField } from '@/lib/locale';
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
@@ -12,8 +13,8 @@ import { getI18nProps } from '@/lib/i18n';
 const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
   studentAssociationInfo: IStudentAssociationIntroduce;
-}> = ({ name, studentAssociationInfo }) => {
-  const { t } = useTranslation('common');
+}> = ({ studentAssociationInfo }) => {
+  const { t, i18n } = useTranslation('common');
 
   return (
     <Layout>
@@ -27,12 +28,18 @@ const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
                 ? studentAssociationInfo.imageUrl
                 : 'https://react.semantic-ui.com/images/wireframe/image.png'
             }
-            alt={`${name}_logo`}
+            alt={`${getLocalizedField(studentAssociationInfo, 'name', i18n.language)}_logo`}
           />
         </div>
-        <h1 style={{ margin: '0' }}>{name}</h1>
+        <h1 style={{ margin: '0' }}>
+          {getLocalizedField(studentAssociationInfo, 'name', i18n.language)}
+        </h1>
         <h2 style={{ color: 'grey', marginTop: 0 }}>
-          {studentAssociationInfo.shortDesc}
+          {getLocalizedField(
+            studentAssociationInfo,
+            'shortDesc',
+            i18n.language,
+          )}
         </h2>
         <div style={{ fontSize: 18 }}>
           <IconLink link={studentAssociationInfo.homepageUrl}>
@@ -69,26 +76,52 @@ const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
           </IconLink>
         </div>{' '}
         <i></i>
-        <div style={{ fontSize: 16, margin: '12px 0' }}>
-          {studentAssociationInfo.content}
+        <div style={{ fontSize: 16, margin: '12px 0', whiteSpace: 'pre-line' }}>
+          {getLocalizedField(studentAssociationInfo, 'content', i18n.language)}
         </div>
         <div>
-          {studentAssociationInfo.location?.trim() && (
+          {getLocalizedField(
+            studentAssociationInfo,
+            'location',
+            i18n.language,
+          ).trim() && (
             <p>
               <b>{t('association.officeLocation')}</b>:{' '}
-              {studentAssociationInfo.location}
+              {getLocalizedField(
+                studentAssociationInfo,
+                'location',
+                i18n.language,
+              )}
             </p>
           )}
-          {studentAssociationInfo.office?.trim() && (
+          {getLocalizedField(
+            studentAssociationInfo,
+            'office',
+            i18n.language,
+          ).trim() && (
             <p>
               <b>{t('association.adminTeam')}</b>:{' '}
-              {studentAssociationInfo.office}
+              {getLocalizedField(
+                studentAssociationInfo,
+                'office',
+                i18n.language,
+              )}
             </p>
           )}
           <p>
             <b>{t('club.representative')}</b>:{' '}
-            {studentAssociationInfo.representative} (
-            {studentAssociationInfo.contact})
+            {getLocalizedField(
+              studentAssociationInfo,
+              'representative',
+              i18n.language,
+            )}{' '}
+            (
+            {getLocalizedField(
+              studentAssociationInfo,
+              'contact',
+              i18n.language,
+            )}
+            )
           </p>
         </div>
       </div>

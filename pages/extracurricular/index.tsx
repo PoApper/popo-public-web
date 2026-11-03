@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next/pages';
 import { GetStaticProps } from 'next';
 import { getI18nProps } from '@/lib/i18n';
 import React, { useState, useEffect } from 'react';
@@ -7,9 +8,10 @@ import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { Activity } from '@/components/extracurricular/types';
 
-const ALL = '전체';
+const ALL = '__all__';
 
 const ExtracurricularIndexPage: React.FC = () => {
+  const { t, i18n } = useTranslation('common');
   const [selectedCategory, setSelectedCategory] = useState<string>(ALL);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -33,7 +35,7 @@ const ExtracurricularIndexPage: React.FC = () => {
     ALL,
     ...Array.from(
       new Set(activities.map((act) => act.category).filter(Boolean)),
-    ).sort((a, b) => a.localeCompare(b, 'ko')),
+    ).sort((a, b) => a.localeCompare(b, i18n.language)),
   ];
 
   const filteredActivities = activities.filter((act) => {
@@ -49,11 +51,8 @@ const ExtracurricularIndexPage: React.FC = () => {
     <Layout>
       <Container>
         <HeaderSection>
-          <h1>비교과활동 수기집</h1>
-          <SubTitle>
-            세계문화탐방대, 노벨위크 등에 참여했던 선배들의 생생한 활동 수기를
-            한곳에서 확인하세요.
-          </SubTitle>
+          <h1>{t('extracurricular.title')}</h1>
+          <SubTitle>{t('extracurricular.subtitle')}</SubTitle>
 
           <SearchFilterWrapper>
             <CategoryGroup>
@@ -63,13 +62,14 @@ const ExtracurricularIndexPage: React.FC = () => {
                   active={selectedCategory === cat}
                   onClick={() => setSelectedCategory(cat)}
                 >
-                  {cat}
+                  {cat === ALL ? t('common.all') : cat}
                 </CategoryChip>
               ))}
             </CategoryGroup>
             <SearchInput
               type="text"
-              placeholder="활동명 또는 내용으로 검색..."
+              placeholder={t('extracurricular.searchPlaceholder')}
+              aria-label={t('extracurricular.searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -88,17 +88,17 @@ const ExtracurricularIndexPage: React.FC = () => {
 
                 <CardMeta>
                   <MetaRow>
-                    <MetaLabel>모집/시행</MetaLabel>
+                    <MetaLabel>{t('extracurricular.period')}</MetaLabel>
                     <MetaVal>{act.period}</MetaVal>
                   </MetaRow>
                   <MetaRow>
-                    <MetaLabel>지원 대상</MetaLabel>
+                    <MetaLabel>{t('extracurricular.target')}</MetaLabel>
                     <MetaVal>{act.target}</MetaVal>
                   </MetaRow>
                 </CardMeta>
 
                 <CardFooter>
-                  <span>수기 보기</span>
+                  <span>{t('extracurricular.readReports')}</span>
                   <span>→</span>
                 </CardFooter>
               </Card>
@@ -110,8 +110,8 @@ const ExtracurricularIndexPage: React.FC = () => {
           <EmptyState>
             <p>
               {loadError
-                ? '비교과활동을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
-                : '검색 조건에 해당되는 비교과활동이 없습니다.'}
+                ? t('extracurricular.loadError')
+                : t('extracurricular.empty')}
             </p>
           </EmptyState>
         )}

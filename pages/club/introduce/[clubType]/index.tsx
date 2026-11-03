@@ -1,3 +1,5 @@
+import { getLocalizedField } from '@/lib/locale';
+import { useTranslation } from 'next-i18next/pages';
 import React from 'next/router';
 import Link from 'next/link';
 import { Container, Image } from 'semantic-ui-react';
@@ -13,6 +15,7 @@ const ClubTypeIndexPage: React.FunctionComponent<{
   clubType: string;
   clubList: IClubIntroduce[];
 }> = ({ clubType, clubList }) => {
+  const { i18n } = useTranslation('common');
   return (
     <Layout>
       <IntroduceGrid>
@@ -21,7 +24,9 @@ const ClubTypeIndexPage: React.FunctionComponent<{
             key={clubInfo.uuid}
             style={{ width: '12em', lineHeight: '12em' }}
           >
-            <Link href={`/club/introduce/${clubType}/${clubInfo.name}`}>
+            <Link
+              href={`/club/introduce/${clubType}/${encodeURIComponent(clubInfo.name)}`}
+            >
               <Image
                 centered
                 size="small"
@@ -29,11 +34,15 @@ const ClubTypeIndexPage: React.FunctionComponent<{
                   clubInfo.imageUrl ??
                   'https://react.semantic-ui.com/images/wireframe/image.png'
                 }
-                alt={`${clubInfo.name}_logo`}
+                alt={`${getLocalizedField(clubInfo, 'name', i18n.language)}_logo`}
               />
             </Link>
-            <h3 style={{ margin: '5px 0 0' }}>{clubInfo.name}</h3>
-            <p style={{ color: 'gray' }}>{clubInfo.shortDesc}</p>
+            <h3 style={{ margin: '5px 0 0' }}>
+              {getLocalizedField(clubInfo, 'name', i18n.language)}
+            </h3>
+            <p style={{ color: 'gray' }}>
+              {getLocalizedField(clubInfo, 'shortDesc', i18n.language)}
+            </p>
           </Container>
         ))}
       </IntroduceGrid>

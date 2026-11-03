@@ -54,7 +54,10 @@
     "appPromo": {
       "title": "POPO App is here — including carpool!",
       "body": "Everything you need for campus life in one place. Install now for a faster experience."
-    }
+    },
+    "heroTitle": "POPO, POstechian's POrtal",
+    "heroSubtitle": "Everything you need for life at POSTECH, in one place.",
+    "heroImageAlt": "POSTECH campus courtyard"
   },
   "notFound": {
     "title": "This page does not exist.",
@@ -73,7 +76,9 @@
     "errorOccurred": "An error occurred.",
     "noticeLikeFailed": "Failed to like the notice.\n{{errMsg}}",
     "noticeUnlikeFailed": "Failed to remove like.\n{{errMsg}}",
-    "privacyPolicyTitle": "Privacy Policy"
+    "privacyPolicyTitle": "Privacy Policy",
+    "all": "All",
+    "loading": "Loading…"
   },
   "openingHours": {
     "Monday": "Mon",
@@ -297,11 +302,11 @@
   },
   "association": {
     "types": {
-      "executive": "Executive bodies",
-      "autonomous": "Autonomous bodies",
-      "media": "Media bodies",
-      "specialized": "Specialized bodies",
-      "uncategorized": "Uncategorized"
+      "executive": "Executive Bodies",
+      "autonomous": "Autonomous Organizations",
+      "media": "Media Committees",
+      "specialized": "Specialized Committees",
+      "uncategorized": "Other Organizations"
     },
     "officeLocation": "Office location",
     "adminTeam": "Partner admin team"
@@ -309,7 +314,7 @@
   "whitebook": {
     "title": "Campus Guide",
     "subtitle": "Your survival guide for life at POSTECH! 📚",
-    "kakaoHint": "Also available via KakaoTalk Plus Friend 'POSTECH 생활백서' 😉"
+    "kakaoHint": "You can also find the Campus Guide on KakaoTalk 😉"
   },
   "benefits": {
     "title": "Student Council Affiliates",
@@ -357,5 +362,85 @@
     "effectiveDate": "- Effective: 2025.02.17 (Mon)",
     "contact": "- Contact: 054-279-3536 (Vehicle Unit)",
     "stopsMap": "Shuttle Bus Stops"
+  },
+  "fileDownload": {
+    "preparing": "Preparing download…",
+    "download": "Download",
+    "original": "Download original",
+    "error": "Could not download the file. Please try again."
+  },
+  "documentViewer": {
+    "loading": "Loading the document…",
+    "hwpLoading": "Loading the HWP document…",
+    "error": "Could not display the document.",
+    "unknownType": "Unknown",
+    "unsupported": "{{type}} files cannot be previewed in the browser."
+  },
+  "licenses": {
+    "title": "Open-source licenses",
+    "intro": "View the licenses and copyright notices for open-source software used by POPO.",
+    "rhwpDescription": "HWP document viewer",
+    "fullNotice": "Full license and copyright notice"
+  },
+  "extracurricular": {
+    "title": "Extracurricular activity reports",
+    "subtitle": "Explore first-hand accounts from students who joined programs such as the World Culture Exploration Program and Nobel Week.",
+    "searchPlaceholder": "Search by activity name or description…",
+    "period": "Recruitment / activity period",
+    "target": "Eligibility",
+    "readReports": "Read reports",
+    "loadError": "Could not load activities. Please try again later.",
+    "empty": "No activities match your search.",
+    "backToList": "← All extracurricular activities",
+    "applicationMethod": "Application and selection process",
+    "category": "Category",
+    "reports": "Activity reports",
+    "reportCount_one": "{{count}} report",
+    "reportCount_other": "{{count}} reports",
+    "filterPeriod": "Period:",
+    "filterMajor": "Major:",
+    "filterGrade": "Year:",
+    "reportTitle": "Report title",
+    "grade": "Year",
+    "major": "Major",
+    "periodColumn": "Period",
+    "author": "Author",
+    "fileType": "File type",
+    "reportsEmpty": "No reports match these filters.",
+    "reportLoadError": "Could not load the report. Please try again later.",
+    "reportLoading": "Loading the report…",
+    "backToActivity": "← Back to {{name}}",
+    "authorLabel": "Author: {{name}}"
+  },
+  "privacyPolicy": {
+    "paragraphs": [
+      "POSTECH Student Union (the “Student Union”) has established this privacy policy in accordance with the Personal Information Protection Act to protect users’ personal information, rights, and interests, and to address complaints concerning personal information effectively.\n\nThe Student Union will announce revisions to this policy through notices on the website or individual notifications.\n\n○ This policy takes effect on October 13, 2019.",
+      "<strong>1. Purposes of processing personal information</strong>\n\nThe Student Union processes personal information for the purposes below. Personal information will not be used for any other purpose. Prior consent will be obtained if the purposes of use change.",
+      "A. Website registration and membership management\nPersonal information is processed to confirm a person’s intention to register; identify and authenticate users of membership services; maintain and manage membership; prevent misuse of services; and handle complaints.",
+      "B. Handling inquiries and complaints\nPersonal information is processed to identify the person submitting an inquiry or complaint, confirm its details, contact or notify the person for fact-finding purposes, and communicate the outcome.",
+      "<strong>2. Categories of personal information collected</strong>\n\nThe Student Union collects some of the personal information listed below from the time of registration. Information in a category that does not apply to a member will not be collected.",
+      "When a member registers or verifies their identity\n- Username, password, name, email address, and position",
+      "When a member uses the services\n- IP address, cookies, date and time of visits, and service usage records",
+      "<strong>3. Processing and retention periods</strong>",
+      "① The Student Union processes and retains personal information within the retention and use periods prescribed by law or agreed to by the data subject when the information is collected.",
+      "② The processing and retention periods for each purpose are as follows.\n\n1. Website registration and membership management\nPersonal information related to website registration and membership management is retained and used for the purposes above from the date of consent to collection and use until membership withdrawal.\n- Basis for retention: Acceptance of the terms during registration\n- Exceptions: If an investigation into a violation of applicable laws is in progress, information is retained until the investigation is completed. If a member withdraws while subject to sanctions, their student ID number may be retained for up to one year after withdrawal to prevent improper re-registration.",
+      "2. Handling inquiries and complaints\nPersonal information related to inquiries and complaints is retained and used for the purposes above from the date of consent to collection and use until the inquiry or complaint has been resolved.\n- Basis for retention: Acceptance of the terms during registration",
+      "<strong>4. Provision of personal information to third parties</strong>\n\n① The Student Union provides personal information to third parties only in cases covered by Articles 17 and 18 of the Personal Information Protection Act, such as when the data subject consents or a specific legal provision applies.\n② The Student Union provides personal information to third parties as follows.\n- Recipient: Pohang University of Science and Technology (POSTECH)\n- Recipient’s purpose of use: Name and position\n- Recipient’s retention and use period: Until the inquiry or complaint has been resolved\n※ Personal information is provided to a third party only when deemed essential to handling the inquiry or complaint.",
+      "<strong>5. Rights and obligations of data subjects and legal representatives, and how to exercise them</strong>\n\nUsers, as data subjects, may exercise the following rights.\n① Data subjects may request access to, correction or deletion of, or suspension of processing of their personal information at any time.\n② Requests under paragraph 1 may be submitted to the Student Union in writing, by email, by fax, or through other means in accordance with Article 41(1) of the Enforcement Decree of the Personal Information Protection Act. The Student Union will act without delay.\n③ Rights under paragraph 1 may be exercised through a legal representative or another authorized representative. In such cases, a power of attorney in the form prescribed in Annex Form No. 11 of the Enforcement Rule of the Personal Information Protection Act must be submitted.\n④ Rights to request access or suspension of processing may be restricted under Articles 35(5) and 37(2) of the Personal Information Protection Act.\n⑤ When another law expressly requires the collection of certain personal information, its deletion cannot be requested.\n⑥ When a request for access, correction, deletion, or suspension of processing is made, the Student Union verifies that the requester is the data subject or an authorized representative.",
+      "<strong>7. Categories of personal information processed</strong>\n\n① The Student Union processes the following categories of personal information.\n1. Website registration and membership management\n- Required information: Password, login ID, name, service usage records, access logs, cookies, and IP address",
+      "2. Handling inquiries and complaints\n- Required information: Name",
+      "<strong>8. Destruction of personal information</strong>\n\nIn principle, the Student Union destroys personal information without delay once the purpose of processing has been fulfilled. The procedures, deadlines, and methods are as follows.\n\n- Destruction procedure\nOnce the purpose has been fulfilled, information entered by users is transferred to a separate database (or separate documents for paper records) and destroyed immediately or after a retention period prescribed by internal policies and applicable laws. Information transferred to this database is not used for any other purpose unless required by law.",
+      "- Destruction deadline\nWhen the retention period expires, personal information is destroyed within five days of the end of that period. When personal information becomes unnecessary because its processing purpose has been fulfilled, a service has been discontinued, a business has ended, or for similar reasons, it is destroyed within five days of the date on which processing is deemed unnecessary.",
+      "- Destruction method\nInformation stored as electronic files is destroyed using technical methods that prevent the records from being recovered.",
+      "<strong>9. Installation, operation, and refusal of automatic data collection tools</strong>\n\n① The Student Union uses cookies, which store and retrieve usage information, to provide personalized services. ② Cookies are small pieces of information sent by the server (HTTP) operating a website to the browser on a user’s computer and may be stored on the computer’s hard drive. A. Purpose of cookies: Cookies are used to understand visits and usage patterns across services and websites, popular search terms, and whether secure connections are used, in order to provide information tailored to users. B. Installation, operation, and refusal of cookies: Users may refuse cookies through the options under Tools > Internet Options > Privacy in their web browser. C. Refusing cookies may make personalized services difficult to use.",
+      "<strong>10. Privacy officer</strong>\n\n① The Student Union designates the following privacy officer to oversee personal information processing and handle data subjects’ complaints and requests for remedies relating to personal information.",
+      "▶ Privacy officer\nName: Park Jun-gi\nPosition: President of the 39th Student Union\nContact: 054-279-2621, <email/>\n※ Inquiries are directed to the department responsible for personal information protection.",
+      "▶ Department responsible for personal information protection\nDepartment: Student Union\nContact person: Park Jun-gi\nContact: 054-279-2621, <email/>",
+      "② Data subjects may contact the privacy officer or responsible department with any questions, complaints, or requests for remedies concerning personal information protection that arise while using the Student Union’s services or activities. The Student Union will respond and take action without delay.",
+      "<strong>11. Changes to this privacy policy</strong>\n\n① This policy applies from its effective date. If provisions are added, removed, or corrected due to changes in laws or policies, the changes will be announced through website notices at least seven days before they take effect.",
+      "<strong>12. Measures to safeguard personal information</strong>\n\nIn accordance with Article 29 of the Personal Information Protection Act, the Student Union takes the following technical, administrative, and physical measures to safeguard personal information.",
+      "1. Limiting and training personnel who handle personal information\nThe Student Union designates personnel authorized to handle personal information and limits access to those personnel to minimize the number of people involved in its management.",
+      "2. Encryption of personal information\nUsers’ passwords are stored and managed using one-way encryption so that only the users know their passwords. Even if an encrypted password is stolen, its plaintext cannot be determined."
+    ]
   }
 }

@@ -1,7 +1,7 @@
 import { Card, Image } from 'semantic-ui-react';
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'next-i18next/pages';
-import { getLocalizedResourceName } from '@/lib/locale';
+import { getLocalizedResourceName, getLocalizedField } from '@/lib/locale';
 
 import { IPlace } from '@/types/reservation.interface';
 import OpeningHoursList from './opening_hours.list';
@@ -26,8 +26,12 @@ const PlaceInformationCard: FunctionComponent<{
         <Card.Header>
           {getLocalizedResourceName(placeInfo, i18n.language)}
         </Card.Header>
-        <Card.Meta>{placeInfo.location}</Card.Meta>
-        <Card.Description>{placeInfo.description}</Card.Description>
+        <Card.Meta>
+          {getLocalizedField(placeInfo, 'location', i18n.language)}
+        </Card.Meta>
+        <Card.Description style={{ whiteSpace: 'pre-line' }}>
+          {getLocalizedField(placeInfo, 'description', i18n.language)}
+        </Card.Description>
         <Card.Meta style={{ marginTop: 8 }}>
           <OpeningHoursList openingHours={JSON.parse(placeInfo.openingHours)} />
           {placeInfo.maxMinutes !== 24 * 60 ||

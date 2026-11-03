@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next/pages';
 import { GetServerSideProps } from 'next';
 import { getI18nProps } from '@/lib/i18n';
 import React, { useState, useEffect } from 'react';
@@ -11,6 +12,7 @@ import { ActivityReport, Activity } from '@/components/extracurricular/types';
 import { useFileDownload } from '@/lib/use-file-download';
 
 const ReportDetailPage: React.FC = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const { reportId } = router.query;
 
@@ -55,8 +57,8 @@ const ReportDetailPage: React.FC = () => {
       <Layout>
         <LoadingContainer>
           {loadError
-            ? '활동 수기를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
-            : '보고서 로딩 중...'}
+            ? t('extracurricular.reportLoadError')
+            : t('extracurricular.reportLoading')}
         </LoadingContainer>
       </Layout>
     );
@@ -68,10 +70,12 @@ const ReportDetailPage: React.FC = () => {
         <Breadcrumb>
           {activity ? (
             <Link href={`/extracurricular/${activity.uuid}`}>
-              ← {activity.title} 상세 목록으로 돌아가기
+              {t('extracurricular.backToActivity', { name: activity.title })}
             </Link>
           ) : (
-            <Link href="/extracurricular">← 전체 목록으로 돌아가기</Link>
+            <Link href="/extracurricular">
+              {t('extracurricular.backToList')}
+            </Link>
           )}
         </Breadcrumb>
 
@@ -80,7 +84,11 @@ const ReportDetailPage: React.FC = () => {
             {report.period && <MetaTag>{report.period}</MetaTag>}
             {report.major && <MetaTag>{report.major}</MetaTag>}
             {report.grade && <MetaTag>{report.grade}</MetaTag>}
-            {report.author && <MetaTag>작성자: {report.author}</MetaTag>}
+            {report.author && (
+              <MetaTag>
+                {t('extracurricular.authorLabel', { name: report.author })}
+              </MetaTag>
+            )}
           </MetaRow>
 
           <ReportTitle>{report.title}</ReportTitle>
@@ -97,7 +105,9 @@ const ReportDetailPage: React.FC = () => {
               onClick={download}
               disabled={isDownloading}
             >
-              {isDownloading ? '다운로드 준비 중…' : '다운로드'}
+              {isDownloading
+                ? t('fileDownload.preparing')
+                : t('fileDownload.download')}
             </DownloadButton>
           </DownloadBar>
           {downloadError && (

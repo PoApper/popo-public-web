@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import Calendar from 'react-calendar';
+import { useTranslation } from 'next-i18next/pages';
 import styled from 'styled-components';
 
 const ReservationCalendar = ({
@@ -8,8 +9,10 @@ const ReservationCalendar = ({
   selectedDate,
   setSelectedDate,
 }) => {
+  const { i18n } = useTranslation('common');
   return (
     <StyledCalendar
+      locale={i18n.language === 'en' ? 'en-US' : 'ko-KR'}
       formatDay={(_, date) => moment(date).format('DD')}
       onChange={(value) => setSelectedDate(moment(value).format('YYYYMMDD'))}
       defaultValue={moment(selectedDate).toDate()}

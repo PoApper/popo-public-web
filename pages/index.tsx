@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styled from 'styled-components';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next/pages';
@@ -8,24 +9,24 @@ import { POPOLinks } from '@/components/common/popo-links';
 import { getI18nProps } from '@/lib/i18n';
 
 const HomePage: React.FunctionComponent = () => {
+  const { t } = useTranslation('common');
   return (
     <Layout>
       <HomeLayout>
-        <picture>
-          <source
-            media="(max-width: 780px)"
-            srcSet="/home/background_mobile.png"
+        <Hero>
+          <Image
+            unoptimized
+            priority
+            src="/home/campus-clean.webp"
+            alt={t('home.heroImageAlt')}
+            width={1920}
+            height={823}
           />
-          <source
-            media="(min-width: 781px)"
-            srcSet="/home/background_web.png"
-          />
-          <img
-            src="/home/background_web.png"
-            alt="Hero Background"
-            style={{ width: '100%', height: 'auto' }}
-          />
-        </picture>
+          <HeroCopy>
+            <h1>{t('home.heroTitle')}</h1>
+            <p>{t('home.heroSubtitle')}</p>
+          </HeroCopy>
+        </Hero>
 
         <CircleSection />
       </HomeLayout>
@@ -47,6 +48,56 @@ const HomeLayout = styled.div`
   flex-direction: column;
   padding: 0;
   margin: 0;
+`;
+
+const Hero = styled.div`
+  position: relative;
+  aspect-ratio: 1920 / 823;
+  overflow: hidden;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.28), transparent);
+  }
+
+  @media (max-width: 780px) {
+    aspect-ratio: 1260 / 891;
+  }
+`;
+
+const HeroCopy = styled.div`
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+
+  > h1 {
+    margin: 0 0 0.6rem;
+    font-family: 'Caveat', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+
+  > p {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.8rem);
+    font-weight: bold;
+  }
 `;
 
 const circleDefs = [

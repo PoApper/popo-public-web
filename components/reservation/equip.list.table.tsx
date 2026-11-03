@@ -1,6 +1,6 @@
 import { Image, Modal, Table } from 'semantic-ui-react';
 import { useTranslation } from 'next-i18next/pages';
-import { getLocalizedResourceName } from '@/lib/locale';
+import { getLocalizedResourceName, getLocalizedField } from '@/lib/locale';
 
 import { IEquipment } from '@/types/reservation.interface';
 import OpeningHoursList from '@/components/reservation/opening_hours.list';
@@ -50,7 +50,7 @@ const EquipListTable = ({ equipments }: { equipments: IEquipment[] }) => {
               <div style={{ marginTop: '1rem' }}>
                 <h4>{t('reservation.shared.description')}</h4>
                 <pre style={{ whiteSpace: 'pre-wrap' }}>
-                  {equipment.description}
+                  {getLocalizedField(equipment, 'description', i18n.language)}
                 </pre>
               </div>
               <div style={{ marginTop: '1rem' }}>
