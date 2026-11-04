@@ -31,21 +31,25 @@ const Layout = ({ children }: LayoutProps) => {
           <Footer />
         </main>
       </ThemeProvider>
-      <FloatingButton
-        href="https://docs.google.com/forms/d/1J23um5RDRTdKC9bscZnixPhEeon6qz4DQRTJYMtFJTU/viewform?edit_requested=true"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image src="/home/siren.ico" alt="Siren Icon" width={30} height={30} />
-        <span>{t('layout.reportBug')}</span>
-      </FloatingButton>
-      <AppInstallButton
-        onClick={() =>
-          document.dispatchEvent(new CustomEvent('open-app-promo'))
-        }
-      >
-        <span>{t('layout.appLaunchFab')}</span>
-      </AppInstallButton>
+      <FloatingActions data-floating-actions>
+        <AppInstallButton
+          aria-label={t('layout.appLaunchFab')}
+          onClick={() =>
+            document.dispatchEvent(new CustomEvent('open-app-promo'))
+          }
+        >
+          <span className="full-label">{t('layout.appLaunchFab')}</span>
+          <span className="short-label">{t('layout.appLaunchFabShort')}</span>
+        </AppInstallButton>
+        <FloatingButton
+          href="https://docs.google.com/forms/d/1J23um5RDRTdKC9bscZnixPhEeon6qz4DQRTJYMtFJTU/viewform?edit_requested=true"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image src="/home/siren.ico" alt="" width={24} height={24} />
+          <span>{t('layout.reportBug')}</span>
+        </FloatingButton>
+      </FloatingActions>
       <AppPromoFab />
     </>
   );
@@ -59,64 +63,105 @@ const Wrapper = styled.div`
   margin: auto;
 `;
 
-const FloatingButton = styled.a`
+const FloatingActions = styled.div`
   position: fixed;
-  bottom: 20px;
-  right: 40px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  right: max(40px, env(safe-area-inset-right));
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+
+  > a,
+  > button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    max-width: 100%;
+    padding: 12px 16px;
+    line-height: 1.4;
+    font-family: inherit;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+  }
+
+  > a > img {
+    flex-shrink: 0;
+  }
+
+  > a > span,
+  > button > span {
+    min-width: 0;
+  }
+
+  .short-label {
+    display: none;
+  }
+
+  > a:focus-visible,
+  > button:focus-visible {
+    outline: 2px solid #2185d0;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 780px) {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 639px) {
+    flex-direction: row;
+    align-items: center;
+
+    > a,
+    > button {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
+    .full-label {
+      display: none;
+    }
+
+    .short-label {
+      display: block;
+    }
+  }
+`;
+
+const FloatingButton = styled.a`
   background-color: #333435;
   color: white;
   border-radius: 25px;
-  width: 130px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   font-size: 14px;
   font-weight: bold;
-  z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease;
 
   &:hover {
     background-color: #000000;
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 780px) {
-    right: 10px;
   }
 `;
 
 export default Layout;
 
 const AppInstallButton = styled.button`
-  position: fixed;
-  bottom: 78px;
-  right: 40px;
   background-color: #333435;
   color: white;
   border-radius: 25px;
-  width: 110px;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: none;
   font-size: 13px;
   font-weight: bold;
-  z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease;
 
   &:hover {
     background-color: #111;
-    transform: scale(1.05);
-  }
-
-  @media (max-width: 780px) {
-    right: 10px;
   }
 `;

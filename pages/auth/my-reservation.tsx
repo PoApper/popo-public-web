@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next/pages';
+import styled from 'styled-components';
 
 import Layout from '@/components/layout';
 import MyPlaceReservationTable from '@/components/auth/MyPlaceReservationTable';
@@ -34,7 +35,7 @@ const MyInfoPage = () => {
         <h2>{t('nav.myReservation')}</h2>
         <p>{t('auth.myReservation.hint')}</p>
 
-        <Tab
+        <ReservationTabs
           panes={[
             {
               menuItem: t('nav.placeReservation'),
@@ -58,6 +59,22 @@ const MyInfoPage = () => {
     </Layout>
   );
 };
+
+const ReservationTabs = styled(Tab)`
+  > .ui.tabular.menu {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  > .ui.tabular.menu > .item {
+    min-width: 0;
+    justify-content: center;
+    padding: 0.85em 0.65em;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+`;
 
 export default MyInfoPage;
 

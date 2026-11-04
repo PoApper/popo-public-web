@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next/pages';
 import { Table } from 'semantic-ui-react';
+import styled from 'styled-components';
 
 import Layout from '@/components/layout';
 import { getI18nProps } from '@/lib/i18n';
@@ -64,86 +65,98 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
       <h1>{t('shuttle.title')}</h1>
 
       <h2>{t('shuttle.facultySection')}</h2>
-      <Table textAlign="center" compact celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell width={1}>{t('shuttle.am')}</Table.HeaderCell>
-            <Table.HeaderCell width={1}>
-              {t('shuttle.facultyBldg8')}
-            </Table.HeaderCell>
-            <Table.HeaderCell width={1}>
-              {t('shuttle.facultyBldg5')}
-            </Table.HeaderCell>
-            <Table.HeaderCell width={1}>
-              {t('shuttle.tempParking')}
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell></Table.Cell>
-            <Table.Cell>08:45</Table.Cell>
-            <Table.Cell>08:46</Table.Cell>
-            <Table.Cell>08:50</Table.Cell>
-          </Table.Row>
-        </Table.Body>
+      <TimetableScroll
+        role="region"
+        aria-label={t('shuttle.facultySection')}
+        tabIndex={0}
+      >
+        <Table unstackable textAlign="center" compact celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell width={1}>{t('shuttle.am')}</Table.HeaderCell>
+              <Table.HeaderCell width={1}>
+                {t('shuttle.facultyBldg8')}
+              </Table.HeaderCell>
+              <Table.HeaderCell width={1}>
+                {t('shuttle.facultyBldg5')}
+              </Table.HeaderCell>
+              <Table.HeaderCell width={1}>
+                {t('shuttle.tempParking')}
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell></Table.Cell>
+              <Table.Cell>08:45</Table.Cell>
+              <Table.Cell>08:46</Table.Cell>
+              <Table.Cell>08:50</Table.Cell>
+            </Table.Row>
+          </Table.Body>
 
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>{t('shuttle.pm')}</Table.HeaderCell>
-            <Table.HeaderCell>{t('shuttle.tempParking')}</Table.HeaderCell>
-            <Table.HeaderCell>{t('shuttle.facultyBldg5')}</Table.HeaderCell>
-            <Table.HeaderCell>{t('shuttle.facultyBldg8')}</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          <Table.Row>
-            <Table.Cell></Table.Cell>
-            <Table.Cell>18:00</Table.Cell>
-            <Table.Cell>18:04</Table.Cell>
-            <Table.Cell>18:05</Table.Cell>
-          </Table.Row>
-        </Table.Body>
-      </Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>{t('shuttle.pm')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('shuttle.tempParking')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('shuttle.facultyBldg5')}</Table.HeaderCell>
+              <Table.HeaderCell>{t('shuttle.facultyBldg8')}</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            <Table.Row>
+              <Table.Cell></Table.Cell>
+              <Table.Cell>18:00</Table.Cell>
+              <Table.Cell>18:04</Table.Cell>
+              <Table.Cell>18:05</Table.Cell>
+            </Table.Row>
+          </Table.Body>
+        </Table>
+      </TimetableScroll>
 
       <h2>{t('shuttle.campusSection')}</h2>
-      <Table textAlign="center" compact celled selectable>
-        <Table.Header>
-          <Table.Row>
-            {InnerSpotList.map((spot, index) => {
+      <TimetableScroll
+        role="region"
+        aria-label={t('shuttle.campusSection')}
+        tabIndex={0}
+      >
+        <Table unstackable textAlign="center" compact celled selectable>
+          <Table.Header>
+            <Table.Row>
+              {InnerSpotList.map((spot, index) => {
+                return (
+                  <Table.HeaderCell width={1} key={index}>
+                    <pre>{spot}</pre>
+                  </Table.HeaderCell>
+                );
+              })}
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {InnerSpotTable_Semester.map((time_list, index) => {
               return (
-                <Table.HeaderCell width={1} key={index}>
-                  <pre>{spot}</pre>
-                </Table.HeaderCell>
+                <Table.Row key={index}>
+                  <Table.Cell>
+                    <b>{index + 1}</b>
+                  </Table.Cell>
+                  {time_list.map((_time, i) => {
+                    return (
+                      <Table.Cell
+                        key={i}
+                        style={{
+                          whiteSpace: 'pre',
+                          color: _time === NO_STOP ? 'red' : 'black',
+                        }}
+                      >
+                        {formatCell(_time)}
+                      </Table.Cell>
+                    );
+                  })}
+                </Table.Row>
               );
             })}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {InnerSpotTable_Semester.map((time_list, index) => {
-            return (
-              <Table.Row key={index}>
-                <Table.Cell>
-                  <b>{index + 1}</b>
-                </Table.Cell>
-                {time_list.map((_time, i) => {
-                  return (
-                    <Table.Cell
-                      key={i}
-                      style={{
-                        whiteSpace: 'pre',
-                        color: _time === NO_STOP ? 'red' : 'black',
-                      }}
-                    >
-                      {formatCell(_time)}
-                    </Table.Cell>
-                  );
-                })}
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
+          </Table.Body>
+        </Table>
+      </TimetableScroll>
 
       <p>
         {t('shuttle.weekdayOnly')}
@@ -167,7 +180,7 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
           width={400}
           height={300}
           style={{
-            maxWidth: '400px',
+            maxWidth: '100%',
             height: 'auto',
           }}
         />
@@ -175,6 +188,21 @@ const TheCampusShuttleBusOperatingSchedule: React.FC = () => {
     </Layout>
   );
 };
+
+const TimetableScroll = styled.div`
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1em 0;
+
+  > .ui.table {
+    margin: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #2185d0;
+    outline-offset: 2px;
+  }
+`;
 
 export default TheCampusShuttleBusOperatingSchedule;
 

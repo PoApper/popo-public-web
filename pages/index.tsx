@@ -159,18 +159,17 @@ const Circle = styled(Link)`
   align-items: center;
   text-decoration: none;
   color: #333;
-  width: 100px;
-  height: auto;
+  width: 100%;
+  min-width: 0;
   gap: 8px;
-
-  @media (max-width: 780px) {
-    width: 90px;
-  }
 `;
 
 const IconWrapper = styled.div`
   width: 100px;
   height: 100px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  flex-shrink: 0;
   border-radius: 50%;
   background-color: #eeeff1;
   display: flex;
@@ -183,39 +182,53 @@ const IconWrapper = styled.div`
     background-color: #dadbdd;
   }
 
-  @media (max-width: 780px) {
-    width: 100px;
-    height: 100px;
+  @media (max-width: 639px) {
+    width: 80px;
+    height: 80px;
   }
 `;
 
 const CircleContainer = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  align-items: start;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 0;
-  gap: 8px;
+  gap: 24px 8px;
 
-  @media (max-width: 780px) {
-    justify-content: center;
-    gap: 20px 25px;
+  @media (max-width: 1099px) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  @media (max-width: 639px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 12px;
   }
 `;
 
 const Icon = styled.img`
   width: 60px;
+  height: 74px;
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
 `;
 
 const Text = styled.span`
   text-align: center;
   color: #333;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   margin-top: 4px;
+  line-height: 1.4;
+  min-height: 2.8em;
+  overflow-wrap: normal;
+
+  @media (max-width: 639px) {
+    font-size: 12px;
+  }
 `;
 
 const CircleSection = () => {

@@ -3,6 +3,7 @@ import { Button, Dropdown, Menu } from 'semantic-ui-react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next/pages';
+import styled from 'styled-components';
 import { IUser } from '@/types/user.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
 
@@ -31,9 +32,9 @@ const MenuItemUser = () => {
   };
 
   return (
-    <Menu.Item position={'right'}>
+    <UserMenuItem position={'right'}>
       {user ? (
-        <Dropdown text={user.name}>
+        <Dropdown text={user.name} title={user.name} direction="left">
           <Dropdown.Menu>
             <Dropdown.Item
               as={Link}
@@ -57,8 +58,35 @@ const MenuItemUser = () => {
           {t('nav.login')}
         </Button>
       )}
-    </Menu.Item>
+    </UserMenuItem>
   );
 };
+
+const UserMenuItem = styled(Menu.Item)`
+  min-width: 0;
+
+  > .ui.dropdown {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  > .ui.dropdown > .text {
+    max-width: 11rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  > .ui.dropdown > .dropdown.icon {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1100px) {
+    > .ui.dropdown > .text {
+      max-width: clamp(3rem, 15vw, 5rem);
+    }
+  }
+`;
 
 export default MenuItemUser;

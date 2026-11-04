@@ -328,15 +328,20 @@ const FilterGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: 100%;
 `;
 
 const FilterLabel = styled.span`
+  flex-shrink: 0;
   font-size: 13px;
   font-weight: 500;
   color: #6b7280;
 `;
 
 const Select = styled.select`
+  min-width: 0;
+  max-width: 100%;
   padding: 6px 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;

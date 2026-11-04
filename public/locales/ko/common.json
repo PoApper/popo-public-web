@@ -25,7 +25,8 @@
     "pageTitle": "POPO 퍼블릭 페이지",
     "metaDescription": "POPO 퍼블릭 페이지",
     "reportBug": "오류 신고",
-    "appLaunchFab": "POPO 앱 출시!"
+    "appLaunchFab": "POPO 앱 출시!",
+    "appLaunchFabShort": "POPO 앱"
   },
   "footer": {
     "stuCouncil": "POSTECH 총학생회",

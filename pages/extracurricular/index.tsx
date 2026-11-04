@@ -275,17 +275,19 @@ const CardMeta = styled.div`
 `;
 
 const MetaRow = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
   font-size: 13px;
 `;
 
 const MetaLabel = styled.span`
   color: #9ca3af;
-  width: 70px;
-  flex-shrink: 0;
 `;
 
 const MetaVal = styled.span`
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: #374151;
   font-weight: 500;
 `;

@@ -70,12 +70,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const IntroduceGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   text-align: center;
   gap: 2rem;
 
+  > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    max-width: 100%;
+  }
+
   // mobile screen
   @media only screen and (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `;

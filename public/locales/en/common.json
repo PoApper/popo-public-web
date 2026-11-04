@@ -25,7 +25,8 @@
     "pageTitle": "POPO Public Page",
     "metaDescription": "POPO Public Page",
     "reportBug": "Report a Bug",
-    "appLaunchFab": "POPO App is here!"
+    "appLaunchFab": "POPO App is here!",
+    "appLaunchFabShort": "POPO App"
   },
   "footer": {
     "stuCouncil": "POSTECH Student Council",
