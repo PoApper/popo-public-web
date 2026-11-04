@@ -6,6 +6,7 @@ import {
   addToFailedQueue,
   processQueue,
 } from './refresh.utils';
+import { withCurrentLocalePrefix } from './locale';
 
 const next_env = process.env.NEXT_PUBLIC_ENV;
 
@@ -64,7 +65,7 @@ PoPoAxios.interceptors.response.use(
         processQueue(refreshError);
         // refresh 실패 시 로그아웃 처리
         if (typeof window !== 'undefined') {
-          window.location.href = '/auth/login';
+          window.location.href = withCurrentLocalePrefix('/auth/login');
         }
         return Promise.reject(refreshError);
       } finally {

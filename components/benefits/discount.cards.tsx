@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Modal, Grid, Header, Divider, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import { IDiscount } from '@/types/benefit.interface';
 
@@ -8,6 +9,7 @@ const DiscountOfferCards = ({
 }: {
   discountOffers: IDiscount[];
 }) => {
+  const { t } = useTranslation('common');
   const initialFlags = Array.from(
     { length: discountOffers.length },
     () => false,
@@ -43,16 +45,16 @@ const DiscountOfferCards = ({
             <Modal.Content>
               <p>
                 <Icon name="clock outline" />
-                영업 시간: {discountOffer.openHour}
+                {t('benefits.openHours', { hours: discountOffer.openHour })}
               </p>
               <p>
                 <Icon name="phone" />
-                가게 번호: {discountOffer.phone}
+                {t('benefits.phone', { phone: discountOffer.phone })}
               </p>
               <Divider />
               <p>
                 <Icon name="star" />
-                할인 내용
+                {t('benefits.discountDetails')}
               </p>
               <p style={{ whiteSpace: 'pre-line' }}>{discountOffer.content}</p>
             </Modal.Content>

@@ -1,29 +1,36 @@
 import Layout from '@/components/layout';
 import { Card, Image } from 'semantic-ui-react';
 import styled from 'styled-components';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next/pages';
+import { getI18nProps } from '@/lib/i18n';
 
 const ClubIndexPage = () => {
+  const { t } = useTranslation('common');
+
   const clubTypes = [
-    { slug: 'performance1', name: '공연1' },
-    { slug: 'performance2', name: '공연2' },
-    { slug: 'sports', name: '체육' },
-    { slug: 'hobbyAndExhibition', name: '취미전시' },
-    { slug: 'study', name: '학술' },
-    { slug: 'societyAndReligion', name: '사회종교' },
+    { slug: 'performance1' },
+    { slug: 'performance2' },
+    { slug: 'sports' },
+    { slug: 'hobbyAndExhibition' },
+    { slug: 'study' },
+    { slug: 'societyAndReligion' },
   ];
 
   return (
     <Layout>
       <ClubTypesGrid>
-        {clubTypes.map(({ slug, name }) => (
+        {clubTypes.map(({ slug }) => (
           <Card
+            as={Link}
             key={slug}
             href={`/club/introduce/${slug}`}
             style={{ margin: '0 auto' }}
           >
             <Card.Content style={{ height: '12em' }}>
               <Image
-                src={`club/${slug}.svg`}
+                src={`/club/${slug}.svg`}
                 alt={slug}
                 style={{
                   height: '100%',
@@ -33,7 +40,7 @@ const ClubIndexPage = () => {
               />
             </Card.Content>
             <Card.Content>
-              <Card.Header>{name}</Card.Header>
+              <Card.Header>{t(`club.types.${slug}`)}</Card.Header>
             </Card.Content>
           </Card>
         ))}
@@ -43,6 +50,10 @@ const ClubIndexPage = () => {
 };
 
 export default ClubIndexPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});
 
 const ClubTypesGrid = styled.div`
   display: grid;

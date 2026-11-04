@@ -16,13 +16,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Docker-2CA5E0?logo=Docker&logoColor=white"/>
   <img src="https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white">
-  <img src="https://img.shields.io/badge/Next.js-14.x-000000?logo=nextdotjs&logoColor=white">
+  <img src="https://img.shields.io/badge/Next.js-15.x-000000?logo=nextdotjs&logoColor=white">
   <img src="https://img.shields.io/badge/React-18.x-61DAFB?logo=react&logoColor=black">
 </p>
 
 ## About
 
-POPO는 PoApper에서 개발하고, POSTECH 총학생회에서 운영하는 포털 사이트입니다. POPO를 통해 교내의 장소/장비를 예약하고, 자치단체 및 동아리 정보를 열람할 수 있습니다.
+POPO는 PoApper에서 개발하고, POSTECH 총학생회에서 운영하는 포털 사이트입니다. POPO를 통해 교내의 장소/장비를 예약하고, 자치단체 및 동아리 정보를 열람할 수 있습니다. UI는 한국어가 기본이며, 헤더에서 영어(`/en/...`)로 전환할 수 있습니다.
 
 ## How to Deploy
 

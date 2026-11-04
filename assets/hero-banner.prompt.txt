@@ -1,0 +1,5 @@
+Tool: built-in image_gen.
+Edit target: public/home/background_web.png.
+Generated output: public/home/campus-clean.webp, encoded as WebP for the website.
+
+Use case: precise-object-edit / text-localization. Edit target: the provided existing POSTECH campus courtyard banner photograph. Remove ONLY all overlaid white lettering, both the large Latin title and the Korean subtitle in the center. Seamlessly reconstruct the underlying building facade, windows, trees, courtyard and railing only where the letters covered them. Preserve the exact scene, camera position, framing, 1920:823 wide aspect ratio, architecture, geometry, people, lighting, colors, image detail, and composition. Do not add or remove any physical objects. Output a clean photographic background with NO text, logos, captions, or watermark. The website will render accessible localized text in HTML separately.

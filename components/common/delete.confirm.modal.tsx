@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Button, Modal } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const DeleteConfirmModal = (props: any) => {
+  const { t } = useTranslation('common');
   const deleteTarget = props.target;
   const deleteURI = props.deleteURI;
   const [open, setOpen] = useState(props.open);
@@ -14,7 +16,7 @@ const DeleteConfirmModal = (props: any) => {
       })
       .catch((err) => {
         const errMsg = err.response.data.message;
-        alert(`삭제에 실패했습니다.\n${errMsg}`);
+        alert(t('common.deleteFailed', { errMsg }));
       });
   };
 
@@ -25,16 +27,16 @@ const DeleteConfirmModal = (props: any) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
     >
-      <Modal.Header>삭제 확인</Modal.Header>
+      <Modal.Header>{t('common.deleteConfirmTitle')}</Modal.Header>
       <Modal.Content>
-        <b>{deleteTarget}</b>이 삭제됩니다. 정말 삭제 하시겠습니까?
+        {t('common.deleteConfirmBody', { target: deleteTarget })}
       </Modal.Content>
       <Modal.Actions>
-        <Button content={'취소'} onClick={() => setOpen(false)} />
+        <Button content={t('common.cancel')} onClick={() => setOpen(false)} />
         <Button
           negative
           icon={'check'}
-          content={'삭제'}
+          content={t('common.delete')}
           onClick={handleDelete}
         />
       </Modal.Actions>

@@ -2,6 +2,7 @@ import moment from 'moment-timezone';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useTranslation } from 'next-i18next/pages';
 import { roundUpByDuration } from '@/lib/time-date';
 import { getReservationRequiredDate } from '@/lib/reservation-required-days';
 const ReservationDatetimePicker = ({
@@ -25,6 +26,7 @@ const ReservationDatetimePicker = ({
   isCinemaRoom?: boolean;
   reservationRequiredDays?: number;
 }) => {
+  const { t } = useTranslation('common');
   const now: moment.Moment = roundUpByDuration(moment().tz('Asia/Seoul'), 30);
   const nowNext30Min: moment.Moment = moment(now).add(30, 'minute');
   const minReservationDate = getReservationRequiredDate(
@@ -43,7 +45,7 @@ const ReservationDatetimePicker = ({
   return (
     <>
       <div className={'required field'}>
-        <label>날짜</label>
+        <label>{t('reservation.shared.date')}</label>
         <DatePicker
           onKeyDown={(e) => e.preventDefault()}
           dateFormat={'yyyy-MM-dd'}
@@ -77,7 +79,7 @@ const ReservationDatetimePicker = ({
       </div>
 
       <div className={'required field'}>
-        <label>시작 시간</label>
+        <label>{t('reservation.shared.startTime')}</label>
         <DatePicker
           showTimeSelect
           showTimeSelectOnly
@@ -105,7 +107,7 @@ const ReservationDatetimePicker = ({
       </div>
 
       <div className={'required field'}>
-        <label>종료 시간</label>
+        <label>{t('reservation.shared.endTime')}</label>
         <DatePicker
           showTimeSelect
           showTimeSelectOnly

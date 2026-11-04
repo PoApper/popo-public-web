@@ -1,16 +1,21 @@
+import { getLocalizedField } from '@/lib/locale';
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
 import { IStudentAssociationIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 
 const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
   name: string;
   studentAssociationInfo: IStudentAssociationIntroduce;
-}> = ({ name, studentAssociationInfo }) => {
+}> = ({ studentAssociationInfo }) => {
+  const { t, i18n } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -23,12 +28,18 @@ const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
                 ? studentAssociationInfo.imageUrl
                 : 'https://react.semantic-ui.com/images/wireframe/image.png'
             }
-            alt={`${name}_logo`}
+            alt={`${getLocalizedField(studentAssociationInfo, 'name', i18n.language)}_logo`}
           />
         </div>
-        <h1 style={{ margin: '0' }}>{name}</h1>
+        <h1 style={{ margin: '0' }}>
+          {getLocalizedField(studentAssociationInfo, 'name', i18n.language)}
+        </h1>
         <h2 style={{ color: 'grey', marginTop: 0 }}>
-          {studentAssociationInfo.shortDesc}
+          {getLocalizedField(
+            studentAssociationInfo,
+            'shortDesc',
+            i18n.language,
+          )}
         </h2>
         <div style={{ fontSize: 18 }}>
           <IconLink link={studentAssociationInfo.homepageUrl}>
@@ -65,23 +76,52 @@ const StudentAssociationSingleIntroducePage: React.FunctionComponent<{
           </IconLink>
         </div>{' '}
         <i></i>
-        <div style={{ fontSize: 16, margin: '12px 0' }}>
-          {studentAssociationInfo.content}
+        <div style={{ fontSize: 16, margin: '12px 0', whiteSpace: 'pre-line' }}>
+          {getLocalizedField(studentAssociationInfo, 'content', i18n.language)}
         </div>
         <div>
-          {studentAssociationInfo.location?.trim() && (
+          {getLocalizedField(
+            studentAssociationInfo,
+            'location',
+            i18n.language,
+          ).trim() && (
             <p>
-              <b>사무실 위치</b>: {studentAssociationInfo.location}
+              <b>{t('association.officeLocation')}</b>:{' '}
+              {getLocalizedField(
+                studentAssociationInfo,
+                'location',
+                i18n.language,
+              )}
             </p>
           )}
-          {studentAssociationInfo.office?.trim() && (
+          {getLocalizedField(
+            studentAssociationInfo,
+            'office',
+            i18n.language,
+          ).trim() && (
             <p>
-              <b>협력 행정팀</b>: {studentAssociationInfo.office}
+              <b>{t('association.adminTeam')}</b>:{' '}
+              {getLocalizedField(
+                studentAssociationInfo,
+                'office',
+                i18n.language,
+              )}
             </p>
           )}
           <p>
-            <b>대표자</b>: {studentAssociationInfo.representative} (
-            {studentAssociationInfo.contact})
+            <b>{t('club.representative')}</b>:{' '}
+            {getLocalizedField(
+              studentAssociationInfo,
+              'representative',
+              i18n.language,
+            )}{' '}
+            (
+            {getLocalizedField(
+              studentAssociationInfo,
+              'contact',
+              i18n.language,
+            )}
+            )
           </p>
         </div>
       </div>
@@ -100,6 +140,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const studentAssociationInfo = res.data;
 
   return {
-    props: { name, studentAssociationInfo },
+    props: {
+      name,
+      studentAssociationInfo,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };

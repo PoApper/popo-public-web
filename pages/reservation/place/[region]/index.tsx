@@ -1,22 +1,26 @@
 import React from 'next/router';
+import Link from 'next/link';
 import { Button, Card, Icon, Select } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import { IPlace } from '@/types/reservation.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { GetServerSideProps } from 'next';
 import { useState } from 'react';
+import { getI18nProps } from '@/lib/i18n';
+import { getLocalizedResourceName, getLocalizedField } from '@/lib/locale';
 
 type ObjectType = {
   [key: string]: string;
 };
 
-const regionName: ObjectType = {
-  'student-hall': '학생 회관',
-  jigok: '지곡 회관',
-  others: '기타',
-  'community-center': '커뮤니티 센터',
-  'residential-college': 'RC',
+const regionKeyMap: ObjectType = {
+  'student-hall': 'reservation.place.regions.studentHall',
+  jigok: 'reservation.place.regions.jigok',
+  others: 'reservation.place.regions.others',
+  'community-center': 'reservation.place.regions.communityCenter',
+  'residential-college': 'reservation.place.regions.rc',
 };
 
 const regionOptions: ObjectType = {
@@ -27,20 +31,32 @@ const regionOptions: ObjectType = {
   'residential-college': 'RESIDENTIAL_COLLEGE',
 };
 
-const SelectClubTypeOptions = [
-  { key: 'alphabetic', value: 'alphabetic', text: '가나다순' },
-  { key: 'popular', value: 'popular', text: '예약 많은 순' },
-];
-
 const PlaceRegionIndexPage: React.FunctionComponent<{
   region: string;
   placeList: IPlace[];
 }> = ({ region, placeList }) => {
+  const { t, i18n } = useTranslation('common');
   const [selectedSortType, setSelectedSortType] = useState('alphabetic');
 
-  const sortedPlaceList = placeList.sort((a, b) => {
+  const SelectClubTypeOptions = [
+    {
+      key: 'alphabetic',
+      value: 'alphabetic',
+      text: t('reservation.place.sortAlphabetic'),
+    },
+    {
+      key: 'popular',
+      value: 'popular',
+      text: t('reservation.place.sortPopular'),
+    },
+  ];
+
+  const sortedPlaceList = [...placeList].sort((a, b) => {
     if (selectedSortType === 'alphabetic') {
-      return a.name > b.name ? 1 : -1;
+      return getLocalizedResourceName(a, i18n.language).localeCompare(
+        getLocalizedResourceName(b, i18n.language),
+        i18n.language,
+      );
     } else if (selectedSortType === 'popular') {
       return a.totalReservationCount < b.totalReservationCount ? 1 : -1;
     } else {
@@ -51,7 +67,11 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
   return (
     <Layout>
       <div>
-        <h1>{regionName[region]} - 장소 예약하기</h1>
+        <h1>
+          {t('reservation.place.regionTitle', {
+            region: t(regionKeyMap[region]),
+          })}
+        </h1>
         <div style={{ marginBottom: 16, textAlign: 'right' }}>
           <Select
             value={selectedSortType}
@@ -66,16 +86,24 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
             return (
               <Card fluid key={place.uuid}>
                 <Card.Content>
-                  <Card.Header>{place.name}</Card.Header>
-                  <Card.Meta>{place.location}</Card.Meta>
-                  <Card.Description>{place.description}</Card.Description>
+                  <Card.Header>
+                    {getLocalizedResourceName(place, i18n.language)}
+                  </Card.Header>
+                  <Card.Meta>
+                    {getLocalizedField(place, 'location', i18n.language)}
+                  </Card.Meta>
+                  <Card.Description style={{ whiteSpace: 'pre-line' }}>
+                    {getLocalizedField(place, 'description', i18n.language)}
+                  </Card.Description>
                   <Card.Description style={{ marginTop: '0.8em' }}>
                     <Button
+                      as={Link}
                       basic
                       compact
-                      href={`/reservation/place/${region}/${place.name}`}
+                      href={`/reservation/place/${region}/${encodeURIComponent(place.name)}`}
                     >
-                      <Icon name={'calendar plus outline'} /> 예약하기
+                      <Icon name={'calendar plus outline'} />{' '}
+                      {t('reservation.shared.reserve')}
                     </Button>
                   </Card.Description>
                 </Card.Content>
@@ -91,6 +119,7 @@ const PlaceRegionIndexPage: React.FunctionComponent<{
 export default PlaceRegionIndexPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const locale = context.locale;
   const region = context.query['region'] as string;
 
   const res = await PoPoAxios.get<IPlace[]>(
@@ -99,6 +128,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const placeList = res.data;
 
   return {
-    props: { region, placeList },
+    props: {
+      region,
+      placeList,
+      ...(await getI18nProps(locale)),
+    },
   };
 };

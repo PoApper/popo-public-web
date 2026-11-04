@@ -1,16 +1,16 @@
 import React from 'react';
 import { Segment, Header, Button, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 const AppPromo: React.FC = () => {
+  const { t } = useTranslation('common');
+
   return (
     <Segment style={{ margin: 0, maxWidth: 360 }}>
       <Header as="h3" style={{ marginBottom: 8 }}>
-        POPO 앱 출시, 카풀 기능까지!
+        {t('home.appPromo.title')}
       </Header>
-      <p style={{ marginBottom: 12 }}>
-        학교 생활에 필요한 기능을 한 곳에서. <br /> 지금 설치하고 더 빠르게
-        이용해보세요.
-      </p>
+      <p style={{ marginBottom: 12 }}>{t('home.appPromo.body')}</p>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <Button
           as="a"

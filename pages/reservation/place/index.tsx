@@ -1,63 +1,84 @@
 import { Card, Grid, Icon, Image } from 'semantic-ui-react';
+import { GetStaticProps } from 'next';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
+import { getI18nProps } from '@/lib/i18n';
 
 const PlaceIndexPage = () => {
+  const { t } = useTranslation('common');
+  const { locale } = useRouter();
+  const showEnglishMeta = locale === 'ko';
+
   return (
     <Layout>
-      <h2>장소 예약</h2>
+      <h2>{t('reservation.place.indexTitle')}</h2>
       <Grid stackable centered columns={3} style={{ maxWidth: 900 }}>
         <Grid.Column>
-          <Card href={'/reservation/place/student-hall'} centered>
+          <Card as={Link} href={'/reservation/place/student-hall'} centered>
             <Image src={'/reservation/student_hall.jpg'} alt={'student_hall'} />
             <Card.Content>
-              <Card.Header>학생회관</Card.Header>
-              <Card.Meta>Student Hall</Card.Meta>
+              <Card.Header>
+                {t('reservation.place.regions.studentHall')}
+              </Card.Header>
+              {showEnglishMeta ? <Card.Meta>Student Hall</Card.Meta> : null}
             </Card.Content>
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/jigok'} centered>
+          <Card as={Link} href={'/reservation/place/jigok'} centered>
             <Image src={'/reservation/jigok.jpg'} alt={'jigok'} />
             <Card.Content>
-              <Card.Header>지곡회관</Card.Header>
-              <Card.Meta>Ji-gok Community Center</Card.Meta>
+              <Card.Header>{t('reservation.place.regions.jigok')}</Card.Header>
+              {showEnglishMeta ? (
+                <Card.Meta>Ji-gok Community Center</Card.Meta>
+              ) : null}
             </Card.Content>
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/community-center'} centered>
+          <Card as={Link} href={'/reservation/place/community-center'} centered>
             <Image
               src={'/reservation/community_center.jpg'}
               alt={'community_center'}
             />
             <Card.Content>
-              <Card.Header>커뮤니티 센터</Card.Header>
-              <Card.Meta>Community Center</Card.Meta>
+              <Card.Header>
+                {t('reservation.place.regions.communityCenter')}
+              </Card.Header>
+              {showEnglishMeta ? <Card.Meta>Community Center</Card.Meta> : null}
             </Card.Content>
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/residential-college'} centered>
+          <Card
+            as={Link}
+            href={'/reservation/place/residential-college'}
+            centered
+          >
             <Image src={'/reservation/rc.jpg'} alt={'rc'} />
             <Card.Content>
-              <Card.Header>RC</Card.Header>
-              <Card.Meta>Residential College</Card.Meta>
+              <Card.Header>{t('reservation.place.regions.rc')}</Card.Header>
+              {showEnglishMeta ? (
+                <Card.Meta>Residential College</Card.Meta>
+              ) : null}
             </Card.Content>
           </Card>
         </Grid.Column>
         <Grid.Column>
-          <Card href={'/reservation/place/others'} centered>
+          <Card as={Link} href={'/reservation/place/others'} centered>
             <Image src={'/reservation/dormitory.jpg'} alt={'others'} />
             <Card.Content>
-              <Card.Header>기타</Card.Header>
-              <Card.Meta>etc</Card.Meta>
+              <Card.Header>{t('reservation.place.regions.others')}</Card.Header>
+              {showEnglishMeta ? <Card.Meta>etc</Card.Meta> : null}
             </Card.Content>
           </Card>
         </Grid.Column>
         <Grid.Column></Grid.Column>
       </Grid>
 
-      <h2>기타 예약</h2>
+      <h2>{t('reservation.place.otherReservations')}</h2>
       <Grid stackable columns={3} style={{ maxWidth: 900 }}>
         <Grid.Column>
           <Card
@@ -74,9 +95,11 @@ const PlaceIndexPage = () => {
               />
               <div>
                 <Card.Header style={{ color: 'black', 'font-weight': 'bold' }}>
-                  박태준 학술정보관
+                  {t('footer.library')}
                 </Card.Header>
-                <Card.Meta>Tae-joon Park Digital Library</Card.Meta>
+                {showEnglishMeta ? (
+                  <Card.Meta>Tae-joon Park Digital Library</Card.Meta>
+                ) : null}
               </div>
             </Card.Content>
           </Card>
@@ -96,9 +119,9 @@ const PlaceIndexPage = () => {
               />
               <div>
                 <Card.Header style={{ color: 'black', 'font-weight': 'bold' }}>
-                  강의실 및 체육시설
+                  {t('reservation.place.classroomFacilities')}
                 </Card.Header>
-                <Card.Meta>POVIS 신고신청 {'>'} 시설이용</Card.Meta>
+                <Card.Meta>{t('reservation.place.povisMeta')}</Card.Meta>
               </div>
             </Card.Content>
           </Card>
@@ -113,7 +136,7 @@ const PlaceIndexPage = () => {
               />
               <div>
                 <Card.Header style={{ color: 'black', 'font-weight': 'bold' }}>
-                  통나무집
+                  {t('reservation.place.logCabin')}
                 </Card.Header>
                 <Card.Meta>054-279-3860</Card.Meta>
               </div>
@@ -126,3 +149,9 @@ const PlaceIndexPage = () => {
 };
 
 export default PlaceIndexPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await getI18nProps(locale)),
+  },
+});

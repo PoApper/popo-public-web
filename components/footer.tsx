@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   Container,
   Divider,
@@ -8,9 +9,11 @@ import {
   List,
   Segment,
 } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 import { PoPoAxios } from '@/lib/axios.instance';
 
 const Footer = () => {
+  const { t } = useTranslation('common');
   const [popoCRMEmail, setPOPOCRMEmail] = useState('');
   const [STUEmail, setSTUEmail] = useState('');
   const [STUPresidentName, setSTUPresidentName] = useState('');
@@ -42,13 +45,16 @@ const Footer = () => {
         <Container textAlign="center">
           <Grid divided stackable style={{ fontSize: 'small' }}>
             <Grid.Column textAlign="left" width={7}>
-              <Header as="h3" content="POSTECH 총학생회" />
+              <Header as="h3" content={t('footer.stuCouncil')} />
               <small>
                 <p>77 Cheongam-Ro. Nam-Gu. Pohang. Gyeongbuk. Korea 790-784</p>
                 <p>
                   {STUPresidentContact && STUPresidentName && (
                     <>
-                      TEL {STUPresidentContact} (총학생회장 {STUPresidentName})
+                      {t('footer.presidentTel', {
+                        contact: STUPresidentContact,
+                        name: STUPresidentName,
+                      })}
                       <br />
                     </>
                   )}
@@ -67,7 +73,9 @@ const Footer = () => {
                       <br />
                     </>
                   )}
-                  {popoCRMEmail && <>POPO 관련 문의: {popoCRMEmail}</>}
+                  {popoCRMEmail && (
+                    <>{t('footer.popoInquiry', { email: popoCRMEmail })}</>
+                  )}
                 </p>
               </small>
             </Grid.Column>
@@ -82,8 +90,8 @@ const Footer = () => {
                 target="_blank"
               />
               <List link>
-                <List.Item as="a" href="/other/recruiting">
-                  개발자 모집
+                <List.Item as={Link} href="/other/recruiting">
+                  {t('footer.recruiting')}
                 </List.Item>
               </List>
             </Grid.Column>
@@ -95,7 +103,7 @@ const Footer = () => {
                   href="https://www.postech.ac.kr/"
                   target="_blank"
                 >
-                  포항공대 홈페이지
+                  {t('footer.postechHomepage')}
                 </List.Item>
                 <List.Item
                   as="a"
@@ -116,7 +124,7 @@ const Footer = () => {
                   href="https://library.postech.ac.kr/"
                   target="_blank"
                 >
-                  박태준 학술정보관
+                  {t('footer.library')}
                 </List.Item>
               </List>
             </Grid.Column>
@@ -124,11 +132,11 @@ const Footer = () => {
 
           <Divider section style={{ marginBottom: '1vh' }} />
           <List horizontal divided link size="small">
-            <List.Item as="a" href="/other/privacy-policy">
-              개인정보처리방침
+            <List.Item as={Link} href="/other/privacy-policy">
+              {t('footer.privacyPolicy')}
             </List.Item>
-            <List.Item as="a" href="/other/open-source-licenses">
-              오픈소스 라이선스
+            <List.Item as={Link} href="/other/open-source-licenses">
+              {t('footer.openSourceLicenses')}
             </List.Item>
             <List.Item>
               <a

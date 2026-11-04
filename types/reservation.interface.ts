@@ -8,9 +8,12 @@ import { IUser } from './user.interface';
 export interface IPlace {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   region: string;
   location: string;
+  locationEn?: string | null;
   description: string;
+  descriptionEn?: string | null;
   imageUrl?: string;
   maxMinutes: number;
   maxConcurrentReservation: number;
@@ -22,7 +25,9 @@ export interface IPlace {
 export interface IEquipment {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   description: string;
+  descriptionEn?: string | null;
   fee: number;
   imageUrl?: string;
   maxMinutes: number;

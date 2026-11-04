@@ -1,3 +1,4 @@
+import { getLocalizedField } from '@/lib/locale';
 import { GetServerSideProps } from 'next';
 import React from 'next/router';
 import { Image } from 'semantic-ui-react';
@@ -6,12 +7,16 @@ import Layout from '@/components/layout';
 import IconLink from '@/components/common/icon.link';
 import { IClubIntroduce } from '@/types/introduce.interface';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
+import { useTranslation } from 'next-i18next/pages';
 
 const ClubSingleIntroducePage: React.FunctionComponent<{
   name: string;
   clubInfo: IClubIntroduce;
   recommendations: IClubIntroduce[];
-}> = ({ name, clubInfo }) => {
+}> = ({ clubInfo }) => {
+  const { t, i18n } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ padding: 8 }}>
@@ -22,12 +27,16 @@ const ClubSingleIntroducePage: React.FunctionComponent<{
               clubInfo.imageUrl ??
               'https://react.semantic-ui.com/images/wireframe/image.png'
             }
-            alt={`${name}_logo`}
+            alt={`${getLocalizedField(clubInfo, 'name', i18n.language)}_logo`}
           />
         </div>
 
-        <h1 style={{ margin: '0' }}>{name}</h1>
-        <h2 style={{ color: 'grey', marginTop: 0 }}>{clubInfo.shortDesc}</h2>
+        <h1 style={{ margin: '0' }}>
+          {getLocalizedField(clubInfo, 'name', i18n.language)}
+        </h1>
+        <h2 style={{ color: 'grey', marginTop: 0 }}>
+          {getLocalizedField(clubInfo, 'shortDesc', i18n.language)}
+        </h2>
 
         <div style={{ fontSize: 18 }}>
           <IconLink link={clubInfo.homepageUrl}>
@@ -64,14 +73,19 @@ const ClubSingleIntroducePage: React.FunctionComponent<{
           </IconLink>
         </div>
 
-        <div style={{ fontSize: 16, margin: '12px 0' }}>{clubInfo.content}</div>
+        <div style={{ fontSize: 16, margin: '12px 0', whiteSpace: 'pre-line' }}>
+          {getLocalizedField(clubInfo, 'content', i18n.language)}
+        </div>
 
         <div>
           <p>
-            <b>동방 위치</b>: {clubInfo.location}
+            <b>{t('club.roomLocation')}</b>:{' '}
+            {getLocalizedField(clubInfo, 'location', i18n.language)}
           </p>
           <p>
-            <b>대표자</b>: {clubInfo.representative}({clubInfo.contact})
+            <b>{t('club.representative')}</b>:{' '}
+            {getLocalizedField(clubInfo, 'representative', i18n.language)}(
+            {getLocalizedField(clubInfo, 'contact', i18n.language)})
           </p>
         </div>
       </div>
@@ -90,6 +104,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const clubInfo = res.data;
 
   return {
-    props: { name, clubInfo },
+    props: {
+      name,
+      clubInfo,
+      ...(await getI18nProps(context.locale)),
+    },
   };
 };

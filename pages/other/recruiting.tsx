@@ -1,48 +1,38 @@
 import styled from 'styled-components';
 import { Container, Icon, Popup, Image } from 'semantic-ui-react';
+import { GetStaticProps } from 'next';
+import { Trans, useTranslation } from 'next-i18next/pages';
 import Layout from '@/components/layout';
+import { getI18nProps } from '@/lib/i18n';
 
 const RecruitingPage = () => {
+  const { t } = useTranslation('common');
+
   return (
     <Layout>
       <div style={{ background: '#eeeeee', borderRadius: '0.4em' }}>
         <Container style={{ padding: '3vh' }}>
           <h1>
             <span style={{ fontFamily: 'Caveat', marginRight: 3 }}>POPO</span>{' '}
-            개발자 모집👨‍💻
+            {t('recruiting.title')}
           </h1>
+          <p>{t('recruiting.p1')}</p>
+          <p>{t('recruiting.p2')}</p>
+          <p>{t('recruiting.p3')}</p>
           <p>
-            총학생회가 POPO를 운영한다면, <strong>PoApper</strong>는 POPO 개발과
-            유지/보수를 맡고 있습니다. 💪
+            <Trans
+              i18nKey="recruiting.p4"
+              components={{ strong: <strong /> }}
+            />
           </p>
-          <p>
-            POPO 개발팀은 POSTECH에서 발생하는 데이터가 제대로 활용되지 못하고
-            있다고 생각합니다.
-          </p>
-          <p>
-            그리고 POSTECH의 데이터를 수집하는 플랫폼 역시 빈약하다고 느끼고
-            있습니다.
-          </p>
-          <p>
-            POPO 개발팀은 적극적으로 개발하고 아이디어를 교환하면서, &nbsp;
-            <strong>플랫폼</strong>을 만들고 <strong>데이터</strong>를 축적해
-            상상을 <strong>현실</strong>로 구현하는 팀입니다! 🤩
-          </p>
-          <p>
-            그런 플랫폼을 여러분의 손으로 만들고 발전시켜 보세요! 😎 개발의 문은
-            언제나 열려있습니다 🔑
-          </p>
+          <p>{t('recruiting.p5')}</p>
           <ol>
-            <li>
-              직접 홈페이지를 개발해보면서, 프론트와 백엔드를 경험해보세요!
-            </li>
-            <li>선임 POPO 개발자의 도움을 받으며 성장해보세요!</li>
-            <li>
-              POPO를 통해 축적된 POSTECH 데이터에서 가능성을 발굴해보세요!
-            </li>
+            <li>{t('recruiting.li1')}</li>
+            <li>{t('recruiting.li2')}</li>
+            <li>{t('recruiting.li3')}</li>
           </ol>
           <p>
-            <strong>Contact Us</strong> : Lead Developer, 나태양(컴공 24)
+            {t('recruiting.contactLead')}
             <a href={'https://github.com/hegelty'}>
               <Icon name={'github'} />
             </a>
@@ -52,7 +42,7 @@ const RecruitingPage = () => {
             />
           </p>
           <p>
-            <strong>Previous Leads</strong> : 김관호(컴공 19)
+            {t('recruiting.prevLead1')}
             <a href={'https://github.com/khkim6040'}>
               <Icon name={'github'} />
             </a>
@@ -62,7 +52,7 @@ const RecruitingPage = () => {
             />
           </p>
           <p>
-            <strong>Previous Leads</strong> : 하석윤(컴공 18)
+            {t('recruiting.prevLead2')}
             <a href={'https://github.com/BlueHorn07'}>
               <Icon name={'github'} />
             </a>
@@ -141,6 +131,10 @@ const RecruitingPage = () => {
 };
 
 export default RecruitingPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});
 
 const FrameWorkDiv = styled.div`
   text-align: center;

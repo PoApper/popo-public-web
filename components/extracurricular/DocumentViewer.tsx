@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next/pages';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { popoApiUrl } from '@/lib/axios.instance';
@@ -31,6 +32,7 @@ const DocumentViewer: React.FC<Props> = ({
   fileName,
   fileType,
 }) => {
+  const { t } = useTranslation('common');
   const containerRef = useRef<HTMLDivElement>(null);
   const hwpContainerRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>(
@@ -46,7 +48,9 @@ const DocumentViewer: React.FC<Props> = ({
   const downloadButton = (
     <>
       <button type="button" onClick={download} disabled={isDownloading}>
-        {isDownloading ? '다운로드 준비 중…' : '원본 내려받기'}
+        {isDownloading
+          ? t('fileDownload.preparing')
+          : t('fileDownload.original')}
       </button>
       {downloadError && <p role="alert">{downloadError}</p>}
     </>
@@ -167,9 +171,11 @@ const DocumentViewer: React.FC<Props> = ({
   if (isDocx) {
     return (
       <>
-        {status === 'loading' && <Notice>문서를 불러오는 중입니다…</Notice>}
+        {status === 'loading' && <Notice>{t('documentViewer.loading')}</Notice>}
         {status === 'error' && (
-          <Notice>문서를 표시하지 못했습니다. {downloadButton}</Notice>
+          <Notice>
+            {t('documentViewer.error')} {downloadButton}
+          </Notice>
         )}
         <DocxContainer ref={containerRef} $hidden={status !== 'ready'} />
       </>
@@ -180,10 +186,12 @@ const DocumentViewer: React.FC<Props> = ({
     return (
       <>
         {status === 'loading' && (
-          <Notice>한글 문서를 불러오는 중입니다…</Notice>
+          <Notice>{t('documentViewer.hwpLoading')}</Notice>
         )}
         {status === 'error' && (
-          <Notice>문서를 표시하지 못했습니다. {downloadButton}</Notice>
+          <Notice>
+            {t('documentViewer.error')} {downloadButton}
+          </Notice>
         )}
         <HwpContainer ref={hwpContainerRef} $hidden={status !== 'ready'} />
       </>
@@ -192,8 +200,9 @@ const DocumentViewer: React.FC<Props> = ({
 
   return (
     <Notice>
-      <strong>{type ? type.toUpperCase() : '이'} 형식</strong>은 웹에서 바로 볼
-      수 없습니다.
+      {t('documentViewer.unsupported', {
+        type: type ? type.toUpperCase() : t('documentViewer.unknownType'),
+      })}
       <br />
       {downloadButton}
     </Notice>

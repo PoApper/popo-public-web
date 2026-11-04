@@ -1,10 +1,13 @@
 import { Button, Icon, Label, Modal, Segment } from 'semantic-ui-react';
 import { useState } from 'react';
 import moment from 'moment';
+import { useTranslation } from 'next-i18next/pages';
+import { getLocalizedResourceName } from '@/lib/locale';
 import DeleteConfirmModal from '../common/delete.confirm.modal';
 
 // @ts-ignore
 const EquipReservationDetailModal = ({ reservation, trigger }) => {
+  const { t, i18n } = useTranslation('common');
   const [open, setOpen] = useState(false);
 
   return (
@@ -16,35 +19,35 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
     >
-      <Modal.Header>장비 예약</Modal.Header>
+      <Modal.Header>{t('reservation.equipment.detailModalTitle')}</Modal.Header>
       <Modal.Content>
         <Segment.Group>
           <Segment>
-            <h4>장비 목록</h4>
+            <h4>{t('reservation.equipment.equipListCol')}</h4>
             <div>
               {reservation.equipments.map((equipment: any) => {
                 return (
                   <Label key={equipment.uuid} style={{ margin: '4px' }}>
-                    {equipment.name}
+                    {getLocalizedResourceName(equipment, i18n.language)}
                   </Label>
                 );
               })}
             </div>
           </Segment>
           <Segment>
-            <h4>전화번호</h4>
+            <h4>{t('reservation.shared.phone')}</h4>
             <div>{reservation.phone}</div>
           </Segment>
           <Segment>
-            <h4>예약 제목</h4>
+            <h4>{t('reservation.shared.title')}</h4>
             <div>{reservation.title}</div>
           </Segment>
           <Segment>
-            <h4>설명</h4>
+            <h4>{t('reservation.shared.description')}</h4>
             <div>{reservation.description}</div>
           </Segment>
           <Segment>
-            <h4>예약 기간</h4>
+            <h4>{t('auth.myReservation.colPeriod')}</h4>
             <div>
               <b>
                 {moment(reservation.date, 'YYYYMMDD').format('YYYY-MM-DD')}
@@ -56,7 +59,7 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
             </div>
           </Segment>
           <Segment>
-            <h4>생성일</h4>
+            <h4>{t('reservation.shared.createdAt')}</h4>
             <div>
               {moment(reservation.createdAt).format('YYYY-MM-DD HH:mm')}
             </div>
@@ -70,7 +73,8 @@ const EquipReservationDetailModal = ({ reservation, trigger }) => {
               deleteURI={`reservation-equip/${reservation.uuid}`}
               trigger={
                 <Button negative>
-                  <Icon name={'trash'} /> 예약 삭제
+                  <Icon name={'trash'} />{' '}
+                  {t('reservation.shared.deleteReservation')}
                 </Button>
               }
             />

@@ -2,13 +2,18 @@ import Head from 'next/head';
 import React from 'react';
 import { Container, Image } from 'semantic-ui-react';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
+import { Trans, useTranslation } from 'next-i18next/pages';
+import { getI18nProps } from '@/lib/i18n';
 
 const NotFoundPage = () => {
+  const { t } = useTranslation('common');
+
   return (
     <>
       <Head>
-        <title>POPO 퍼블릭 페이지</title>
-        <meta name="description" content="POPO 퍼블릭 페이지" />
+        <title>{t('layout.pageTitle')}</title>
+        <meta name="description" content={t('layout.metaDescription')} />
         <link rel="icon" href={'/favicon.ico'} />
       </Head>
       <>
@@ -17,15 +22,14 @@ const NotFoundPage = () => {
             <Link href={'/'} passHref>
               <Image centered src={'/popo.svg'} alt={'popo_logo'} />
             </Link>
-            <h1>페이지가 존재하지 않습니다.</h1>
+            <h1>{t('notFound.title')}</h1>
             <p>
-              링크를 잘못 입력하셨거나 페이지가 삭제/이동되었을 수 있습니다. 🚫
+              {t('notFound.body')}
               <br />
-              POPO로{' '}
-              <Link href={'/'} passHref>
-                메인 페이지
-              </Link>
-              로 이동 🚀
+              <Trans
+                i18nKey="notFound.goHome"
+                components={[<Link key="home" href="/" passHref />]}
+              />
             </p>
           </Container>
         </main>
@@ -35,3 +39,9 @@ const NotFoundPage = () => {
 };
 
 export default NotFoundPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await getI18nProps(locale)),
+  },
+});

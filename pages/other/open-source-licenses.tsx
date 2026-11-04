@@ -1,3 +1,6 @@
+import { useTranslation } from 'next-i18next/pages';
+import { GetStaticProps } from 'next';
+import { getI18nProps } from '@/lib/i18n';
 import { Container, Header, List } from 'semantic-ui-react';
 import Layout from '@/components/layout';
 
@@ -5,27 +8,25 @@ import Layout from '@/components/layout';
 const openSourceLicenses = [
   {
     name: '@rhwp/core',
-    description: '한글 문서 뷰어',
+    descriptionKey: 'licenses.rhwpDescription',
     licenseUrl: '/licenses/rhwp.txt',
   },
 ];
 
 const OpenSourceLicensesPage = () => {
+  const { t } = useTranslation('common');
   return (
     <Layout>
       <Container text>
-        <Header as="h1">오픈소스 라이선스</Header>
-        <p>
-          POPO에서 사용하는 오픈소스의 라이선스 및 저작권 고지를 확인할 수
-          있습니다.
-        </p>
+        <Header as="h1">{t('licenses.title')}</Header>
+        <p>{t('licenses.intro')}</p>
         <List divided relaxed>
           {openSourceLicenses.map((license) => (
             <List.Item key={license.name}>
               <List.Header as="a" href={license.licenseUrl}>
-                {license.description} ({license.name})
+                {t(license.descriptionKey)} ({license.name})
               </List.Header>
-              <List.Description>라이선스 및 저작권 고지 전문</List.Description>
+              <List.Description>{t('licenses.fullNotice')}</List.Description>
             </List.Item>
           ))}
         </List>
@@ -35,3 +36,7 @@ const OpenSourceLicensesPage = () => {
 };
 
 export default OpenSourceLicensesPage;
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

@@ -7,11 +7,17 @@
 export interface IClubIntroduce {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   content: string;
+  contentEn?: string | null;
   shortDesc: string;
+  shortDescEn?: string | null;
   location: string;
+  locationEn?: string | null;
   representative: string;
+  representativeEn?: string | null;
   contact: string;
+  contactEn?: string | null;
   imageUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;
@@ -32,10 +38,15 @@ export type AssociationType =
 export interface IAssociationIntroduce {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   content: string;
+  contentEn?: string | null;
   location: string;
+  locationEn?: string | null;
   representative: string;
+  representativeEn?: string | null;
   contact: string;
+  contactEn?: string | null;
   imageUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;
@@ -47,12 +58,19 @@ export interface IAssociationIntroduce {
 export interface IStudentAssociationIntroduce {
   uuid: string;
   name: string;
+  nameEn?: string | null;
   shortDesc: string;
+  shortDescEn?: string | null;
   content: string;
+  contentEn?: string | null;
   location: string;
+  locationEn?: string | null;
   representative: string;
+  representativeEn?: string | null;
   office: string;
+  officeEn?: string | null;
   contact: string;
+  contactEn?: string | null;
   imageUrl?: string;
   homepageUrl?: string;
   facebookUrl?: string;

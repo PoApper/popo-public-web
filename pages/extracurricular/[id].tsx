@@ -1,3 +1,6 @@
+import { useTranslation } from 'next-i18next/pages';
+import { GetServerSideProps } from 'next';
+import { getI18nProps } from '@/lib/i18n';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -6,15 +9,18 @@ import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
 import { Activity, ActivityReport } from '@/components/extracurricular/types';
 
+const ALL = '__all__';
+
 const ExtracurricularDetailPage: React.FC = () => {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const { id } = router.query;
 
   const [activity, setActivity] = useState<Activity | null>(null);
   const [reports, setReports] = useState<ActivityReport[]>([]);
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('전체');
-  const [selectedMajor, setSelectedMajor] = useState<string>('전체');
-  const [selectedGrade, setSelectedGrade] = useState<string>('전체');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>(ALL);
+  const [selectedMajor, setSelectedMajor] = useState<string>(ALL);
+  const [selectedGrade, setSelectedGrade] = useState<string>(ALL);
   const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,27 +49,21 @@ const ExtracurricularDetailPage: React.FC = () => {
     return (
       <Layout>
         <LoadingContainer>
-          {loadError
-            ? '비교과활동을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.'
-            : '로딩 중...'}
+          {loadError ? t('extracurricular.loadError') : t('common.loading')}
         </LoadingContainer>
       </Layout>
     );
   }
 
   // Filter options
-  const periods = [
-    '전체',
-    ...Array.from(new Set(reports.map((r) => r.period))),
-  ];
-  const majors = ['전체', ...Array.from(new Set(reports.map((r) => r.major)))];
-  const grades = ['전체', ...Array.from(new Set(reports.map((r) => r.grade)))];
+  const periods = [ALL, ...Array.from(new Set(reports.map((r) => r.period)))];
+  const majors = [ALL, ...Array.from(new Set(reports.map((r) => r.major)))];
+  const grades = [ALL, ...Array.from(new Set(reports.map((r) => r.grade)))];
 
   const filteredReports = reports.filter((rep) => {
-    const matchPeriod =
-      selectedPeriod === '전체' || rep.period === selectedPeriod;
-    const matchMajor = selectedMajor === '전체' || rep.major === selectedMajor;
-    const matchGrade = selectedGrade === '전체' || rep.grade === selectedGrade;
+    const matchPeriod = selectedPeriod === ALL || rep.period === selectedPeriod;
+    const matchMajor = selectedMajor === ALL || rep.major === selectedMajor;
+    const matchGrade = selectedGrade === ALL || rep.grade === selectedGrade;
     return matchPeriod && matchMajor && matchGrade;
   });
 
@@ -71,7 +71,7 @@ const ExtracurricularDetailPage: React.FC = () => {
     <Layout>
       <Container>
         <Breadcrumb>
-          <Link href="/extracurricular">← 전체 비교과활동 목록</Link>
+          <Link href="/extracurricular">{t('extracurricular.backToList')}</Link>
         </Breadcrumb>
 
         <OverviewCard>
@@ -83,67 +83,74 @@ const ExtracurricularDetailPage: React.FC = () => {
 
           <InfoGrid>
             <InfoBox>
-              <InfoLabel>모집 / 시행 시기</InfoLabel>
+              <InfoLabel>{t('extracurricular.period')}</InfoLabel>
               <InfoValue>{activity.period}</InfoValue>
             </InfoBox>
             <InfoBox>
-              <InfoLabel>지원 대상</InfoLabel>
+              <InfoLabel>{t('extracurricular.target')}</InfoLabel>
               <InfoValue>{activity.target}</InfoValue>
             </InfoBox>
             <InfoBox>
-              <InfoLabel>신청 및 선발 절차</InfoLabel>
+              <InfoLabel>{t('extracurricular.applicationMethod')}</InfoLabel>
               <InfoValue>{activity.applicationMethod}</InfoValue>
             </InfoBox>
             <InfoBox>
-              <InfoLabel>카테고리</InfoLabel>
+              <InfoLabel>{t('extracurricular.category')}</InfoLabel>
               <InfoValue>{activity.category}</InfoValue>
             </InfoBox>
           </InfoGrid>
         </OverviewCard>
 
         <SectionTitleWrapper>
-          <SectionTitle>활동 보고서</SectionTitle>
-          <CountTag>{filteredReports.length}건</CountTag>
+          <SectionTitle>{t('extracurricular.reports')}</SectionTitle>
+          <CountTag>
+            {t('extracurricular.reportCount', {
+              count: filteredReports.length,
+            })}
+          </CountTag>
         </SectionTitleWrapper>
 
         <FilterBar>
           <FilterGroup>
-            <FilterLabel>시기:</FilterLabel>
+            <FilterLabel>{t('extracurricular.filterPeriod')}</FilterLabel>
             <Select
+              aria-label={t('extracurricular.filterPeriod')}
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
             >
               {periods.map((p) => (
                 <option key={p} value={p}>
-                  {p}
+                  {p === ALL ? t('common.all') : p}
                 </option>
               ))}
             </Select>
           </FilterGroup>
 
           <FilterGroup>
-            <FilterLabel>전공:</FilterLabel>
+            <FilterLabel>{t('extracurricular.filterMajor')}</FilterLabel>
             <Select
+              aria-label={t('extracurricular.filterMajor')}
               value={selectedMajor}
               onChange={(e) => setSelectedMajor(e.target.value)}
             >
               {majors.map((m) => (
                 <option key={m} value={m}>
-                  {m}
+                  {m === ALL ? t('common.all') : m}
                 </option>
               ))}
             </Select>
           </FilterGroup>
 
           <FilterGroup>
-            <FilterLabel>학년:</FilterLabel>
+            <FilterLabel>{t('extracurricular.filterGrade')}</FilterLabel>
             <Select
+              aria-label={t('extracurricular.filterGrade')}
               value={selectedGrade}
               onChange={(e) => setSelectedGrade(e.target.value)}
             >
               {grades.map((g) => (
                 <option key={g} value={g}>
-                  {g}
+                  {g === ALL ? t('common.all') : g}
                 </option>
               ))}
             </Select>
@@ -154,12 +161,12 @@ const ExtracurricularDetailPage: React.FC = () => {
           <Table>
             <thead>
               <tr>
-                <th>보고서 제목</th>
-                <th>시기</th>
-                <th>학년</th>
-                <th>전공</th>
-                <th>작성자</th>
-                <th>파일 유형</th>
+                <th>{t('extracurricular.reportTitle')}</th>
+                <th>{t('extracurricular.periodColumn')}</th>
+                <th>{t('extracurricular.grade')}</th>
+                <th>{t('extracurricular.major')}</th>
+                <th>{t('extracurricular.author')}</th>
+                <th>{t('extracurricular.fileType')}</th>
               </tr>
             </thead>
             <tbody>
@@ -194,7 +201,7 @@ const ExtracurricularDetailPage: React.FC = () => {
           </Table>
 
           {filteredReports.length === 0 && (
-            <EmptyReports>조건에 만족하는 보고서가 없습니다.</EmptyReports>
+            <EmptyReports>{t('extracurricular.reportsEmpty')}</EmptyReports>
           )}
         </TableWrapper>
       </Container>
@@ -321,15 +328,20 @@ const FilterGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: 100%;
 `;
 
 const FilterLabel = styled.span`
+  flex-shrink: 0;
   font-size: 13px;
   font-weight: 500;
   color: #6b7280;
 `;
 
 const Select = styled.select`
+  min-width: 0;
+  max-width: 100%;
   padding: 6px 12px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -424,3 +436,7 @@ const EmptyReports = styled.div`
   color: #9ca3af;
   font-size: 14px;
 `;
+
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => ({
+  props: { ...(await getI18nProps(locale)) },
+});

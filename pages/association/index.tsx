@@ -1,10 +1,14 @@
+import { getLocalizedField } from '@/lib/locale';
 import React from 'react';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Image } from 'semantic-ui-react';
+import { useTranslation } from 'next-i18next/pages';
 
 import Layout from '@/components/layout';
 import { PoPoAxios } from '@/lib/axios.instance';
+import { getI18nProps } from '@/lib/i18n';
 import {
   AssociationType,
   IAssociationIntroduce,
@@ -14,7 +18,6 @@ type AssociationTypeKey = 'executive' | 'autonomous' | 'media' | 'specialized';
 
 interface IGroupedAssociation {
   associationType: AssociationTypeKey | 'uncategorized';
-  displayName: string;
   associations: IAssociationIntroduce[];
 }
 
@@ -24,13 +27,6 @@ const associationTypeOrder: AssociationTypeKey[] = [
   'media',
   'specialized',
 ];
-
-const associationTypeDisplayName: Record<AssociationTypeKey, string> = {
-  executive: '집행기구',
-  autonomous: '자치기구',
-  media: '언론기구',
-  specialized: '전문기구',
-};
 
 const associationTypeMap: Record<AssociationType, AssociationTypeKey> = {
   executive: 'executive',
@@ -56,6 +52,8 @@ const getAssociationType = (
 const AssociationIndexPage: React.FunctionComponent<{
   associationList: IAssociationIntroduce[];
 }> = ({ associationList }) => {
+  const { t, i18n } = useTranslation('common');
+
   // 자치단체 분류를 기준으로 그룹화
   const groupedData = associationList.reduce<
     Record<AssociationTypeKey | 'uncategorized', IGroupedAssociation>
@@ -67,9 +65,6 @@ const AssociationIndexPage: React.FunctionComponent<{
       if (!acc[key]) {
         acc[key] = {
           associationType: key,
-          displayName: associationType
-            ? associationTypeDisplayName[associationType]
-            : '미분류',
           associations: [],
         };
       }
@@ -92,23 +87,27 @@ const AssociationIndexPage: React.FunctionComponent<{
   const introduceItems = (associationItems: IAssociationIntroduce[]) =>
     associationItems.map((intro) => (
       <div key={intro.uuid}>
-        <Image
-          centered
-          size="small"
-          href={`/association/introduce/${intro.name}`}
-          src={
-            intro.imageUrl ??
-            'https://react.semantic-ui.com/images/wireframe/image.png'
-          }
-          alt={`${intro.name}_logo`}
-          style={{
-            width: '150px',
-            height: '150px',
-            objectFit: 'cover',
-            objectPosition: 'center',
-          }}
-        />
-        <AssociationName>{intro.name}</AssociationName>
+        <Link href={`/association/introduce/${encodeURIComponent(intro.name)}`}>
+          <Image
+            centered
+            size="small"
+            src={
+              intro.imageUrl ??
+              'https://react.semantic-ui.com/images/wireframe/image.png'
+            }
+            alt={`${getLocalizedField(intro, 'name', i18n.language)}_logo`}
+            style={{
+              width: '150px',
+              height: '150px',
+              maxWidth: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+            }}
+          />
+        </Link>
+        <AssociationName>
+          {getLocalizedField(intro, 'name', i18n.language)}
+        </AssociationName>
       </div>
     ));
 
@@ -118,7 +117,9 @@ const AssociationIndexPage: React.FunctionComponent<{
         <PageContainer>
           {sortedCategories.map((category) => (
             <CategorySection key={category.associationType}>
-              <CategoryHeader>{category.displayName}</CategoryHeader>
+              <CategoryHeader>
+                {t(`association.types.${category.associationType}`)}
+              </CategoryHeader>
               <IntroduceGrid>
                 {introduceItems(category.associations)}
               </IntroduceGrid>
@@ -134,7 +135,7 @@ const AssociationIndexPage: React.FunctionComponent<{
 
 export default AssociationIndexPage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const res = await PoPoAxios.get<IAssociationIntroduce[]>(
       'introduce/association',
@@ -142,11 +143,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const associationList = res.data;
 
     return {
-      props: { associationList },
+      props: {
+        associationList,
+        ...(await getI18nProps(context.locale)),
+      },
     };
   } catch {
     return {
-      props: { associationList: [] },
+      props: {
+        associationList: [],
+        ...(await getI18nProps(context.locale)),
+      },
     };
   }
 };
@@ -174,13 +181,18 @@ const CategoryHeader = styled.h2`
 
 const IntroduceGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   text-align: center;
   gap: 2rem;
 
+  > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   // mobile screen
   @media only screen and (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `;
 
