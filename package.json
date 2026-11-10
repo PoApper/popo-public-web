@@ -15,12 +15,12 @@
   },
   "dependencies": {
     "@rhwp/core": "^0.8.4",
-    "axios": "^1.18.0",
+    "axios": "^1.21.0",
     "docx-preview": "^0.4.0",
     "i18next": "^26.4.2",
-    "moment": "^2.30.1",
+    "moment": "^2.31.0",
     "moment-timezone": "^0.5.45",
-    "next": "^15.5.21",
+    "next": "^15.5.29",
     "next-i18next": "^16.3.1",
     "react": "^18.2.0",
     "react-calendar": "^5.0.0",
@@ -29,23 +29,30 @@
     "react-i18next": "^17.0.15",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5",
-    "styled-components": "^6.1.14"
+    "styled-components": "6.6.0"
   },
   "devDependencies": {
-    "@types/node": "20.14",
+    "@types/node": "^24.19.2",
     "@types/react": "^18.3.9",
     "@types/react-datepicker": "^6.2.0",
     "@types/styled-components": "^5.1.34",
     "eslint": "^8.53.0",
-    "eslint-config-next": "^14.2.13",
+    "eslint-config-next": "^15.5.29",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.4.2",
-    "react-router-dom": "^6.30.6",
     "typescript": "^5.7.3"
   },
   "engines": {
-    "npm": ">=10.5.0",
-    "node": ">=20.9.0"
+    "node": ">=24.22.2 <25",
+    "npm": ">=11 <12"
+  },
+  "overrides": {
+    "postcss": "^8.5.32",
+    "follow-redirects": "^1.16.1",
+    "sharp": "^0.35.5"
+  },
+  "allowScripts": {
+    "sharp@0.35.5": true
   }
 }
