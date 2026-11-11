@@ -1,5 +1,5 @@
 # Build Step
-FROM node:20-alpine AS builder
+FROM node:24.22.2-alpine AS builder
 
 WORKDIR /usr/src/app
 
@@ -20,7 +20,7 @@ ENV NEXT_PUBLIC_POPO_VERSION=${POPO_VERSION}
 RUN npm run build
 
 # Run Step
-FROM node:20-alpine AS runner
+FROM node:24.22.2-alpine AS runner
 
 WORKDIR /usr/src/app
 
